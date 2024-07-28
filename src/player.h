@@ -11,6 +11,9 @@ class Player {
   Board *board;
 
  public:
+  Player(Color c, Board *b);
+  virtual ~Player();
+
   Color getColor();
   virtual Move getMove() = 0;
 };
