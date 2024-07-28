@@ -22,9 +22,14 @@ void ChessController::createGame(){
             }
 
             // for now set both players to human
+<<<<<<< HEAD
             // initialize both to NoColor for now
             p0 = new Human(Color::NoColor);
             p1 = new Human(Color::NoColor);
+=======
+            p0 = new Human(0);
+            p1 = new Human(1);
+>>>>>>> d30aeef8b1bfd48f1f5f4f3ac595e29dadb96a7a
         } 
     }
 }

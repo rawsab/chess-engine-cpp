@@ -24,8 +24,13 @@ enum class PieceType {
 };
 
 struct Move {
-  int r, c, nr, nc;
-  MoveType getMoveType();
+    MoveType moveType;
+    PieceType oldPieceType;
+    PieceType newPieceType;
+    int r;  // row
+    int c;  // column
+    int nr; // new row
+    int nc; // new column
 };
 
 #endif
