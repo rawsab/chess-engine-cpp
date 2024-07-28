@@ -48,8 +48,10 @@ void ChessController::createGame(){
                 isValidMove = board->canMove(turn, Color::Black);
             }
 
-            if (isValidMove) {
+            // change to isValidMove
+            if (true) {
                 board->move(turn);
+                textDisplay->print(); // prints board
                 playerTurn++;
             } else {
                 cout << "Invalid move" << endl;
