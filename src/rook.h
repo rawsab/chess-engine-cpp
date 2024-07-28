@@ -15,6 +15,7 @@ class Rook : public Piece {
  public:
   Rook(Square *pos, Color c);
   bool getCanCastle();
+  void setCanCastle();
   vector<Move> possibleMoves();
 };
 
