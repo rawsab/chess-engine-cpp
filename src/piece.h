@@ -3,15 +3,13 @@
 
 #include <vector>
 
-#include "board.h"
 #include "types.h"
 
 class Board;
 
 using namespace std;
 
-struct Move;
-class Square;
+
 class Piece {
  private:
  protected:
