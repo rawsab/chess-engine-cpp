@@ -17,7 +17,7 @@ void TextView::print() {
         for (int j = 0; j < 8; ++j) {
             Piece* curPiece = board->getSquare(i, j).getPiece();
             if (curPiece == nullptr) {
-                cout << " ";
+                cout << "  ";
                 continue;
             } 
             PieceType pp = curPiece->getType();
@@ -47,11 +47,12 @@ void TextView::print() {
                     cout << " ";
                     break;
             }
+            cout << " ";
         }
         cout << "|" << endl;
     }
     cout << " '-----------------' " << endl;
-    cout << "   0 1 2 3 4 5 6 7" << endl;
+    cout << "   a b c d e f g h" << endl;
 }
 
 TextView::~TextView() {
