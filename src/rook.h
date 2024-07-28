@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "piece.h"
-#include "square.h"
 
 using namespace std;
 
@@ -13,10 +12,10 @@ class Rook : public Piece {
   bool canCastle;
 
  public:
-  Rook(Color c);
+  Rook(Color c, Square *pos);
   bool getCanCastle() const;
   void setCanCastle();
-  vector<Move> possibleMoves();
+  vector<Move> getMoves(const Board& b) const override;
 };
 
 #endif
