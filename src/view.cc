@@ -10,22 +10,19 @@ using namespace std;
 View::View() {
     board = vector<vector<char>>(8, vector<char>(8, ' '));
     // Initialize the board with the standard chess layout
-    string initialBoard[8] = {
-        "rnbqkbnr",
-        "pppppppp",
-        "        ",
-        "        ",
-        "        ",
-        "        ",
-        "PPPPPPPP",
-        "RNBQKBNR"
+
+    vector<vector<char>> initBoard = {
+        {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'},
+        {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
+        {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'}
     };
 
-    for (int i = 0; i < 8; ++i) {
-        for (int j = 0; j < 8; ++j) {
-            board[i][j] = initialBoard[i][j];
-        }
-    }
+    board = initBoard;
 }
 
 void View::notify(Move turn) {
