@@ -12,7 +12,7 @@ class Player {
 
  public:
   Color getColor();
-  Move getMove();
+  virtual Move getMove() = 0;
 };
 
 #endif
