@@ -1,5 +1,6 @@
 #include "board.h"
 #include "square.h"
+#include "pawn.h"
 
 Board::Board() : whiteScore(0), blackScore(0) {
     board = vector<vector<Square>>(8, vector<Square>(8, Square(0, 0, nullptr)));
@@ -10,7 +11,7 @@ Board::Board() : whiteScore(0), blackScore(0) {
         }
     }
 
-    board[1][1].updateSquare(new Rook(Color::White, &board[1][1]));
+    board[6][1].updateSquare(new Pawn(Color::White, &board[6][1]));
     // // Setup pawns
     // for (int i = 0; i < 8; ++i) {
     //     board[1][i].updateSquare(new Pawn(Color::White, &board[1][i]));

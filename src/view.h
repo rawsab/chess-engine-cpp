@@ -10,7 +10,6 @@ using namespace std;
 
 class View {
   protected:
-    vector<vector<char>> board;
   public:
     View();
 
