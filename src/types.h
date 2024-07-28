@@ -1,6 +1,8 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <string>
+
 enum class MoveType { 
   Promotion, 
   EnPassant, 
@@ -25,15 +27,17 @@ enum class PieceType {
 };
 
 struct Move {
-    MoveType moveType;
-    PieceType oldPieceType;
-    PieceType newPieceType;
-    Color oldColorType;
-    Color newColorType;
     int r;  // row
     int c;  // column
     int nr; // new row
     int nc; // new column
+
+    Move(const std::string& from, const std::string& to);
+    Move(Move&& other) noexcept;
+    Move& operator=(Move&& other) noexcept;
+    Move(const Move& other);
+    Move& operator=(const Move& other);
+    ~Move();
 };
 
 #endif

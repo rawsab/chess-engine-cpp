@@ -8,6 +8,10 @@ Human::Human(Color c) : Player(c) {
 }
 
 Move Human::getMove() {
+    string start, end;
+	cin >> start >> end;
+	Move turn(start, end);
+	return turn;
 }
 
 Human::~Human() {
