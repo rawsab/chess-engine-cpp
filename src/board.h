@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "square.h"
+#include "rook.h"
 #include <vector>
 
 using namespace std;
