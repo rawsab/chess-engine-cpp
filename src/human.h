@@ -3,7 +3,7 @@
 
 class Human : public Player {
  public:
-    Human(Color c);
+    Human(int c);
     Move getMove() override;
 
     ~Human();
