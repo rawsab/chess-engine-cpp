@@ -16,7 +16,7 @@ class Square {
     ~Square() {};
 
     void updateSquare(Piece* p);
-    Piece* getPiece();
+    Piece* getPiece() const;
 };
 
 #endif

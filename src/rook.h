@@ -13,8 +13,8 @@ class Rook : public Piece {
   bool canCastle;
 
  public:
-  Rook(Square *pos, Color c);
-  bool getCanCastle();
+  Rook(Color c);
+  bool getCanCastle() const;
   void setCanCastle();
   vector<Move> possibleMoves();
 };
