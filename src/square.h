@@ -2,7 +2,8 @@
 #define SQUARE_H
 
 #include "types.h"
-#include "piece.h"
+
+class Piece;
 
 class Square {
  private:

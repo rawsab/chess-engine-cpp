@@ -3,10 +3,9 @@
 
 #include <vector>
 
-#include "square.h"
 #include "types.h"
+#include "square.h"
 
-class Square;
 class Board;
 
 using namespace std;

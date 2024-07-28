@@ -3,6 +3,8 @@
 #include <iostream>
 #include <sstream>
 #include "types.h"
+#include "board.h"
+
 using namespace std;
 
 class View {
