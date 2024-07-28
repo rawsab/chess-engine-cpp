@@ -22,8 +22,8 @@ void ChessController::createGame(){
             }
 
             // for now set both players to human
-            p0 = new Human();
-            p1 = new Human();
+            p0 = new Human(0);
+            p1 = new Human(1);
         } 
     }
 }
