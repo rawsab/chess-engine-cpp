@@ -1,7 +1,12 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-enum class MoveType { Promotion, EnPassant, CastlePawn2, Regular };
+enum class MoveType { 
+  Promotion, 
+  EnPassant, 
+  CastlePawn2, 
+  Regular 
+};
 
 enum class Color {
   Black,
