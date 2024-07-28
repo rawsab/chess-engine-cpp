@@ -27,6 +27,8 @@ struct Move {
     MoveType moveType;
     PieceType oldPieceType;
     PieceType newPieceType;
+    Color oldColorType;
+    Color newColorType;
     int r;  // row
     int c;  // column
     int nr; // new row
