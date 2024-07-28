@@ -13,11 +13,11 @@ void TextView::print() {
     // Print the board
     cout << " ,-----------------," << endl;
     for (int i = 0; i < 8; ++i) {
-        cout << 8 - i << "| ";
+        cout << i << "| ";
         for (int j = 0; j < 8; ++j) {
             Piece* curPiece = board->getSquare(i, j).getPiece();
             if (curPiece == nullptr) {
-                cout << " ";
+                cout << "  ";
                 continue;
             } 
             PieceType pp = curPiece->getType();
@@ -40,13 +40,11 @@ void TextView::print() {
                 case PieceType::Pawn:
                     cout << "p";
                     break;
-                case PieceType::NoPiece:
-                    cout << " ";
-                    break;
                 default:
                     cout << " ";
                     break;
             }
+            cout << " ";
         }
         cout << "|" << endl;
     }
