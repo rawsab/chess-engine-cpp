@@ -19,6 +19,10 @@ vector<Move> Pawn::getMoves() const {
         !board->getSquare(currentRow, 4).getPiece()) {
       moves.push_back(Move{currentRow, currentCol, 4, currentCol});
     }
+    if (currentRow < 7 && !board->getSquare(currentRow, currentCol - 1).getPiece()){
+			moves.push_back(Move{currentRow, currentCol, currentRow, currentCol - 1});
+		}
+
   }
   return moves;
 }
