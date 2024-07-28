@@ -11,7 +11,7 @@ class Square {
     int col;
 
  public:
-    Square(int r, int c, Piece* p = nullptr) ;
+    Square(int r, int c, Piece* p = nullptr);
     ~Square() {};
 
     void updateSquare(Piece* p);

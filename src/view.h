@@ -1,20 +1,18 @@
-#ifndef __DISPLAY_H__
-#define __DISPLAY_H__
+#ifndef __VIEW_H__
+#define __VIEW_H__
 #include <iostream>
 #include <sstream>
+#include "types.h"
+using namespace std;
 
 class View {
   protected:
-    vector<vector<Square>> board;
+    vector<vector<char>> board;
   public:
     View();
 
-    void notify(Move turn);
-
-    virtual void print(std::ostream &out) {}
-    virtual void update() {}
-  
-    virtual ~View() = 0;
+    void notify(Move turn);  
+    virtual ~View();
 };
 
 #endif

@@ -2,13 +2,14 @@
 #include "player.h"
 #include "human.h"
 #include "board.h"
-#include "View.h"
+#include "view.h"
 #include "types.h"
 
 using namespace std;
 
 ChessController::ChessController() : p0(NULL), p1(NULL), textDisplay(NULL), p0Score(0), p1Score(0) {
     board = new Board();
+    textDisplay = new TextView();
     // board->setupBoard();
 }
 

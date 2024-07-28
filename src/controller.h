@@ -6,6 +6,7 @@
 #include "human.h"
 #include "board.h"
 #include "view.h"
+#include "textView.h"
 #include "types.h"
 
 class ChessController {
@@ -15,7 +16,7 @@ private:
     int p0Score;
     int p1Score;
     Board *board;
-    int textDisplay;
+    TextView *textDisplay;
     int playerTurn;
 
 public:

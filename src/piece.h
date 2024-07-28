@@ -6,6 +6,7 @@
 #include "square.h"
 #include "types.h"
 
+class Square;
 class Board;
 
 using namespace std;
