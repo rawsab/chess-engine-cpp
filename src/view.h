@@ -2,6 +2,7 @@
 #define __VIEW_H__
 #include <iostream>
 #include <sstream>
+#include <vector>
 #include "types.h"
 #include "board.h"
 
