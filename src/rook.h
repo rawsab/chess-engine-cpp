@@ -18,8 +18,4 @@ class Rook : public Piece {
   vector<Move> possibleMoves();
 };
 
-Rook::Rook(/* args */) {}
-
-Rook::~Rook() {}
-
 #endif
