@@ -40,9 +40,6 @@ void TextView::print() {
                 case PieceType::Pawn:
                     cout << "p";
                     break;
-                case PieceType::NoPiece:
-                    cout << " ";
-                    break;
                 default:
                     cout << " ";
                     break;
