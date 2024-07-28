@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "types.h"
+#include "square.h"
 
 class Board;
 
@@ -16,10 +17,11 @@ class Piece {
   int points;
   PieceType type;
   Color color;
+  Square *pos;
 
  public:
-  Piece(PieceType t, Color c, int points);
-  virtual vector<Move> getMoves() const = 0;
+  Piece(PieceType t, Color c, int points, Square *pos);
+  virtual vector<Move> getMoves(const Board& b) const = 0;
   void move(Move m);
   bool isValidMove(Move m, const Board& b) const;
   bool canCheck(const Board& b) const;
