@@ -24,6 +24,7 @@ class Board {
    vector<vector<Square>> getSquares();
    Square getSquare(int row, int col);
 
+   bool canMove(Move m, Color c); // make virtual
    void move(Move m); // make virtual
    bool isCheck(Color c);
    bool isCheckmate(Color c);

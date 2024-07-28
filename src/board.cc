@@ -1,13 +1,14 @@
 #include "board.h"
+#include "square.h"
 
-Board::Board() : whiteScore{0}, blackScore{0} {
-    // initialize 8x8 board
-    board = vector<vector<Square>>(8, vector<Square>(8));
+Board::Board() : whiteScore(0), blackScore(0) {
     setupBoard();
 }
 
+Board::~Board() {
+}
+
 void Board::setupBoard() {
-    // to implement
 }
 
 vector<vector<Square>> Board::getSquares() {
@@ -21,16 +22,23 @@ Square Board::getSquare(int row, int col) {
     return board[row][col];
 }
 
+bool Board::canMove(Move m, Color c) {
+    return false;
+}
+
+void Board::move(Move m) {
+}
+
 bool Board::isCheck(Color c) {
-    // to implement
+    return false;
 }
 
 bool Board::isCheckmate(Color c) {
-    // to implement
+    return false;
 }
 
 bool Board::isStalemate() {
-    // to implement
+    return false;
 }
 
 float Board::getWhiteScore() {
@@ -41,4 +49,9 @@ float Board::getBlackScore() {
     return blackScore;
 }
 
-Board::~Board() {}
+void Board::updateWhiteScore() {
+}
+
+void Board::updateBlackScore() {
+}
+

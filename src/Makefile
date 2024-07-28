@@ -1,9 +1,9 @@
 CXX = g++
 CXXFLAGS = -std=c++14
-EXEC = a3q1
+EXEC = chess
 
-SRCS = main.cc controller.cc human.cc
-HEADERS = controller.h types.h player.h View.h human.h
+SRCS = main.cc controller.cc human.cc board.cc
+HEADERS = controller.h types.h player.h View.h human.h board.h square.h
 OBJS = $(SRCS:.cc=.o)
 
 all: $(EXEC)

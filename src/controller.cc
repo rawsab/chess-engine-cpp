@@ -8,7 +8,7 @@
 using namespace std;
 
 ChessController::ChessController() : p0(NULL), p1(NULL), textDisplay(NULL), p0Score(0), p1Score(0) {
-    // board = new Board();
+    board = new Board();
     // board->setupBoard();
 }
 
@@ -28,9 +28,34 @@ void ChessController::createGame(){
 
             // for now set both players to human
             // initialize both to NoColor for now
-            p0 = new Human(Color::NoColor);
-            // p1 = new Human(Color::NoColor);
-        } 
+            p0 = new Human(Color::White);
+            p1 = new Human(Color::Black);
+        } else if (cmd == "move") {
+            // read input
+            string startPos, endPos;
+            cin >> startPos >> endPos;
+
+            Move turn; // make move turn off move we need to make
+
+            // checks if move is valid for player
+            bool isValidMove;
+            if (playerTurn % 2) {
+                turn = p0->getMove();
+                isValidMove = board->canMove(turn, Color::White);
+            } else {
+                turn = p1->getMove();
+                isValidMove = board->canMove(turn, Color::Black);
+            }
+
+            if (isValidMove) {
+                board->move(turn);
+                playerTurn++;
+            } else {
+                cout << "Invalid move" << endl;
+            }
+
+        }
+
     }
 }
 

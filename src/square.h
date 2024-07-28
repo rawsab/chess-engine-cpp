@@ -11,9 +11,9 @@ class Square {
     int col;
 
  public:
-    Square(int r, int c);
-    Square(int r, int c, Piece* p);
-    ~Square();
+    Square(int r, int c) {};
+    Square(int r, int c, Piece* p) {};
+    ~Square() {};
 
     void updateSquare(Piece* p);
     Piece* getPiece();

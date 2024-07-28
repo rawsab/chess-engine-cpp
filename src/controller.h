@@ -14,8 +14,8 @@ private:
     Player *p1;  // black
     int p0Score;
     int p1Score;
-    // Board board;
-    View textDisplay;
+    Board *board;
+    int textDisplay;
     int playerTurn;
 
 public:
