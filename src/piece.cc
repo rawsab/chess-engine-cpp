@@ -33,3 +33,5 @@ Color Piece::getColor() const { return color; }
 PieceType Piece::getType() const { return type; }
 
 int Piece::getPoints() const { return points; }
+
+Piece::~Piece() {}

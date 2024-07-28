@@ -2,9 +2,9 @@
 
 using namespace std;
 
-Square::Square(int r, int c, Piece* p = nullptr): row{r}, col{c}, piece{p} {}
+Square::Square(int r, int c, Piece* p): row{r}, col{c}, piece{p} {}
 
-Square::updateSquare(Piece *p) {
+void Square::updateSquare(Piece *p) {
     piece = p;
 }
 
@@ -15,6 +15,6 @@ int Square::getCol() const {
     return col;
 }
 
-int Square::getPiece() const {
+Piece* Square::getPiece() const {
     return piece;
 }
