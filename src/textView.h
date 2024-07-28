@@ -4,10 +4,13 @@
 #include <sstream>
 #include "view.h"
 #include "types.h"
+#include "board.h"
 
 class TextView : public View {
+  Board* board;
+
   public:
-    TextView();
+    TextView(Board* b);
     void print();
     ~TextView();
 };

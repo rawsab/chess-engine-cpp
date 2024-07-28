@@ -42,7 +42,12 @@ bool Piece::canCheck() const {
 
 Color Piece::getColor() const { return color; }
 
-PieceType Piece::getType() const { return type; }
+PieceType Piece::getType() const { 
+  if(this == nullptr) {
+    return PieceType::NoPiece;
+  }
+  return type; 
+}
 
 int Piece::getPoints() const { return points; }
 

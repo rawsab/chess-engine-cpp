@@ -9,7 +9,7 @@ using namespace std;
 
 ChessController::ChessController() : p0(NULL), p1(NULL), textDisplay(NULL), p0Score(0), p1Score(0) {
     board = new Board();
-    textDisplay = new TextView();
+    textDisplay = new TextView(board);
     // board->setupBoard();
 }
 
@@ -31,6 +31,8 @@ void ChessController::createGame(){
             // initialize both to NoColor for now
             p0 = new Human(Color::White);
             p1 = new Human(Color::Black);
+
+            textDisplay->print(); // prints board
         } else if (cmd == "move") {
             // read input
             string startPos, endPos;
