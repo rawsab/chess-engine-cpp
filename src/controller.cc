@@ -1,7 +1,7 @@
 #include "controller.h"
 #include "player.h"
 #include "human.h"
-// #include "Board.h"
+#include "board.h"
 #include "View.h"
 #include "types.h"
 

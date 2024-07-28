@@ -4,8 +4,8 @@
 #include <string>
 #include "player.h"
 #include "human.h"
-// #include "Board.h"
-#include "View.h"
+#include "board.h"
+#include "view.h"
 #include "types.h"
 
 class ChessController {
@@ -15,7 +15,7 @@ private:
     int p0Score;
     int p1Score;
     // Board board;
-    int textDisplay;
+    View textDisplay;
     int playerTurn;
 
 public:
