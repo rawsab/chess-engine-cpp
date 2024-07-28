@@ -7,6 +7,8 @@ class Computer : public Player {
  public:
     Computer(Color c);
     virtual Move getMove() = 0;
+
+    ~Computer();
 };
 
 

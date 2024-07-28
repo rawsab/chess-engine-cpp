@@ -7,6 +7,8 @@ class Human : public Player {
  public:
     Human(Color c);
     Move getMove() override;
+
+    ~Human();
 };
 
 #endif
