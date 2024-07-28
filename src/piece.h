@@ -5,8 +5,8 @@
 
 #include "types.h"
 #include "square.h"
+#include "board.h"
 
-class Board;
 
 using namespace std;
 
@@ -17,6 +17,7 @@ class Piece {
   PieceType type;
   Color color;
   Square* pos;
+  Board* board;
 
   void getlinearMoves(int row, int col, vector<Move>& moves);
 

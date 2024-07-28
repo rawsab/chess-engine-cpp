@@ -2,7 +2,8 @@
 
 using namespace std;
 
-Piece::Piece(PieceType t, Color c, int points, Square *pos) : points{points}, type{t}, color{c}, pos{pos} {}
+Piece::Piece(PieceType t, Color c, int points, Square* pos)
+    : points{points}, type{t}, color{c}, pos{pos} {}
 
 void Piece::getlinearMoves(int row, int col, vector<Move>& moves) {
   int currentRow = pos->getRow();
@@ -10,9 +11,19 @@ void Piece::getlinearMoves(int row, int col, vector<Move>& moves) {
   int newRow = currentRow + row;
   int newCol = currentCol + col;
 
-  while(newCol >= 0 && newCol < 8 && newRow >= 0 && newRow < 8){
-    // logic for checking moves. 
+  while (newCol >= 0 && newCol < 8 && newRow >= 0 && newRow < 8) {
+    // logic for checking moves.
+    Piece* oldPiece = board->getSquare(newRow, newCol).getPiece();
+    if (oldPiece && oldPiece->getColor() != color) {
+      moves.push_back(Move{MoveType::Regular, oldPiece->getType(), type,
+                           oldPiece->getColor(), color, currentRow, currentCol,
+                           newRow, newCol});
+      break;
+    }
 
+    moves.push_back(Move{MoveType::Regular, oldPiece->getType(), type,
+                         oldPiece->getColor(), color, currentRow, currentCol,
+                         newRow, newCol});
     newRow += row;
     newCol += col;
   }
