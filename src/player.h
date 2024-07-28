@@ -8,11 +8,10 @@ class Player {
  private:
  protected:
   Color color;
-  Board *board;
 
  public:
-  Player(Color c, Board *b);
-  virtual ~Player();
+  Player(Color c) {};
+  virtual ~Player() {};
 
   Color getColor();
   virtual Move getMove() = 0;

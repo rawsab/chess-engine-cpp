@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -std=c++14
 EXEC = a3q1
 
-SRCS = main.cc controller.cc
+SRCS = main.cc controller.cc human.cc
 HEADERS = controller.h types.h player.h View.h human.h
 OBJS = $(SRCS:.cc=.o)
 

@@ -1,4 +1,9 @@
 #include "controller.h"
+#include "player.h"
+#include "human.h"
+// #include "Board.h"
+#include "View.h"
+#include "types.h"
 
 using namespace std;
 
@@ -29,6 +34,5 @@ void ChessController::createGame(){
     }
 }
 
-ChessController::~ChessController(){
-}
+ChessController::~ChessController() {}
 
