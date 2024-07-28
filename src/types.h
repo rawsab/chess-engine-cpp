@@ -32,12 +32,24 @@ struct Move {
     int nr; // new row
     int nc; // new column
 
-    Move(const std::string& from, const std::string& to);
-    Move(Move&& other) noexcept;
-    Move& operator=(Move&& other) noexcept;
-    Move(const Move& other);
-    Move& operator=(const Move& other);
+    // Default constructor
+    Move();
+    Move(int x, int y, int nx, int ny);
+
+    // Destructor
     ~Move();
+
+    // Copy constructor
+    Move(const Move& other);
+
+    // Copy assignment operator
+    Move& operator=(const Move& other);
+
+    // Move constructor
+    Move(Move&& other) noexcept;
+
+    // Move assignment operator
+    Move& operator=(Move&& other) noexcept;
 };
 
 #endif

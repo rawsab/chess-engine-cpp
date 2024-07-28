@@ -35,9 +35,6 @@ void ChessController::createGame(){
             textDisplay->print(); // prints board
         } else if (cmd == "move") {
             // read input
-            string startPos, endPos;
-            cin >> startPos >> endPos;
-
             Move turn; // make move turn off move we need to make
 
             // checks if move is valid for player
@@ -49,7 +46,6 @@ void ChessController::createGame(){
                 turn = p1->getMove();
                 isValidMove = board->canMove(turn, Color::Black);
             }
-
             // change to isValidMove
             if (true) {
                 board->move(turn);

@@ -1,30 +1,12 @@
 #include "types.h"
-#include <string>
-#include <utility>
 
-Move::Move(const std::string& from, const std::string& to) {
-    if (from.size() == 2 && to.size() == 2) {
-        c = from[0] - 'a';
-        r = from[1] - '1';
-        nc = to[0] - 'a';
-        nr = to[1] - '1';
-    }
-}
+// Default constructor
+Move::Move() : r(0), c(0), nr(0), nc(0) {}
+Move::Move(int x, int y, int nx, int ny) : r(x), c(y), nr(nx), nc(ny) {}
 
-// Move constructor
-Move::Move(Move&& other) noexcept 
-    : r(std::exchange(other.r, 0)), c(std::exchange(other.c, 0)), 
-      nr(std::exchange(other.nr, 0)), nc(std::exchange(other.nc, 0)) {}
-
-// Move assignment operator
-Move& Move::operator=(Move&& other) noexcept {
-    if (this != &other) {
-        r = std::exchange(other.r, 0);
-        c = std::exchange(other.c, 0);
-        nr = std::exchange(other.nr, 0);
-        nc = std::exchange(other.nc, 0);
-    }
-    return *this;
+// Destructor
+Move::~Move() {
+    // No dynamic memory to clean up
 }
 
 // Copy constructor
@@ -42,7 +24,27 @@ Move& Move::operator=(const Move& other) {
     return *this;
 }
 
-// Destructor
-Move::~Move() {
-    // No dynamic resources to release
+// Move constructor
+Move::Move(Move&& other) noexcept 
+    : r(other.r), c(other.c), nr(other.nr), nc(other.nc) {
+    other.r = 0;
+    other.c = 0;
+    other.nr = 0;
+    other.nc = 0;
+}
+
+// Move assignment operator
+Move& Move::operator=(Move&& other) noexcept {
+    if (this != &other) {
+        r = other.r;
+        c = other.c;
+        nr = other.nr;
+        nc = other.nc;
+
+        other.r = 0;
+        other.c = 0;
+        other.nr = 0;
+        other.nc = 0;
+    }
+    return *this;
 }
