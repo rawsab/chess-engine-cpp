@@ -1,10 +1,11 @@
 #include "pawn.h"
+#include "board.h"
 
 using namespace std;
 
 Pawn::Pawn(Color c, Square *pos): Piece{PieceType::Pawn, c, 1, pos}, canMove2{true} {}
 
-vector<Move> Pawn::getMoves(const Board& b) const { 
+vector<Move> Pawn::getMoves() const { 
     vector<Move> moves;
     if (!pos) return moves;
 

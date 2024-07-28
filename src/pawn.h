@@ -10,7 +10,7 @@ class Pawn : public Piece {
 
   public:
     Pawn(Color c, Square *pos);
-    vector<Move> getMoves(const Board& b) const override;
+    vector<Move> getMoves() const override;
 };
 
 #endif
