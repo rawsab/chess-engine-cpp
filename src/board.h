@@ -22,15 +22,15 @@ class Board {
    vector<vector<Square>> getSquares();
    Square getSquare(int row, int col);
 
-   void move(Move m);
+   virtual void move(Move m) = 0;
    bool isCheck(Color c);
    bool isCheckmate(Color c);
    bool isStalemate();
 
    float getWhiteScore();
    float getBlackScore();
-   void updateWhiteScore();
-   void updateBlackScore();
+   virtual void updateWhiteScore() = 0;
+   virtual void updateBlackScore() = 0;
 };
 
 #endif
