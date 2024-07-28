@@ -1,16 +1,20 @@
-CXX=g++
-CXXFLAGS= -std=c++14 -Wall -g -MMD
+CXX = g++
+CXXFLAGS = -std=c++14
+EXEC = a3q1
 
-EXEC= chess
-CCFILES= $(wildcard*.cc)
-DEPENDS= ${OBJECTS: .o = .d}
-OBJECTS= ${ccfiles: .cc = .o}
+SRCS = main.cc controller.cc
+HEADERS = controller.h types.h player.h View.h human.h
+OBJS = $(SRCS:.cc=.o)
 
-${EXEC}: ${OBJECTS}
-	${CXX} ${OBJECTS} -o ${EXEC}
+all: $(EXEC)
 
--include ${DEPENDS}
+$(EXEC): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(EXEC) $(OBJS)
 
-.PHONY: clean
+%.o: %.cc $(HEADERS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
 clean:
-	rm ${EXEC} ${OBJECTS} ${DEPENDS}
+	rm -f $(EXEC)
+
+.PHONY: all clean

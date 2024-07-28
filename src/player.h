@@ -1,5 +1,5 @@
 #ifndef PLAYER_H
-#define PLAYER_h
+#define PLAYER_H
 
 #include "types.h"
 #include "board.h"
