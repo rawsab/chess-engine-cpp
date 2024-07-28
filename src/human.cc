@@ -8,9 +8,20 @@ Human::Human(Color c) : Player(c) {
 }
 
 Move Human::getMove() {
-    string start, end;
-	cin >> start >> end;
-	Move turn(start, end);
+    cout << "called";
+    string from, to;
+	cin >> from >> to;
+    int r, c, nr, nc;
+    if (from.size() == 2 && to.size() == 2) {
+        c = from[0] - 'a';
+        r = from[1] - '1';
+        nc = to[0] - 'a';
+        nr = to[1] - '1';
+    } else {
+        r = c = nr = nc = 0;
+    }
+
+	Move turn(r, c, nr, nc);
 	return turn;
 }
 
