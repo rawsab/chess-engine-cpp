@@ -6,6 +6,8 @@
 #include "board.h"
 #include "types.h"
 
+class Board;
+
 using namespace std;
 
 struct Move;
@@ -20,9 +22,9 @@ class Piece {
  public:
   virtual vector<Move> getMoves() = 0;
   PieceType getType();
-  void move(Move);
-  bool isValidMove(Move, const Board &);
-  bool canCheck(const Board &);
+  void move(Move m);
+  bool isValidMove(Move m, const Board& b);
+  bool canCheck(const Board& b);
   int getValue();
   virtual ~Piece();
 };

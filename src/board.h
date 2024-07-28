@@ -7,6 +7,8 @@
 
 using namespace std;
 
+class Square;
+
 class Board {
  private:
    vector<vector<Square>> board;
@@ -22,15 +24,15 @@ class Board {
    vector<vector<Square>> getSquares();
    Square getSquare(int row, int col);
 
-   virtual void move(Move m) = 0;
+   void move(Move m); // make virtual
    bool isCheck(Color c);
    bool isCheckmate(Color c);
    bool isStalemate();
 
    float getWhiteScore();
    float getBlackScore();
-   virtual void updateWhiteScore() = 0;
-   virtual void updateBlackScore() = 0;
+   void updateWhiteScore(); // make virtual
+   void updateBlackScore(); // make virtual
 };
 
 #endif
