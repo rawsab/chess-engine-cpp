@@ -16,6 +16,8 @@ class Square {
 
     void updateSquare(Piece* p);
     Piece* getPiece() const;
+    int getRow() const;
+    int getCol() const;
 };
 
 #endif
