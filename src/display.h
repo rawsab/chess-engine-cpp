@@ -1,20 +1,25 @@
-#ifndef __DISPLAY_H__
-#define __DISPLAY_H__
+#ifndef DISPLAY_H
+#define DISPLAY_H
 #include <iostream>
 #include <sstream>
+#include <vector>
 
-class View {
+#include "types.h"
+#include "square.h"
+
+class Display {
   protected:
     vector<vector<Square>> board;
+
   public:
-    View();
+    Display(bool isCustomGame);
 
     void notify(Move turn);
 
     virtual void print(std::ostream &out) {}
     virtual void update() {}
   
-    virtual ~View() = 0;
+    virtual ~Display() = 0;
 };
 
 #endif

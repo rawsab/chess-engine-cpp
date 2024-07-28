@@ -21,6 +21,7 @@ enum class PieceType {
   King,
   Queen,
   Pawn,
+  Empty,
 };
 
 struct Move {

@@ -2,7 +2,7 @@
 #include "player.h"
 #include "human.h"
 #include "board.h"
-#include "View.h"
+#include "display.h"
 #include "types.h"
 
 using namespace std;

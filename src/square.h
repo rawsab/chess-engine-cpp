@@ -10,12 +10,15 @@ class Square {
     int row;
     int col;
 
+    bool isEmpty;
+
  public:
     Square(int r, int c);
     Square(int r, int c, Piece* p);
     ~Square();
 
-    void updateSquare(Piece* p);
+    void updateSquare(Piece* p, Square* s);
+
     Piece* getPiece();
 };
 

@@ -2,11 +2,13 @@
 #define CHESSCONTROLLER_H
 
 #include <string>
+#include "types.h"
 #include "player.h"
 #include "human.h"
+#include "computer.h"
 #include "board.h"
-#include "view.h"
-#include "types.h"
+#include "display.h"
+#include "textDisplay.h"
 
 class ChessController {
 private:
@@ -15,7 +17,7 @@ private:
     int p0Score;
     int p1Score;
     // Board board;
-    View textDisplay;
+    TextDisplay textDisplay;
     int playerTurn;
 
 public:
