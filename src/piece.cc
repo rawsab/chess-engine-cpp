@@ -1,4 +1,5 @@
 #include "piece.h"
+
 #include "board.h"
 
 using namespace std;
@@ -16,15 +17,11 @@ void Piece::getlinearMoves(int row, int col, vector<Move>& moves) {
     // logic for checking moves.
     Piece* oldPiece = board->getSquare(newRow, newCol).getPiece();
     if (oldPiece && oldPiece->getColor() != color) {
-      moves.push_back(Move{MoveType::Regular, oldPiece->getType(), type,
-                           oldPiece->getColor(), color, currentRow, currentCol,
-                           newRow, newCol});
+      moves.push_back(Move{currentRow, currentCol, newRow, newCol});
       break;
     }
 
-    moves.push_back(Move{MoveType::Regular, oldPiece->getType(), type,
-                         oldPiece->getColor(), color, currentRow, currentCol,
-                         newRow, newCol});
+    moves.push_back(Move{currentRow, currentCol, newRow, newCol});
     newRow += row;
     newCol += col;
   }
@@ -33,7 +30,9 @@ void Piece::getlinearMoves(int row, int col, vector<Move>& moves) {
 bool Piece::canCheck() const {
   vector<Move> moves = getMoves();
   for (auto move : moves) {
-    if (move.oldPieceType == PieceType::King && move.oldColorType != color) {
+    Piece* currentPiece = board->getSquare(move.nr, move.nc).getPiece();
+    if (currentPiece && currentPiece->getType() == PieceType::King &&
+        currentPiece->getColor() != color) {
       return true;
     }
   }
@@ -42,11 +41,11 @@ bool Piece::canCheck() const {
 
 Color Piece::getColor() const { return color; }
 
-PieceType Piece::getType() const { 
-  if(this == nullptr) {
+PieceType Piece::getType() const {
+  if (this == nullptr) {
     return PieceType::NoPiece;
   }
-  return type; 
+  return type;
 }
 
 int Piece::getPoints() const { return points; }
