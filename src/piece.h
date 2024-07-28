@@ -8,6 +8,8 @@
 
 using namespace std;
 
+struct Move;
+class Square;
 class Piece {
  private:
  protected:
