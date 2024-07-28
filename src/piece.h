@@ -20,10 +20,9 @@ class Piece {
  public:
   Piece(PieceType t, Color c, int points);
   virtual vector<Move> getMoves() const = 0;
-  PieceType getType();
   void move(Move m);
-  bool isValidMove(Move m, const Board& b);
-  bool canCheck(const Board& b);
+  bool isValidMove(Move m, const Board& b) const;
+  bool canCheck(const Board& b) const;
   int getPoints() const;
   Color getColor() const;
   PieceType getType() const;
