@@ -1,7 +1,7 @@
 #include "computer.h"
 #include <stdlib.h>
+#include <random>
 #include <algorithm>
-#include <iostream>
 
 using namespace std;
 
@@ -13,6 +13,16 @@ LevelOne::LevelOne(Color c, Board *b) : Computer{c, b} {}
 LevelTwo::LevelTwo(Color c, Board *b) : Computer{c, b} {}
 LevelThree::LevelThree(Color c, Board *b) : Computer{c, b} {}
 LevelFour::LevelFour(Color c, Board *b) : Computer{c, b} {}
+
+
+int getRandom(int min, int max) {
+    static random_device rd;
+    static mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(min, max);
+
+    return dis(gen);
+}
+
 
 Move LevelOne::getMove() {
     // get all pieces of the color
@@ -26,27 +36,39 @@ Move LevelOne::getMove() {
         }
     }
 
-    cout << endl << endl << "GOT ALL PIECES" << endl << endl;
-
-    if (pieces.size() == 0) return;
+    if (pieces.size() == 0) return Move{};
 
     while (!pieces.empty()) {
-        Piece* chosenPiece = pieces[rand() % pieces.size()]; // choose random piece
+        int randomPieceIndex = getRandom(0, pieces.size() - 1);
+
+        while (pieces[randomPieceIndex] == nullptr) {
+            randomPieceIndex = getRandom(0, pieces.size() - 1);
+        }
+
+        Piece* chosenPiece = pieces[randomPieceIndex]; // choose random piece
+
         vector<Move> moves = chosenPiece->getMoves();
-        
+
         while (!moves.empty()) {
-            Move chosenMove = moves[rand() % moves.size()]; // choose random move
+            int randomMoveIndex = getRandom(0, moves.size() - 1);
+
+            while (moves[randomMoveIndex] == Move{0, 0, 0, 0}) {
+                randomMoveIndex = getRandom(0, moves.size() - 1);
+            }
+
+            Move chosenMove = moves[randomMoveIndex]; // choose random move
             board->move(chosenMove);
+
             if (!(board->isCheck(color))) {
-                return chosenMove;
+                return Move{};
             }
             else {
                 board->undoMove();
-                moves.erase(remove(moves.begin(), moves.end(), chosenMove), moves.end());
+                moves[randomMoveIndex] = Move{0, 0, 0, 0};
             }
         }
 
-        pieces.erase(remove(pieces.begin(), pieces.end(), chosenPiece), pieces.end());
+        pieces[randomPieceIndex] = nullptr;
     }
 
     return Move{};

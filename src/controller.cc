@@ -33,10 +33,11 @@ void ChessController::addToScore(Color c, int score) {
 void ChessController::createGame(){
     string cmd;
     bool setupMode = true;
+    string firstPlayer, secondPlayer;
 
     while (cin >> cmd) {        
         if (cmd == "game") {
-            string firstPlayer, secondPlayer;
+            // string firstPlayer, secondPlayer;
             cin >> firstPlayer >> secondPlayer;
             
             if (firstPlayer != "human" && secondPlayer != "human") {
@@ -77,7 +78,7 @@ void ChessController::createGame(){
             Move turn; // make move turn off move we need to make
 
             // checks if move is valid for player
-            bool isValidMove;
+            bool isValidMove = true;
             if (playerTurn % 2 == 0) {
                 turn = p0->getMove();
                 isValidMove = board->canMove(turn, Color::White);
@@ -108,7 +109,19 @@ void ChessController::createGame(){
                       addToScore(Color::Black, 1);
                     }
                 }
+
+                // TESTING BELOW
                 playerTurn++;
+
+                if (secondPlayer != "human") {
+                    cout << "Computer is making move" << endl;
+                    turn = p1->getMove();
+                    textDisplay->print();
+                    // isValidMove = board->canMove(turn, Color::Black);
+                }
+
+                playerTurn++;
+
             } else {
                 cout << "Invalid move" << endl;
             }
