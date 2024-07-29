@@ -8,7 +8,7 @@ class Queen : public Piece {
   private:
 
   public:
-    Queen(Color c, Square *pos);
+    Queen(Color c, Square *pos,  Board *b);
     vector<Move> getMoves() const override;
     // bool canMove(int newRow, int newCol) const override;
 };

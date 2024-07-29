@@ -22,7 +22,7 @@ class Piece {
   void getlinearMoves(int row, int col, vector<Move>& moves) const;
 
  public:
-  Piece(PieceType t, Color c, int points, Square* pos);
+  Piece(PieceType t, Color c, int points, Square* pos, Board* b);
   virtual vector<Move> getMoves() const = 0;
   virtual bool canMove(int row, int col) const = 0; 
   void move(Move m);

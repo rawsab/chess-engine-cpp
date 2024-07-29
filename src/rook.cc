@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Rook::Rook(Color c, Square*pos): Piece{PieceType::Rook, c, 5, pos}, canCastle{true} {}
+Rook::Rook(Color c, Square*pos,  Board *b): Piece{PieceType::Rook, c, 5, pos, b}, canCastle{true} {}
 
 bool Rook::getCanCastle() const { return canCastle; }
 

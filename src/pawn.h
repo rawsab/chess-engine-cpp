@@ -10,7 +10,7 @@ class Pawn : public Piece {
     bool enpassant;
 
    public:
-    Pawn(Color c, Square *pos);
+    Pawn(Color c, Square *pos, Board *b);
     vector<Move> getMoves() const override;
     bool canMove(int newRow, int newCol) const override;
 };

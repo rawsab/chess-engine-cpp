@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Pawn::Pawn(Color c, Square *pos)
-    : Piece{PieceType::Pawn, c, 1, pos}, canMove2{true}, enpassant{false} {}
+Pawn::Pawn(Color c, Square *pos, Board *b)
+    : Piece{PieceType::Pawn, c, 1, pos, b}, canMove2{true}, enpassant{false} {}
 
 vector<Move> Pawn::getMoves() const {
   vector<Move> moves;
@@ -40,7 +40,7 @@ bool Pawn::canMove(int newRow, int newCol) const {
           (board->getSquare(newRow, newCol).getPiece()->getColor() == Color::Black ||
            (enpassant && board->getSquare(newRow, newCol).getPiece()->getColor() == Color::NoColor))) {
         return true;
-      } else if (newCol == col && newRow == row + 1 && newRow < 8 &&
+      } else if (newCol == col && newRow == row - 1 && newRow >= 0 &&
                  board->getSquare(newRow, newCol).getPiece()->getColor() == Color::NoColor) {
         return true;
       } else if (newCol == col - 1 && newRow == row + 1 && newCol >= 0 &&
@@ -49,7 +49,7 @@ bool Pawn::canMove(int newRow, int newCol) const {
                   (enpassant &&
                    board->getSquare(newRow, newCol).getPiece()->getColor() == Color::NoColor))) {
         return true;
-      } else if (newCol == col && newRow == row + 2 && canMove2 &&
+      } else if (newCol == col && newRow == row - 2 && canMove2 &&
                  !board->getSquare(newRow, newCol).getPiece() &&
                  !board->getSquare(newRow - 1, newCol).getPiece()) {
         return true;
@@ -60,8 +60,7 @@ bool Pawn::canMove(int newRow, int newCol) const {
           (board->getSquare(newRow, newCol).getPiece()->getColor() == Color::White ||
            (enpassant && board->getSquare(newRow, newCol).getPiece()->getColor() == Color::NoColor))) {
         return true;
-      } else if (newCol == col && newRow == row - 1 && newRow >= 0 &&
-                 board->getSquare(newRow, newCol).getPiece()->getColor() == Color::NoColor) {
+      } else if (newCol == col && newRow == row + 1 && newRow < 8 && board->getSquare(newRow,newCol).getPiece() == nullptr) {
         return true;
       } else if (newCol == col + 1 && newRow == row - 1 && newCol < 8 &&
                  newRow >= 0 &&
@@ -69,7 +68,7 @@ bool Pawn::canMove(int newRow, int newCol) const {
                   (enpassant &&
                    board->getSquare(newRow, newCol).getPiece()->getColor() == Color::NoColor))) {
         return true;
-      } else if (newCol == col && newRow == row - 2 && canMove2 &&
+      } else if (newCol == col && newRow == row + 2 && newRow < 8 && canMove2 &&
                  !board->getSquare(newRow, newCol).getPiece() &&
                  !board->getSquare(newRow + 1, newCol).getPiece()) {
         return true;
