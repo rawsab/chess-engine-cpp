@@ -104,11 +104,11 @@ Square Board::getSquare(int row, int col) {
 }
 
 bool Board::canMove(Move m, Color c) {
-//   Piece* currentPiece = getSquare(m.r, m.c).getPiece();
-//   if (!currentPiece || currentPiece->getColor() != c) return false;
+  Piece* currentPiece = getSquare(m.r, m.c).getPiece();
+  if (!currentPiece || currentPiece->getColor() != c) return false;
 
-//   return currentPiece->canMove(m.nr, m.nc);
-return true;
+  return currentPiece->canMove(m.nr, m.nc);
+// return true;
 }
 
 void Board::move(Move m) {
