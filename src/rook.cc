@@ -30,7 +30,7 @@ bool Rook::canMove(int newRow, int newCol) const {
 
   Move possibleMove{row, col, newRow, newCol};
 
-  if (row = newRow && col != newCol){
+  if (row == newRow && col != newCol){
     getlinearMoves(0, 1, moves);
     getlinearMoves(0, -1, moves);
 
