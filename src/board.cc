@@ -20,24 +20,24 @@ Board::Board() : whiteScore(0), blackScore(0) {
 
     // // Setup other pieces
     // // White
-    // board[0][0].updateSquare(new Rook(Color::White, &board[0][0]));
-    // board[0][7].updateSquare(new Rook(Color::White, &board[0][7]));
-    // board[0][1].updateSquare(new Knight(Color::White, &board[0][1]));
-    // board[0][6].updateSquare(new Knight(Color::White, &board[0][6]));
-    // board[0][2].updateSquare(new Bishop(Color::White, &board[0][2]));
-    // board[0][5].updateSquare(new Bishop(Color::White, &board[0][5]));
-    // board[0][3].updateSquare(new Queen(Color::White, &board[0][3]));
-    // board[0][4].updateSquare(new King(Color::White, &board[0][4]));
+    board[0][0].updateSquare(new Rook(Color::White, &board[0][0], this));
+    board[0][7].updateSquare(new Rook(Color::White, &board[0][7], this));
+    board[0][1].updateSquare(new Knight(Color::White, &board[0][1], this));
+    board[0][6].updateSquare(new Knight(Color::White, &board[0][6], this));
+    board[0][2].updateSquare(new Bishop(Color::White, &board[0][2], this));
+    board[0][5].updateSquare(new Bishop(Color::White, &board[0][5], this));
+    board[0][3].updateSquare(new Queen(Color::White, &board[0][3], this));
+    board[0][4].updateSquare(new King(Color::White, &board[0][4], this));
 
-    // // Black
-    // board[7][0].updateSquare(new Rook(Color::Black, &board[7][0]));
-    // board[7][7].updateSquare(new Rook(Color::Black, &board[7][7]));
-    // board[7][1].updateSquare(new Knight(Color::Black, &board[7][1]));
-    // board[7][6].updateSquare(new Knight(Color::Black, &board[7][6]));
-    // board[7][2].updateSquare(new Bishop(Color::Black, &board[7][2]));
-    // board[7][5].updateSquare(new Bishop(Color::Black, &board[7][5]));
-    // board[7][3].updateSquare(new Queen(Color::Black, &board[7][3]));
-    // board[7][4].updateSquare(new King(Color::Black, &board[7][4]));
+    // Black
+    board[7][0].updateSquare(new Rook(Color::Black, &board[7][0], this));
+    board[7][7].updateSquare(new Rook(Color::Black, &board[7][7], this));
+    board[7][1].updateSquare(new Knight(Color::Black, &board[7][1], this));
+    board[7][6].updateSquare(new Knight(Color::Black, &board[7][6], this));
+    board[7][2].updateSquare(new Bishop(Color::Black, &board[7][2], this));
+    board[7][5].updateSquare(new Bishop(Color::Black, &board[7][5], this));
+    board[7][3].updateSquare(new Queen(Color::Black, &board[7][3], this));
+    board[7][4].updateSquare(new King(Color::Black, &board[7][4], this));
 }
 
 Piece* Board::createPiece(const string& p, int r, int c) {
