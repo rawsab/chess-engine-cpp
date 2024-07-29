@@ -203,7 +203,7 @@ bool Board::isCheckmate(Color c) {
     return true;
 }
 
-bool Board::isStalemate() {
+bool Board::isStalemate(Color c) {
     return false;
 }
 

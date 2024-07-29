@@ -22,7 +22,7 @@ private:
 public:
     ChessController();
 
-    void addToScore(Color c);
+    void addToScore(Color c, int score);
     void createGame();
     ~ChessController();
 };

@@ -36,7 +36,7 @@ class Board {
    void undoMove();
    bool isCheck(Color c);
    bool isCheckmate(Color c);
-   bool isStalemate();
+   bool isStalemate(Color c);
    Piece* createPiece(const string& p, int r, int c);
    void updatePiece(const string& p, int r, int c);
    float getWhiteScore();
