@@ -1,6 +1,7 @@
 #include "board.h"
 #include "square.h"
 #include "pawn.h"
+#include <iostream>
 
 Board::Board() : whiteScore(0), blackScore(0) {
     board = vector<vector<Square>>(8, vector<Square>(8, Square(0, 0, nullptr)));
@@ -61,11 +62,11 @@ bool Board::canMove(Move m, Color c) {
 void Board::move(Move m) {
     if (!canMove(m, board[m.r][m.c].getPiece()->getColor())) return;
 
-    Square src = getSquare(m.r, m.c);
-    Square dst = getSquare(m.nr, m.nc);
-    Piece* p = src.getPiece();
-    dst.updateSquare(p);
-    src.updateSquare(nullptr);
+    Square* src = &board[m.r][m.c];
+    Square* dst = &board[m.nr][m.nc];
+    Piece* p = src->getPiece();
+    dst->updateSquare(p);
+    src->updateSquare(nullptr);
 
 }
 

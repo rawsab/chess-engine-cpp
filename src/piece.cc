@@ -39,7 +39,12 @@ bool Piece::canCheck() const {
   return false;
 }
 
-Color Piece::getColor() const { return color; }
+Color Piece::getColor() const { 
+  if (this == nullptr) {
+    return Color::NoColor;
+  }
+  return color; 
+}
 
 PieceType Piece::getType() const {
   if (this == nullptr) {

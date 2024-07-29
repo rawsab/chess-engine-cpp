@@ -26,6 +26,9 @@ enum class PieceType {
   NoPiece,
 };
 
+std::ostream& operator<<(std::ostream& os, const PieceType& pieceType);
+
+
 struct Move {
     int r;  // row
     int c;  // column

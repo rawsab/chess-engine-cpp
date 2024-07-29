@@ -7,7 +7,7 @@
 
 using namespace std;
 
-ChessController::ChessController() : p0(NULL), p1(NULL), textDisplay(NULL), p0Score(0), p1Score(0) {
+ChessController::ChessController() : p0(nullptr), p1(nullptr), textDisplay(nullptr), p0Score(0), p1Score(0), playerTurn(0) {
     board = new Board();
     textDisplay = new TextView(board);
     // board->setupBoard();

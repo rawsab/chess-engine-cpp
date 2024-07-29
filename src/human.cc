@@ -14,9 +14,9 @@ Move Human::getMove() {
     int r, c, nr, nc;
     if (from.size() == 2 && to.size() == 2) {
         c = from[0] - 'a';
-        r = from[1] - '1';
+        r = from[1] - '1' + 1;
         nc = to[0] - 'a';
-        nr = to[1] - '1';
+        nr = to[1] - '1' + 1;
     } else {
         r = c = nr = nc = 0;
     }
