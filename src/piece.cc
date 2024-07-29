@@ -7,7 +7,7 @@ using namespace std;
 Piece::Piece(PieceType t, Color c, int points, Square* pos)
     : points{points}, type{t}, color{c}, pos{pos} {}
 
-void Piece::getlinearMoves(int row, int col, vector<Move>& moves) {
+void Piece::getlinearMoves(int row, int col, vector<Move>& moves) const {
   int currentRow = pos->getRow();
   int currentCol = pos->getCol();
   int newRow = currentRow + row;
