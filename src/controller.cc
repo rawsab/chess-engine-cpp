@@ -4,6 +4,7 @@
 #include "board.h"
 #include "view.h"
 #include "types.h"
+#include <string>
 
 using namespace std;
 
@@ -16,6 +17,7 @@ ChessController::ChessController() : p0(nullptr), p1(nullptr), textDisplay(nullp
 
 void ChessController::createGame(){
     string cmd;
+    bool setupMode = true;
 
     while (cin >> cmd) {
         if (cmd == "game") {
@@ -33,6 +35,7 @@ void ChessController::createGame(){
             p1 = new Human(Color::Black);
 
             textDisplay->print(); // prints board
+            setupMode = false;
         } else if (cmd == "move") {
             // read input
             Move turn; // make move turn off move we need to make
@@ -47,7 +50,7 @@ void ChessController::createGame(){
                 isValidMove = board->canMove(turn, Color::Black);
             }
             // change to isValidMove
-            if (true) {
+            if (isValidMove) {
                 board->move(turn);
                 textDisplay->print(); // prints board
                 playerTurn++;
@@ -55,8 +58,31 @@ void ChessController::createGame(){
                 cout << "Invalid move" << endl;
             }
 
-        }
+        } else if (cmd == "setup") {
+            if (!setupMode) {
+                cout << "Can not enter setup mode" << endl;
+                continue;
+            }
+            board->clearBoard();
 
+            string op;
+            while (cin >> op) {
+                if (op == "+") {
+                    string piece, pos;
+                    cin >> piece >> pos;
+
+                    // sets piece at position
+                    int r, c;
+                    if (pos.size() == 2) {
+                        c = pos[0] - 'a';
+                        r = pos[1] - '1' + 1;
+                        board->updatePiece(piece, r, c);
+                    }
+                    
+                    textDisplay->print();
+                } 
+            }
+        }
     }
 }
 
