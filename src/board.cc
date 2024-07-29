@@ -45,18 +45,18 @@ Piece* Board::createPiece(const string& p, int r, int c) {
     Color color = (isupper(p[0]) ? Color::White : Color::Black);
 
     switch (tolower(p[0])) {
-        // case 'k':
-        //     piece = new King(color, &board[r][c]);
-        //     break;
+        case 'k':
+            piece = new King(color, &board[r][c], this);
+            break;
         case 'q':
             piece = new Queen(color, &board[r][c], this);
             break;
-        // case 'n':
-        //     piece = new Knight(color, &board[r][c]);
-        //     break;
-        // case 'b':
-        //     piece = new Bishop(color, &board[r][c]);
-        //     break;
+        case 'n':
+            piece = new Knight(color, &board[r][c], this);
+            break;
+        case 'b':
+            piece = new Bishop(color, &board[r][c], this);
+            break;
         case 'r':
             piece = new Rook(color, &board[r][c], this);
             break;
@@ -121,7 +121,39 @@ void Board::move(Move m) {
 }
 
 bool Board::isCheck(Color c) {
-    return false;
+    Square* kingSquare = nullptr;
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            Square& square = board[row][col];
+            Piece* piece = square.getPiece();
+            if (piece && piece->getType() == PieceType::King && piece->getColor() == c) {
+                kingSquare = &square;
+                break;
+            }
+        }
+        if (kingSquare) break;
+    }
+
+    if (!kingSquare) return false; // King not found
+
+    // Check all pieces of the opposite color to see if they can attack the king
+    Color opposingColor = (c == Color::White) ? Color::Black : Color::White;
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            Square& square = board[row][col];
+            Piece* piece = square.getPiece();
+            if (piece && piece->getColor() == opposingColor) {
+                std::vector<Move> moves = piece->getMoves();
+                for (const Move& move : moves) {
+                    if (move.nr == kingSquare->getRow() && move.nc == kingSquare->getCol()) {
+                        return true; // King is in check
+                    }
+                }
+            }
+        }
+    }
+
+    return false; // King is not in check
 }
 
 bool Board::isCheckmate(Color c) {

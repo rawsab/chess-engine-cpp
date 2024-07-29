@@ -53,6 +53,11 @@ void ChessController::createGame(){
             if (isValidMove) {
                 board->move(turn);
                 textDisplay->print(); // prints board
+
+                cout << "checking for check for " << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << endl;
+                if(board->isCheck(((playerTurn + 1) % 2 == 0) ? Color::White : Color::Black)){
+                    cout << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << " in check" << endl;
+                }
                 playerTurn++;
             } else {
                 cout << "Invalid move" << endl;
