@@ -67,7 +67,7 @@ void ChessController::createGame(){
 
             string op;
             while (cin >> op) {
-                if (op == "+") {
+                if (op == "+") {            // TODO: make sure capitalization is correct
                     string piece, pos;
                     cin >> piece >> pos;
 
@@ -80,7 +80,7 @@ void ChessController::createGame(){
                     }
                     
                     textDisplay->print();
-                } else if (op == "-") {
+                } else if (op == "-") {     // TODO: make sure capitalization is correct
                     string pos;
                     cin >> pos;
 
