@@ -55,4 +55,6 @@ PieceType Piece::getType() const {
 
 int Piece::getPoints() const { return points; }
 
+void Piece::updateSquare(Square* s) { pos = s; }
+
 Piece::~Piece() {}

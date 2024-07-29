@@ -119,6 +119,7 @@ void Board::move(Move m) {
     dst->updateSquare(p);
     src->updateSquare(nullptr);
 
+    p->updateSquare(dst);
 }
 
 bool Board::isCheck(Color c) {

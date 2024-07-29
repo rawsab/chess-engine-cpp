@@ -6,7 +6,6 @@
 
 class Pawn : public Piece {
   private:
-    bool canMove2;
     bool enpassant;
 
    public:

@@ -31,6 +31,7 @@ class Piece {
   int getPoints() const;
   Color getColor() const;
   PieceType getType() const;
+  void updateSquare(Square* s);
   virtual ~Piece();
 };
 
