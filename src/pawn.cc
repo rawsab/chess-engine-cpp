@@ -49,11 +49,14 @@ bool Pawn::canMove(int newRow, int newCol) const {
                   (enpassant &&
                    newSquare.getPiece()->getColor() == Color::NoColor))) {
         return true;
-      } else if (newCol == col && newRow == row + 2 && canMove2 && !newSquare.getPiece() && !board->getSquare(newRow - 1, newCol).getPiece()){
+      } else if (newCol == col && newRow == row + 2 && canMove2 &&
+                 !newSquare.getPiece() &&
+                 !board->getSquare(newRow - 1, newCol).getPiece()) {
         return true;
       }
-    } else if (getColor() == Color::Black){
-         if (newCol == col - 1 && newRow == row - 1 && newRow >= 0 && newCol >= 0 &&
+    } else if (getColor() == Color::Black) {
+      if (newCol == col - 1 && newRow == row - 1 && newRow >= 0 &&
+          newCol >= 0 &&
           (newSquare.getPiece()->getColor() == Color::White ||
            (enpassant && newSquare.getPiece()->getColor() == Color::NoColor))) {
         return true;
@@ -66,11 +69,12 @@ bool Pawn::canMove(int newRow, int newCol) const {
                   (enpassant &&
                    newSquare.getPiece()->getColor() == Color::NoColor))) {
         return true;
-      } else if (newCol == col && newRow == row - 2 && canMove2 && !newSquare.getPiece() && !board->getSquare(newRow + 1, newCol).getPiece()){
+      } else if (newCol == col && newRow == row - 2 && canMove2 &&
+                 !newSquare.getPiece() &&
+                 !board->getSquare(newRow + 1, newCol).getPiece()) {
         return true;
       }
     }
-  } else {
-    return false;
   }
+  return false;
 }
