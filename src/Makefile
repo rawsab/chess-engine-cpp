@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++14 -g -Wall 
+CXXFLAGS = -std=c++14 -g -Wall
 EXEC = chess
 
 SRCS = main.cc controller.cc human.cc board.cc view.cc textView.cc piece.cc square.cc rook.cc pawn.cc types.cc knight.cc queen.cc
@@ -15,6 +15,6 @@ $(EXEC): $(OBJS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(EXEC)
+	rm -f $(EXEC) $(OBJS)
 
 .PHONY: all clean
