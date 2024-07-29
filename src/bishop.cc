@@ -7,9 +7,6 @@ vector<Move> Bishop::getMoves() const {
     vector<Move> moves;
     if (!pos) return moves;
 
-    int currentRow = pos->getRow();
-    int currentCol = pos->getCol();
-
     // diagonal movement
     getlinearMoves(1, 1, moves);
     getlinearMoves(1, -1, moves);
@@ -17,4 +14,26 @@ vector<Move> Bishop::getMoves() const {
     getlinearMoves(-1, -1, moves);
 
     return moves;
+}
+
+bool Bishop::canMove(int newRow, int newCol) const {
+  if (!pos) return false;
+
+  vector<Move> moves;
+
+  int row = pos->getRow();
+  int col = pos->getCol();
+
+  Move possibleMove{row, col, newRow, newCol};
+
+  if (row != newRow && col != newCol){
+    moves = getMoves();
+  }
+  
+  for (auto move : moves){
+    if (move == possibleMove){
+      return true;
+    }
+  }
+  return false;
 }

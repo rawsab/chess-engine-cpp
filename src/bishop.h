@@ -10,6 +10,7 @@ class Bishop : public Piece {
   public:
     Bishop(Color c, Square *pos, Board *b);
     vector<Move> getMoves() const override;
+    bool canMove(int newRow, int newCol) const override;
 };
 
 #endif
