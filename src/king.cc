@@ -45,6 +45,16 @@ vector<Move> King::getMoves() const {
             }
         }
     }
+    if (currentCol + 1 < 8) {
+        if (board->getSquare(currentRow, currentCol + 1).getPiece()->getColor() != color) {
+            moves.push_back(Move{currentRow, currentCol, currentRow, currentCol + 1});
+        }
+    }
+    if (currentCol - 1 >= 0) {
+        if (board->getSquare(currentRow, currentCol - 1).getPiece()->getColor() != color) {
+            moves.push_back(Move{currentRow, currentCol, currentRow, currentCol - 1});
+        }
+    }
 
     return moves;
 }
