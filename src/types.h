@@ -61,6 +61,7 @@ struct Move {
 
 struct MoveHistory{
   Move move;
+  PieceType movedType;
   Piece* captured;
 };
 

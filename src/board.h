@@ -42,7 +42,7 @@ class Board {
    float getWhiteScore();
    float getBlackScore();
    stack<MoveHistory> getPastMoves();
-   void addPastMoves(Move &m, Piece *p = nullptr);
+   void addPastMoves(Move& m, PieceType movedType, Piece* captured = nullptr);
    MoveHistory popLastMove();
    void updateWhiteScore();  // make virtual
    void updateBlackScore(); // make virtual

@@ -130,7 +130,7 @@ void Board::move(Move m) {
     src->updateSquare(nullptr);
     p->updateSquare(dst);
 
-    pastMoves.push(MoveHistory{m, dstOccupant});
+    addPastMoves(m, p->getType(), dstOccupant);
 }
 
 void Board::undoMove() {
@@ -232,8 +232,8 @@ void Board::updateWhiteScore() {
 void Board::updateBlackScore() {
 }
 
-void Board::addPastMoves(Move& m, Piece* p) { 
-    pastMoves.push(MoveHistory{std::move(m), p});
+void Board::addPastMoves(Move& m, PieceType movedType, Piece* captured) { 
+    pastMoves.push(MoveHistory{std::move(m), movedType, captured});
 }
 
 MoveHistory Board::popLastMove() { 
