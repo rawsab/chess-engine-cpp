@@ -122,8 +122,6 @@ bool Board::canMove(Move m, Color c) {
 }
 
 void Board::move(Move m) {
-    if (!canMove(m, board[m.r][m.c].getPiece()->getColor())) return;
-
     Square* src = &board[m.r][m.c];
     Square* dst = &board[m.nr][m.nc];
     Piece* p = src->getPiece();
