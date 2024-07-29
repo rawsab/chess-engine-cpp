@@ -99,23 +99,17 @@ Square Board::getSquare(int row, int col) {
         throw "Square out of bounds";
     }
     return board[row][col];
-}bool move
-r
+}
 
-d::canMove(Move m, Color c) {
+bool Board::canMove(Move m, Color c) {
   Piece* currentPiece = getSquare(m.r, m.c).getPiece();
   if (!currentPiece || currentPiece->getColor() != c) return false;
-return movee
 
+  return currentPiece->canMove(m.nr, m.nc);
+}
 
-  ce->canMove(m.nr, m.nc);
-}move
-B
-
-oard::move(Move m) {i
-    f (!canMove(mmovebo
-    
-    ard[m.r][m.c].getPiece()->getColor())) return;
+void Board::move(Move m) {
+    if (!canMove(m, board[m.r][m.c].getPiece()->getColor())) return;
 
     Square* src = &board[m.r][m.c];
     Square* dst = &board[m.nr][m.nc];
@@ -126,10 +120,10 @@ oard::move(Move m) {i
     p->updateSquare(dst);
 
     pastMoves.push(MoveHistory{m, dstOccupant});
-}void move
-d
+}
 
-::undoMove(MoveHistory m) {
+void Board::undoMove(MoveHistory m) {
+
     Square* src = &board[m.move.nr][m.move.nc];
     Square* dst = &board[m.move.r][m.move.c];
     Piece* p = src->getPiece();
@@ -184,11 +178,13 @@ bool Board::isCheckmate(Color c) {
             if (piece && piece->getColor() == c) {
                 std::vector<Move> moves = piece->getMoves();
                 for (const Move& move : moves) {
-                    board->move(move);
+                    // Make a temporary move
+                    // move(move);
 
                     bool isStillInCheck = isCheck(c);
 
-                    board->undoMove();
+                    // Undo the move
+                    // undoMove();
 
                     // If the move gets the king out of check, it's not checkmate
                     if (!isStillInCheck) {
@@ -221,14 +217,11 @@ void Board::updateWhiteScore() {
 void Board::updateBlackScore() {
 }
 
-void Board::addPastMoves(Move& m, Piece* p) { pastMoves.push(MoveHistor
-    y{std::move(m), pmove);
+void Board::addPastMoves(Move& m, Piece* p) { 
+    pastMoves.push(MoveHistory{std::move(m), p});
+}
 
-
-}MoveHistory Boardmove
-p
-
-opLastMove() { 
+MoveHistory Board::popLastMove() { 
     MoveHistory lastMove = pastMoves.top();
     pastMoves.pop();
     return lastMove;
