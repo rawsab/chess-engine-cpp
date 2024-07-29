@@ -1,6 +1,4 @@
 #include "board.h"
-#include "square.h"
-#include "pawn.h"
 #include <iostream>
 #include <string>
 
@@ -50,9 +48,9 @@ Piece* Board::createPiece(const string& p, int r, int c) {
         // case 'k':
         //     piece = new King(color, &board[r][c]);
         //     break;
-        // case 'q':
-        //     piece = new Queen(color, &board[r][c]);
-        //     break;
+        case 'q':
+            piece = new Queen(color, &board[r][c], this);
+            break;
         // case 'n':
         //     piece = new Knight(color, &board[r][c]);
         //     break;

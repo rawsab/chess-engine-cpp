@@ -4,6 +4,8 @@
 #include "types.h"
 #include "square.h"
 #include "rook.h"
+#include "queen.h"
+#include "pawn.h"
 #include <vector>
 
 using namespace std;
