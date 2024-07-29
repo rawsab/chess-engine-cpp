@@ -122,14 +122,14 @@ void Board::move(Move m) {
     pastMoves.push(MoveHistory{m, dstOccupant});
 }
 
-void Board::undoMove(MoveHistory m) {
+void Board::undoMove() {
 
-    Square* src = &board[m.move.nr][m.move.nc];
-    Square* dst = &board[m.move.r][m.move.c];
-    Piece* p = src->getPiece();
-    dst->updateSquare(p);
-    src->updateSquare(m.captured);
-    p->updateSquare(dst);
+    // Square* src = &board[m.move.nr][m.move.nc];
+    // Square* dst = &board[m.move.r][m.move.c];
+    // Piece* p = src->getPiece();
+    // dst->updateSquare(p);
+    // src->updateSquare(m.captured);
+    // p->updateSquare(dst);
 
 }
 
