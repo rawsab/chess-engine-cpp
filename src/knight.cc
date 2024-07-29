@@ -36,3 +36,22 @@ vector<Move> Knight::getMoves() const {
 
     return moves;
 }
+
+bool Knight::canMove(int newRow, int newCol) const {
+    vector<Move> moves = getMoves();
+
+    if (!pos) return false;
+
+    int row = pos->getRow();
+    int col = pos->getCol();
+
+    Move possibleMove{row, col, newRow, newCol};
+
+
+    for (Move move : moves) {
+        if (move == possibleMove) {
+            return true;
+        }
+    }
+    return false;
+}

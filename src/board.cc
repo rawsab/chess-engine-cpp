@@ -11,12 +11,12 @@ Board::Board() : whiteScore(0), blackScore(0) {
         }
     }
 
-    board[6][1].updateSquare(new Pawn(Color::Black, &board[6][1], this));
+    // board[6][1].updateSquare(new Pawn(Color::Black, &board[6][1], this));
     // // Setup pawns
-    // for (int i = 0; i < 8; ++i) {
-    //     board[1][i].updateSquare(new Pawn(Color::White, &board[1][i]));
-    //     board[6][i].updateSquare(new Pawn(Color::Black, &board[6][i]));
-    // }
+    for (int i = 0; i < 8; ++i) {
+        board[1][i].updateSquare(new Pawn(Color::Black, &board[1][i], this));
+        board[6][i].updateSquare(new Pawn(Color::White, &board[6][i], this));
+    }
 
     // // Setup other pieces
     // // White
