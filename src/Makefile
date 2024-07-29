@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++14 -g -Wall 
+CXXFLAGS = -std=c++14 -g -Wall -fsanitize=address
 EXEC = chess
 
 SRCS = main.cc controller.cc human.cc board.cc view.cc textView.cc piece.cc square.cc rook.cc pawn.cc types.cc knight.cc queen.cc
