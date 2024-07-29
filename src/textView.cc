@@ -21,24 +21,25 @@ void TextView::print() {
                 continue;
             } 
             PieceType pp = curPiece->getType();
+            Color pc = curPiece->getColor();
             switch (pp) {
                 case PieceType::Bishop:
-                    cout << "b";
+                    cout << (pc == Color::White ? "B" : "b");
                     break;
                 case PieceType::Rook:
-                    cout << "r";
+                    cout << (pc == Color::White ? "R" : "r");
                     break;
                 case PieceType::Knight:
-                    cout << "n";
+                    cout << (pc == Color::White ? "N" : "n");
                     break;
                 case PieceType::King:
-                    cout << "k";
+                    cout << (pc == Color::White ? "K" : "k");
                     break;
                 case PieceType::Queen:
-                    cout << "q";
+                    cout << (pc == Color::White ? "Q" : "q");
                     break;
                 case PieceType::Pawn:
-                    cout << "p";
+                    cout << (pc == Color::White ? "P" : "p");
                     break;
                 default:
                     cout << " ";
