@@ -4,7 +4,7 @@
 using namespace std;
 
 Queen::Queen(Color c, Square *pos)
-    : Piece{PieceType::Knight, c, 3, pos} {}
+    : Piece{PieceType::Queen, c, 3, pos} {}
 
 vector<Move> Queen::getMoves() const {
     vector<Move> moves;
