@@ -58,73 +58,84 @@ void ChessController::createGame(){
                 cout << "Invalid move" << endl;
             }
 
+        } else if (cmd == "undo") {
+          if (board->getPastMoves().empty()) {
+            cout << "No moves to undo" << endl;
+          }
+          else {
+            MoveHistory lastMove = board->popLastMove();
+            board->undoMove(lastMove);
+            textDisplay->print();
+            playerTurn--;
+          }
+
         } else if (cmd == "setup") {
-            if (!setupMode) {
-                cout << "Can not enter setup mode" << endl;
-                continue;
+          if (!setupMode) {
+            cout << "Can not enter setup mode" << endl;
+            continue;
+          }
+          board->clearBoard();
+
+          string op;
+          while (cin >> op) {
+            if (op == "+") {  // TODO: make sure capitalization is correct
+              string piece, pos;
+              cin >> piece >> pos;
+
+              // sets piece at position
+              int r, c;
+              if (pos.size() == 2) {
+                c = pos[0] - 'a';
+                r = pos[1] - '1' + 1;
+                board->updatePiece(piece, r, c);
+              }
+
+              textDisplay->print();
+            } else if (op ==
+                       "-") {  // TODO: make sure capitalization is correct
+              string pos;
+              cin >> pos;
+
+              // sets piece at position
+              int r, c;
+              if (pos.size() == 2) {
+                c = pos[0] - 'a';
+                r = pos[1] - '1' + 1;
+                // renive piece
+                board->updatePiece("", r, c);
+              }
+
+              textDisplay->print();
+            } else if (op == "=") {
+              string col;
+              cin >> col;
+              if (col == "white") {
+                playerTurn = 0;
+              } else if (col == "black") {
+                playerTurn = 1;
+              }
+            } else if (op == "done") {
+              cout << "Exiting setup" << endl;
+              break;
             }
-            board->clearBoard();
-
-            string op;
-            while (cin >> op) {
-                if (op == "+") {            // TODO: make sure capitalization is correct
-                    string piece, pos;
-                    cin >> piece >> pos;
-
-                    // sets piece at position
-                    int r, c;
-                    if (pos.size() == 2) {
-                        c = pos[0] - 'a';
-                        r = pos[1] - '1' + 1;
-                        board->updatePiece(piece, r, c);
-                    }
-                    
-                    textDisplay->print();
-                } else if (op == "-") {     // TODO: make sure capitalization is correct
-                    string pos;
-                    cin >> pos;
-
-                    // sets piece at position
-                    int r, c;
-                    if (pos.size() == 2) {
-                        c = pos[0] - 'a';
-                        r = pos[1] - '1' + 1;
-                        // renive piece
-                        board->updatePiece("", r, c);
-                    }
-                    
-                    textDisplay->print();
-                }  else if (op == "=") {
-                    string col;
-                    cin >> col;
-                    if (col == "white") {
-                        playerTurn = 0;
-                    } else if (col == "black") {
-                        playerTurn = 1;
-                    }
-                } else if (op == "done"){
-                    cout << "Exiting setup" << endl;
-                    break;
-                }
- 
-            }
+          }
         } else if (cmd == "resign") {
-            if (setupMode) {
-                cout << "Not playing a game" << endl;
-                continue;
-            }
+          if (setupMode) {
+            cout << "Not playing a game" << endl;
+            continue;
+          }
 
-            if(playerTurn % 2 == 0){
-                p1Score += 1;
-            } else {
-                p0Score += 1;
-            }
+          if (playerTurn % 2 == 0) {
+            p1Score += 1;
+          } else {
+            p0Score += 1;
+          }
 
-            cout << "Current score: " << std::endl;
-            cout<< "White: " << p0Score << std::endl;
-            cout<< "Black: " << p1Score << std::endl;
+          cout << "Current score: " << std::endl;
+          cout << "White: " << p0Score << std::endl;
+          cout << "Black: " << p1Score << std::endl;
 
-            playerTurn = 0; // reset to white turn
+          playerTurn = 0;  // reset to white turn
         }
 
         // remove this

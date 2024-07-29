@@ -114,10 +114,23 @@ void Board::move(Move m) {
     Square* src = &board[m.r][m.c];
     Square* dst = &board[m.nr][m.nc];
     Piece* p = src->getPiece();
+    Piece* dstOccupant = dst->getPiece();
     dst->updateSquare(p);
     src->updateSquare(nullptr);
-
     p->updateSquare(dst);
+
+    pastMoves.push(MoveHistory{m, dstOccupant});
+}
+
+void Board::undoMove(MoveHistory m) {
+
+    Square* src = &board[m.move.nr][m.move.nc];
+    Square* dst = &board[m.move.r][m.move.c];
+    Piece* p = src->getPiece();
+    dst->updateSquare(p);
+    src->updateSquare(m.captured);
+    p->updateSquare(dst);
+
 }
 
 bool Board::isCheck(Color c) {
@@ -146,3 +159,16 @@ void Board::updateWhiteScore() {
 void Board::updateBlackScore() {
 }
 
+void Board::addPastMoves(Move& m, Piece* p) { 
+    pastMoves.push(MoveHistory{std::move(m), p});
+}
+
+MoveHistory Board::popLastMove() { 
+    MoveHistory lastMove = pastMoves.top();
+    pastMoves.pop();
+    return lastMove;
+}
+
+stack<MoveHistory> Board::getPastMoves() { 
+    return pastMoves; 
+}

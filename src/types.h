@@ -3,6 +3,8 @@
 
 #include <string>
 
+class Piece;
+
 enum class MoveType { 
   Promotion, 
   EnPassant, 
@@ -55,6 +57,11 @@ struct Move {
     Move& operator=(Move&& other) noexcept;
 
     bool operator==(const Move& other) const;
+};
+
+struct MoveHistory{
+  Move move;
+  Piece* captured;
 };
 
 #endif

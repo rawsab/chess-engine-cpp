@@ -10,6 +10,7 @@
 #include "queen.h"
 #include "pawn.h"
 #include <vector>
+#include <stack>
 
 using namespace std;
 
@@ -19,8 +20,9 @@ class Board {
    vector<vector<Square>> board;
    int whiteScore;
    int blackScore;
+   stack<MoveHistory> pastMoves;
 
- public:
+  public:
    Board();
    ~Board();
 
@@ -31,6 +33,7 @@ class Board {
 
    bool canMove(Move m, Color c); // make virtual
    void move(Move m); // make virtual
+   void undoMove(MoveHistory m);
    bool isCheck(Color c);
    bool isCheckmate(Color c);
    bool isStalemate();
@@ -38,7 +41,10 @@ class Board {
    void updatePiece(const string& p, int r, int c);
    float getWhiteScore();
    float getBlackScore();
-   void updateWhiteScore(); // make virtual
+   stack<MoveHistory> getPastMoves();
+   void addPastMoves(Move &m, Piece *p = nullptr);
+   MoveHistory popLastMove();
+   void updateWhiteScore();  // make virtual
    void updateBlackScore(); // make virtual
 };
 
