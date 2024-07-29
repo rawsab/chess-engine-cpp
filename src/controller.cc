@@ -14,6 +14,19 @@ ChessController::ChessController() : p0(nullptr), p1(nullptr), textDisplay(nullp
     // board->setupBoard();
 }
 
+void ChessController::addToScore(Color c) {
+    if (c == Color::White) {
+      p0Score += 1;
+    } else {
+      p1Score += 1;
+    }
+
+    cout << "Current score: " << std::endl;
+    cout << "White: " << p0Score << std::endl;
+    cout << "Black: " << p1Score << std::endl;
+
+    playerTurn = 0;  // reset to white turn
+}
 
 void ChessController::createGame(){
     string cmd;
@@ -55,8 +68,17 @@ void ChessController::createGame(){
                 textDisplay->print(); // prints board
 
                 cout << "checking for check for " << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << endl;
-                if(board->isCheck(((playerTurn + 1) % 2 == 0) ? Color::White : Color::Black)){
+                Color opposingColor = ((playerTurn + 1) % 2 == 0) ? Color::White : Color::Black;
+                if(board->isCheck(opposingColor)){
                     cout << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << " in check" << endl;
+                    if(board->isCheckmate(opposingColor)){
+                      cout << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << "checkmate" << endl;
+                      if (playerTurn % 2 == 0) {
+                        addToScore(Color::Black);
+                      } else {
+                        addToScore(Color::White);
+                      }
+                    }
                 }
                 playerTurn++;
             } else {
@@ -130,14 +152,10 @@ void ChessController::createGame(){
           }
 
           if (playerTurn % 2 == 0) {
-            p1Score += 1;
+            addToScore(Color::Black);
           } else {
-            p0Score += 1;
+            addToScore(Color::White);
           }
-
-          cout << "Current score: " << std::endl;
-          cout << "White: " << p0Score << std::endl;
-          cout << "Black: " << p1Score << std::endl;
 
           playerTurn = 0;  // reset to white turn
         }

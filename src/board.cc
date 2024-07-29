@@ -180,13 +180,15 @@ bool Board::isCheckmate(Color c) {
             if (piece && piece->getColor() == c) {
                 std::vector<Move> moves = piece->getMoves();
                 for (const Move& move : moves) {
+                    Move turn {move.r, move.c, move.nr, move.nc};
+
                     // Make a temporary move
-                    // move(move);
+                    Board::move(turn);
 
                     bool isStillInCheck = isCheck(c);
 
                     // Undo the move
-                    // undoMove();
+                    undoMove();
 
                     // If the move gets the king out of check, it's not checkmate
                     if (!isStillInCheck) {
