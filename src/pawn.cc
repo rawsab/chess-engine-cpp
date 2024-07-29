@@ -11,20 +11,28 @@ vector<Move> Pawn::getMoves() const {
   vector<Move> moves;
   if (!pos) return moves;
 
-  int currentRow = pos->getRow();
-  int currentCol = pos->getCol();
+  int row = pos->getRow();
+  int col = pos->getCol();
 
-  if (color == Color::White) {
-    if (currentRow == 6 && !board->getSquare(currentRow, 5).getPiece() &&
-        !board->getSquare(currentRow, 4).getPiece()) {
-      moves.push_back(Move{currentRow, currentCol, 4, currentCol});
+  // Potential move directions for white pawns
+  vector<pair<int, int>> directionsWhite = {{1, 0}, {1, 1}, {1, -1}, {2, 0}};
+
+  // Potential move directions for black pawns
+  vector<pair<int, int>> directionsBlack = {
+      {-1, 0}, {-1, 1}, {-1, -1}, {-2, 0}};
+
+  vector<pair<int, int>> directions =
+      getColor() == Color::White ? directionsWhite : directionsBlack;
+
+  for (const auto &direction : directions) {
+    int newRow = row + direction.first;
+    int newCol = col + direction.second;
+
+    if (canMove(newRow, newCol)) {
+      moves.emplace_back(Move(row,col, newRow, newCol));
     }
-    if (currentRow < 7 &&
-        !board->getSquare(currentRow, currentCol - 1).getPiece()) {
-      moves.push_back(Move{currentRow, currentCol, currentRow, currentCol - 1});
-    }
-    /// finish off
   }
+
   return moves;
 }
 
@@ -33,19 +41,23 @@ bool Pawn::canMove(int newRow, int newCol) const {
     int col = pos->getCol();
     int row = pos->getRow();
 
-    // Square board->getSquare(newRow, newCol) = board->getSquare(newRow, newCol);
+    // Square board->getSquare(newRow, newCol) = board->getSquare(newRow,
+    // newCol);
 
     if (getColor() == Color::White) {
       if (newCol == col + 1 && newRow == row + 1 && newRow < 8 && newCol < 8 &&
-          (board->getSquare(newRow, newCol).getPiece()->getColor() == Color::Black ||
-           (enpassant && board->getSquare(newRow, newCol).getPiece() == nullptr))) {
+          (board->getSquare(newRow, newCol).getPiece()->getColor() ==
+               Color::Black ||
+           (enpassant &&
+            board->getSquare(newRow, newCol).getPiece() == nullptr))) {
         return true;
       } else if (newCol == col && newRow == row - 1 && newRow >= 0 &&
                  board->getSquare(newRow, newCol).getPiece() == nullptr) {
         return true;
       } else if (newCol == col - 1 && newRow == row + 1 && newCol >= 0 &&
                  newRow < 8 &&
-                 (board->getSquare(newRow, newCol).getPiece()->getColor() == Color::Black ||
+                 (board->getSquare(newRow, newCol).getPiece()->getColor() ==
+                      Color::Black ||
                   (enpassant &&
                    board->getSquare(newRow, newCol).getPiece() == nullptr))) {
         return true;
@@ -57,14 +69,18 @@ bool Pawn::canMove(int newRow, int newCol) const {
     } else if (getColor() == Color::Black) {
       if (newCol == col - 1 && newRow == row - 1 && newRow >= 0 &&
           newCol >= 0 &&
-          (board->getSquare(newRow, newCol).getPiece()->getColor() == Color::White ||
-           (enpassant && board->getSquare(newRow, newCol).getPiece() == nullptr))) {
+          (board->getSquare(newRow, newCol).getPiece()->getColor() ==
+               Color::White ||
+           (enpassant &&
+            board->getSquare(newRow, newCol).getPiece() == nullptr))) {
         return true;
-      } else if (newCol == col && newRow == row + 1 && newRow < 8 && board->getSquare(newRow,newCol).getPiece() == nullptr) {
+      } else if (newCol == col && newRow == row + 1 && newRow < 8 &&
+                 board->getSquare(newRow, newCol).getPiece() == nullptr) {
         return true;
       } else if (newCol == col + 1 && newRow == row - 1 && newCol < 8 &&
                  newRow >= 0 &&
-                 (board->getSquare(newRow, newCol).getPiece()->getColor() == Color::White ||
+                 (board->getSquare(newRow, newCol).getPiece()->getColor() ==
+                      Color::White ||
                   (enpassant &&
                    board->getSquare(newRow, newCol).getPiece() == nullptr))) {
         return true;
@@ -79,4 +95,4 @@ bool Pawn::canMove(int newRow, int newCol) const {
 }
 
 // fix white moving back down
-// fix pawn cant go to a place where a pawn already was 
+// fix pawn cant go to a place where a pawn already was
