@@ -59,9 +59,9 @@ Piece* Board::createPiece(const string& p, int r, int c) {
         // case 'b':
         //     piece = new Bishop(color, &board[r][c]);
         //     break;
-        // case 'r':
-        //     piece = new Rook(color, &board[r][c]);
-        //     break;
+        case 'r':
+            piece = new Rook(color, &board[r][c], this);
+            break;
         case 'p':
             piece = new Pawn(color, &board[r][c], this);
             break;

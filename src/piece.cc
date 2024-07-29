@@ -20,6 +20,9 @@ void Piece::getlinearMoves(int row, int col, vector<Move>& moves) const {
       moves.push_back(Move{currentRow, currentCol, newRow, newCol});
       break;
     }
+    if (oldPiece && oldPiece->getColor() == color){
+      break;
+    }
 
     moves.push_back(Move{currentRow, currentCol, newRow, newCol});
     newRow += row;
