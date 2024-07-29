@@ -89,7 +89,7 @@ void ChessController::createGame(){
                     if (pos.size() == 2) {
                         c = pos[0] - 'a';
                         r = pos[1] - '1' + 1;
-                        board->updatePiece(piece, r, c);
+                        board->updatePiece(nullptr, r, c);
                     }
                     
                     textDisplay->print();
