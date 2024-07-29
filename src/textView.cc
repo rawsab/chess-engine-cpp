@@ -8,7 +8,6 @@ TextView::TextView(Board* b) : View(), board {b} {
     // Constructor
 }
 
-
 void TextView::print() {
     // Print the board
     cout << " ,-----------------," << endl;

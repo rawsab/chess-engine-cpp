@@ -68,8 +68,7 @@ void ChessController::createGame(){
             cout << "No moves to undo" << endl;
           }
           else {
-            MoveHistory lastMove = board->popLastMove();
-            board->undoMove(lastMove);
+            board->undoMove();
             textDisplay->print();
             playerTurn--;
           }

@@ -122,7 +122,9 @@ void Board::move(Move m) {
     pastMoves.push(MoveHistory{m, dstOccupant});
 }
 
-void Board::undoMove(MoveHistory m) {
+void Board::undoMove() {
+
+    MoveHistory m = popLastMove();
 
     Square* src = &board[m.move.nr][m.move.nc];
     Square* dst = &board[m.move.r][m.move.c];
