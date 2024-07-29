@@ -1,7 +1,7 @@
 #include "bishop.h"
 
-Bishop::Bishop(Color c, Square *pos) 
-    : Piece{PieceType::Bishop, c, 3, pos} {}
+Bishop::Bishop(Color c, Square *pos, Board *b) 
+    : Piece{PieceType::Bishop, c, 3, pos, b} {}
 
 vector<Move> Bishop::getMoves() const {
     vector<Move> moves;
