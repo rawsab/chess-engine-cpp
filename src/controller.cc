@@ -55,8 +55,12 @@ void ChessController::createGame(){
                 textDisplay->print(); // prints board
 
                 cout << "checking for check for " << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << endl;
-                if(board->isCheck(((playerTurn + 1) % 2 == 0) ? Color::White : Color::Black)){
+                Color opposingColor = ((playerTurn + 1) % 2 == 0) ? Color::White : Color::Black;
+                if(board->isCheck(opposingColor)){
                     cout << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << " in check" << endl;
+                    if(board->isCheckmate(opposingColor)){
+                      cout << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << "checkmate" << endl;
+                    }
                 }
                 playerTurn++;
             } else {
