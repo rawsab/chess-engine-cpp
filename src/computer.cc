@@ -1,15 +1,20 @@
 #include "computer.h"
 #include <stdlib.h>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
 Computer::Computer(Color c, Board *b) : Player{c}, board{b} {}
 
+Computer::~Computer() {}
 
 LevelOne::LevelOne(Color c, Board *b) : Computer{c, b} {}
+LevelTwo::LevelTwo(Color c, Board *b) : Computer{c, b} {}
+LevelThree::LevelThree(Color c, Board *b) : Computer{c, b} {}
+LevelFour::LevelFour(Color c, Board *b) : Computer{c, b} {}
 
-void LevelOne::generateMove() {
+Move LevelOne::getMove() {
     // get all pieces of the color
     vector<Piece*> pieces;
     for (int i = 0; i < 8; ++i) {
@@ -21,6 +26,8 @@ void LevelOne::generateMove() {
         }
     }
 
+    cout << endl << endl << "GOT ALL PIECES" << endl << endl;
+
     if (pieces.size() == 0) return;
 
     while (!pieces.empty()) {
@@ -31,7 +38,7 @@ void LevelOne::generateMove() {
             Move chosenMove = moves[rand() % moves.size()]; // choose random move
             board->move(chosenMove);
             if (!(board->isCheck(color))) {
-                return;
+                return chosenMove;
             }
             else {
                 board->undoMove();
@@ -41,8 +48,18 @@ void LevelOne::generateMove() {
 
         pieces.erase(remove(pieces.begin(), pieces.end(), chosenPiece), pieces.end());
     }
-    
-    return;
+
+    return Move{};
 }
 
+Move LevelTwo::getMove(){
+    return Move{};
+}
 
+Move LevelThree::getMove(){
+    return Move{};
+}
+
+Move LevelFour::getMove(){
+    return Move{};
+}

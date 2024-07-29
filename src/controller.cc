@@ -1,6 +1,7 @@
 #include "controller.h"
 #include "player.h"
 #include "human.h"
+#include "computer.h"
 #include "board.h"
 #include "view.h"
 #include "types.h"
@@ -43,10 +44,31 @@ void ChessController::createGame(){
                 continue;
             }
 
-            // for now set both players to human
-            // initialize both to NoColor for now
-            p0 = new Human(Color::White);
-            p1 = new Human(Color::Black);
+            // choose player one type
+            if (firstPlayer == "human") {
+                p0 = new Human(Color::White);
+            } else if (firstPlayer == "computer1") {
+                p0 = new LevelOne(Color::White, board);
+            } else if (firstPlayer == "computer2") {
+                p0 = new LevelTwo(Color::White, board);
+            } else if (firstPlayer == "computer3") {
+                p0 = new LevelThree(Color::White, board);
+            } else if (firstPlayer == "computer4") {
+                p0 = new LevelFour(Color::White, board);
+            }
+
+            // choose player two type
+            if (secondPlayer == "human") {
+                p1 = new Human(Color::Black);
+            } else if (secondPlayer == "computer1") {
+                p1 = new LevelOne(Color::Black, board);
+            } else if (secondPlayer == "computer2") {
+                p1 = new LevelTwo(Color::Black, board);
+            } else if (secondPlayer == "computer3") {
+                p1 = new LevelThree(Color::Black, board);
+            } else if (secondPlayer == "computer4") {
+                p1 = new LevelFour(Color::Black, board);
+            }
 
             textDisplay->print(); // prints board
             setupMode = false;

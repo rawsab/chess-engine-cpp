@@ -9,7 +9,8 @@ class Computer : public Player {
 
  public:
     Computer(Color c, Board *b);
-    virtual void generateMove() = 0;
+
+    virtual Move getMove() = 0;
 
     ~Computer();
 };
@@ -20,25 +21,25 @@ class Computer : public Player {
 class LevelOne : public Computer {
  public:
     LevelOne(Color c, Board *b);
-    void generateMove() override;
+    Move getMove() override;
 };
 
 class LevelTwo : public Computer {
  public:
     LevelTwo(Color c, Board *b);
-    void generateMove() override;
+    Move getMove() override;
 };
 
 class LevelThree : public Computer {
  public:
     LevelThree(Color c, Board *b);
-    void generateMove() override;
+    Move getMove() override;
 };
 
 class LevelFour : public Computer {
  public:
     LevelFour(Color c, Board *b);
-    void generateMove() override;
+    Move getMove() override;
 };
 
 #endif
