@@ -24,6 +24,7 @@ class Piece {
  public:
   Piece(PieceType t, Color c, int points, Square* pos);
   virtual vector<Move> getMoves() const = 0;
+  virtual bool canMove(int row, int col) const = 0; 
   void move(Move m);
   bool isValidMove(Move m) const;
   bool canCheck() const;
