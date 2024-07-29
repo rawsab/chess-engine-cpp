@@ -124,12 +124,14 @@ void Board::move(Move m) {
 
 void Board::undoMove() {
 
-    // Square* src = &board[m.move.nr][m.move.nc];
-    // Square* dst = &board[m.move.r][m.move.c];
-    // Piece* p = src->getPiece();
-    // dst->updateSquare(p);
-    // src->updateSquare(m.captured);
-    // p->updateSquare(dst);
+    MoveHistory m = this->popLastMove();
+
+    Square* src = &board[m.move.nr][m.move.nc];
+    Square* dst = &board[m.move.r][m.move.c];
+    Piece* p = src->getPiece();
+    dst->updateSquare(p);
+    src->updateSquare(m.captured);
+    p->updateSquare(dst);
 
 }
 
