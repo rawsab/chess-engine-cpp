@@ -108,7 +108,24 @@ void ChessController::createGame(){
                 }
  
             }
+        } else if (cmd == "resign") {
+            if (setupMode) {
+                cout << "Not playing a game" << endl;
+                continue;
+            }
+
+            if(playerTurn % 2 == 0){
+                p1Score += 1;
+            } else {
+                p0Score += 1;
+            }
+
+            cout << "Current score: " << std::endl;
+            cout<< "White: " << p0Score << std::endl;
+            cout<< "Black: " << p1Score << std::endl;
+
         }
+
     }
 }
 
