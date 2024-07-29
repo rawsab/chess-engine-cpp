@@ -80,7 +80,21 @@ void ChessController::createGame(){
                     }
                     
                     textDisplay->print();
+                } if (op == "-") {
+                    string pos;
+                    cin >> pos;
+
+                    // sets piece at position
+                    int r, c;
+                    if (pos.size() == 2) {
+                        c = pos[0] - 'a';
+                        r = pos[1] - '1' + 1;
+                        board->updatePiece(nullptr, r, c);
+                    }
+                    
+                    textDisplay->print();
                 } 
+ 
             }
         }
     }
