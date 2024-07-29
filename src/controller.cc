@@ -80,7 +80,7 @@ void ChessController::createGame(){
                     }
                     
                     textDisplay->print();
-                } if (op == "-") {
+                } else if (op == "-") {
                     string pos;
                     cin >> pos;
 
@@ -89,11 +89,23 @@ void ChessController::createGame(){
                     if (pos.size() == 2) {
                         c = pos[0] - 'a';
                         r = pos[1] - '1' + 1;
-                        board->updatePiece(nullptr, r, c);
+                        // renive piece
+                        board->updatePiece("", r, c);
                     }
                     
                     textDisplay->print();
-                } 
+                }  else if (op == "=") {
+                    string col;
+                    cin >> col;
+                    if (col == "white") {
+                        playerTurn = 0;
+                    } else if (col == "black") {
+                        playerTurn = 1;
+                    }
+                } else if (op == "done"){
+                    cout << "Exiting setup" << endl;
+                    break;
+                }
  
             }
         }
