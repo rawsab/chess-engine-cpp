@@ -5,6 +5,7 @@
 #include "view.h"
 #include "types.h"
 #include <string>
+#include <cmath>
 
 using namespace std;
 
@@ -14,16 +15,16 @@ ChessController::ChessController() : p0(nullptr), p1(nullptr), textDisplay(nullp
     // board->setupBoard();
 }
 
-void ChessController::addToScore(Color c) {
+void ChessController::addToScore(Color c, int score) {
     if (c == Color::White) {
-      p0Score += 1;
+      p0Score += score;
     } else {
-      p1Score += 1;
+      p1Score += score;
     }
 
     cout << "Current score: " << std::endl;
-    cout << "White: " << p0Score << std::endl;
-    cout << "Black: " << p1Score << std::endl;
+    cout << "White: " << ((double)p0Score / 2) << std::endl;
+    cout << "Black: " << ((double)p1Score / 2) << std::endl;
 
     playerTurn = 0;  // reset to white turn
 }
@@ -74,10 +75,15 @@ void ChessController::createGame(){
                     if(board->isCheckmate(opposingColor)){
                       cout << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << "checkmate" << endl;
                       if (playerTurn % 2 == 0) {
-                        addToScore(Color::Black);
+                        addToScore(Color::Black, 2);
                       } else {
-                        addToScore(Color::White);
+                        addToScore(Color::White, 2);
                       }
+                    }
+                } else {
+                    if(board->isStalemate(opposingColor)){ 
+                      addToScore(Color::White, 1);
+                      addToScore(Color::Black, 1);
                     }
                 }
                 playerTurn++;
@@ -117,8 +123,7 @@ void ChessController::createGame(){
               }
 
               textDisplay->print();
-            } else if (op ==
-                       "-") {  // TODO: make sure capitalization is correct
+            } else if (op == "-") {  // TODO: make sure capitalization is correct
               string pos;
               cin >> pos;
 
@@ -152,9 +157,9 @@ void ChessController::createGame(){
           }
 
           if (playerTurn % 2 == 0) {
-            addToScore(Color::Black);
+            addToScore(Color::Black, 2);
           } else {
-            addToScore(Color::White);
+            addToScore(Color::White, 2);
           }
 
           playerTurn = 0;  // reset to white turn
