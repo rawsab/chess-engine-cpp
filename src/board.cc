@@ -105,7 +105,20 @@ bool Board::canMove(Move m, Color c) {
   Piece* currentPiece = getSquare(m.r, m.c).getPiece();
   if (!currentPiece || currentPiece->getColor() != c) return false;
 
-  return currentPiece->canMove(m.nr, m.nc);
+    if(currentPiece->canMove(m.nr, m.nc)) {
+        Move turn {m.r, m.c, m.nr, m.nc};
+        // Make a temporary move
+        Board::move(turn);
+        bool isInCheck = isCheck(c);
+        // Undo the move
+        undoMove();
+
+        // make sure move doesnt put our king in check
+        if (!isInCheck) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void Board::move(Move m) {
