@@ -3,8 +3,8 @@
 
 using namespace std;
 
-King::King(Color c, Square *pos)
-    : Piece{PieceType::King, c, 40, pos} {}
+King::King(Color c, Square *pos, Board *b)
+    : Piece{PieceType::King, c, 40, pos, b} {}
 
 vector<Move> King::getMoves() const {
     vector<Move> moves;
@@ -47,4 +47,20 @@ vector<Move> King::getMoves() const {
     }
 
     return moves;
+}
+
+bool King::canMove(int newRow, int newCol) const {
+  vector<Move> moves = getMoves();
+  if (!pos) return false;
+
+  int row = pos->getRow();
+  int col = pos->getCol();
+
+  Move possibleMove{row, col, newRow, newCol};
+
+  for (auto move : moves){
+    if (move == possibleMove) return true;
+  }
+
+  return false;
 }

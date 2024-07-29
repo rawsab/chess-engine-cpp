@@ -9,11 +9,11 @@ class King : public Piece {
     bool canCastle;
 
   public:
-    King(Color c, Square *pos);
+    King(Color c, Square *pos, Board* b);
     vector<Move> getMoves() const override;
     bool getCanCastle() const;
     void setCanCastle();
-    // bool canMove(int newRow, int newCol) const override;
+    bool canMove(int newRow, int newCol) const override;
 };
 
 #endif
