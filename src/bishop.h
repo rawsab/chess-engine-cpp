@@ -2,12 +2,14 @@
 #define BISHOP_H
 
 #include "piece.h"
-
-using namespace std;
+#include <vector>
 
 class Bishop : public Piece {
- private:
- public:
+  private:
+
+  public:
+    Bishop(Color c, Square *pos, Board *b);
+    vector<Move> getMoves() const override;
 };
 
 #endif
