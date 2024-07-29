@@ -16,7 +16,7 @@ class Rook : public Piece {
   bool getCanCastle() const;
   void setCanCastle();
   vector<Move> getMoves() const override;
-  ~Rook() = default;
+  bool canMove(int newRow, int newCol) const override;
 };
 
 #endif

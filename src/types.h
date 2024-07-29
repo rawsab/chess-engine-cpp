@@ -53,6 +53,8 @@ struct Move {
 
     // Move assignment operator
     Move& operator=(Move&& other) noexcept;
+
+    bool operator==(const Move& other) const;
 };
 
 #endif

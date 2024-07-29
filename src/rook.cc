@@ -19,3 +19,30 @@ vector<Move> Rook::getMoves() const {
 
     return moves;
 }
+
+bool Rook::canMove(int newRow, int newCol) const {
+  if (!pos) return false;
+
+  vector<Move> moves;
+
+  int row = pos->getRow();
+  int col = pos->getCol();
+
+  Move possibleMove{row, col, newRow, newCol};
+
+  if (row = newRow && col != newCol){
+    getlinearMoves(0, 1, moves);
+    getlinearMoves(0, -1, moves);
+
+  } else if (col == newCol && row != newRow){
+    getlinearMoves(1, 0, moves);
+    getlinearMoves(-1, 0, moves);
+  }
+
+  for (auto move : moves){
+    if (move == possibleMove){
+      return true;
+    }
+  }
+  return false;
+}

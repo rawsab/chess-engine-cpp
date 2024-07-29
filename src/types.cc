@@ -64,3 +64,7 @@ Move& Move::operator=(Move&& other) noexcept {
     }
     return *this;
 }
+
+bool Move::operator==(const Move& other) const {
+  return r == other.r && c == other.c && nr == other.nr && nc == other.nc;
+}
