@@ -11,6 +11,7 @@ class Knight : public Piece {
     Knight(Color c, Square *pos,  Board *b);
     vector<Move> getMoves() const override;
     Move getKnightMove(int currentRow, int currentCol, int rowD, int colD) const;
+    bool canMove(int newRow, int newCol) const override;
 };
 
 #endif
