@@ -2,6 +2,7 @@
 #include "square.h"
 #include "pawn.h"
 #include <iostream>
+#include <string>
 
 Board::Board() : whiteScore(0), blackScore(0) {
     board = vector<vector<Square>>(8, vector<Square>(8, Square(0, 0, nullptr)));
@@ -12,7 +13,7 @@ Board::Board() : whiteScore(0), blackScore(0) {
         }
     }
 
-    board[6][1].updateSquare(new Pawn(Color::White, &board[6][1]));
+    board[6][1].updateSquare(new Pawn(Color::Black, &board[6][1]));
     // // Setup pawns
     // for (int i = 0; i < 8; ++i) {
     //     board[1][i].updateSquare(new Pawn(Color::White, &board[1][i]));
@@ -40,6 +41,53 @@ Board::Board() : whiteScore(0), blackScore(0) {
     // board[7][3].updateSquare(new Queen(Color::Black, &board[7][3]));
     // board[7][4].updateSquare(new King(Color::Black, &board[7][4]));
 }
+
+Piece* Board::createPiece(const string& p, int r, int c) {
+    Piece* piece = nullptr;
+    Color color = (isupper(p[0]) ? Color::White : Color::Black);
+
+    switch (tolower(p[0])) {
+        // case 'k':
+        //     piece = new King(color, &board[r][c]);
+        //     break;
+        // case 'q':
+        //     piece = new Queen(color, &board[r][c]);
+        //     break;
+        // case 'n':
+        //     piece = new Knight(color, &board[r][c]);
+        //     break;
+        // case 'b':
+        //     piece = new Bishop(color, &board[r][c]);
+        //     break;
+        // case 'r':
+        //     piece = new Rook(color, &board[r][c]);
+        //     break;
+        case 'p':
+            piece = new Pawn(color, &board[r][c]);
+            break;
+        default:
+            // Handle invalid piece input if necessary
+            break;
+    }
+    return piece;
+}
+
+void Board::updatePiece(const string& p, int r, int c) {
+    board[r][c].updateSquare(createPiece(p, r, c));
+    return;
+}
+
+
+void Board::clearBoard() {
+    board = vector<vector<Square>>(8, vector<Square>(8, Square(0, 0, nullptr)));
+
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            board[i][j] = Square(i, j, nullptr);
+        }
+    }
+}
+
 
 Board::~Board() {
 }

@@ -19,7 +19,7 @@ class Board {
    Board();
    ~Board();
 
-   void setupBoard();
+   void clearBoard();
 
    vector<vector<Square>> getSquares();
    Square getSquare(int row, int col);
@@ -29,7 +29,8 @@ class Board {
    bool isCheck(Color c);
    bool isCheckmate(Color c);
    bool isStalemate();
-
+   Piece* createPiece(const string& p, int r, int c);
+   void updatePiece(const string& p, int r, int c);
    float getWhiteScore();
    float getBlackScore();
    void updateWhiteScore(); // make virtual
