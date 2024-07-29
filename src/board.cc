@@ -99,17 +99,23 @@ Square Board::getSquare(int row, int col) {
         throw "Square out of bounds";
     }
     return board[row][col];
-}
+}bool move
+r
 
-bool Board::canMove(Move m, Color c) {
+d::canMove(Move m, Color c) {
   Piece* currentPiece = getSquare(m.r, m.c).getPiece();
   if (!currentPiece || currentPiece->getColor() != c) return false;
+return movee
 
-  return currentPiece->canMove(m.nr, m.nc);
-}
 
-void Board::move(Move m) {
-    if (!canMove(m, board[m.r][m.c].getPiece()->getColor())) return;
+  ce->canMove(m.nr, m.nc);
+}move
+B
+
+oard::move(Move m) {i
+    f (!canMove(mmovebo
+    
+    ard[m.r][m.c].getPiece()->getColor())) return;
 
     Square* src = &board[m.r][m.c];
     Square* dst = &board[m.nr][m.nc];
@@ -120,10 +126,10 @@ void Board::move(Move m) {
     p->updateSquare(dst);
 
     pastMoves.push(MoveHistory{m, dstOccupant});
-}
+}void move
+d
 
-void Board::undoMove(MoveHistory m) {
-
+::undoMove(MoveHistory m) {
     Square* src = &board[m.move.nr][m.move.nc];
     Square* dst = &board[m.move.r][m.move.c];
     Piece* p = src->getPiece();
@@ -170,7 +176,31 @@ bool Board::isCheck(Color c) {
 }
 
 bool Board::isCheckmate(Color c) {
-    return false;
+    // Step 2: Check if any move can get the king out of check
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            Square& square = board[row][col];
+            Piece* piece = square.getPiece();
+            if (piece && piece->getColor() == c) {
+                std::vector<Move> moves = piece->getMoves();
+                for (const Move& move : moves) {
+                    board->move(move);
+
+                    bool isStillInCheck = isCheck(c);
+
+                    board->undoMove();
+
+                    // If the move gets the king out of check, it's not checkmate
+                    if (!isStillInCheck) {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
+    // If no valid move gets the king out of check, it's checkmate
+    return true;
 }
 
 bool Board::isStalemate() {
@@ -191,11 +221,14 @@ void Board::updateWhiteScore() {
 void Board::updateBlackScore() {
 }
 
-void Board::addPastMoves(Move& m, Piece* p) { 
-    pastMoves.push(MoveHistory{std::move(m), p});
-}
+void Board::addPastMoves(Move& m, Piece* p) { pastMoves.push(MoveHistor
+    y{std::move(m), pmove);
 
-MoveHistory Board::popLastMove() { 
+
+}MoveHistory Boardmove
+p
+
+opLastMove() { 
     MoveHistory lastMove = pastMoves.top();
     pastMoves.pop();
     return lastMove;

@@ -64,16 +64,15 @@ void ChessController::createGame(){
             }
 
         } else if (cmd == "undo") {
-          if (board->getPastMoves().empty()) {
-            cout << "No moves to undo" << endl;
-          }
-          else {
-            MoveHistory lastMove = board->popLastMove();
-            board->undoMove(lastMove);
-            textDisplay->print();
-            playerTurn--;
-          }
-
+            if (board->getPastMoves().empty()) {
+                cout << "No moves to undo" << endl;
+            }
+            else {
+                MoveHistory lastMove = board->popLastMove();
+                board->undoMove(lastMove);
+                textDisplay->print();
+                playerTurn--;
+            }
         } else if (cmd == "setup") {
           if (!setupMode) {
             cout << "Can not enter setup mode" << endl;
