@@ -3,8 +3,8 @@
 
 using namespace std;
 
-Knight::Knight(Color c, Square *pos)
-    : Piece{PieceType::Knight, c, 3, pos} {}
+Knight::Knight(Color c, Square *pos,  Board *b)
+    : Piece{PieceType::Knight, c, 3, pos, b} {}
 
 
 Move Knight::getKnightMove(int currentRow, int currentCol, int rowD, int colD) const {

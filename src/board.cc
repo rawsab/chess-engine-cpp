@@ -9,11 +9,11 @@ Board::Board() : whiteScore(0), blackScore(0) {
 
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
-            board[i][j] = Square(i, j, nullptr);
+            board[i][j] = Square{i, j, nullptr};
         }
     }
 
-    board[6][1].updateSquare(new Pawn(Color::Black, &board[6][1]));
+    board[6][1].updateSquare(new Pawn(Color::Black, &board[6][1], this));
     // // Setup pawns
     // for (int i = 0; i < 8; ++i) {
     //     board[1][i].updateSquare(new Pawn(Color::White, &board[1][i]));
@@ -63,7 +63,7 @@ Piece* Board::createPiece(const string& p, int r, int c) {
         //     piece = new Rook(color, &board[r][c]);
         //     break;
         case 'p':
-            piece = new Pawn(color, &board[r][c]);
+            piece = new Pawn(color, &board[r][c], this);
             break;
         default:
             // Handle invalid piece input if necessary
@@ -104,11 +104,10 @@ Square Board::getSquare(int row, int col) {
 }
 
 bool Board::canMove(Move m, Color c) {
-//   Piece* currentPiece = getSquare(m.r, m.c).getPiece();
-//   if (!currentPiece || currentPiece->getColor() != c) return false;
+  Piece* currentPiece = getSquare(m.r, m.c).getPiece();
+  if (!currentPiece || currentPiece->getColor() != c) return false;
 
-//   return currentPiece->canMove(m.nr, m.nc);
-return true;
+  return currentPiece->canMove(m.nr, m.nc);
 }
 
 void Board::move(Move m) {

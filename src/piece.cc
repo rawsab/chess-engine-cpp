@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Piece::Piece(PieceType t, Color c, int points, Square* pos)
-    : points{points}, type{t}, color{c}, pos{pos} {}
+Piece::Piece(PieceType t, Color c, int points, Square* pos, Board *b)
+    : points{points}, type{t}, color{c}, pos{pos}, board{b} {}
 
 void Piece::getlinearMoves(int row, int col, vector<Move>& moves) const {
   int currentRow = pos->getRow();

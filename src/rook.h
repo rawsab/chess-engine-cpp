@@ -12,7 +12,7 @@ class Rook : public Piece {
   bool canCastle;
 
  public:
-  Rook(Color c, Square *pos);
+  Rook(Color c, Square *pos, Board *b);
   bool getCanCastle() const;
   void setCanCastle();
   vector<Move> getMoves() const override;
