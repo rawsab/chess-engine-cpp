@@ -14,9 +14,10 @@ void LevelOne::generateMove() {
     vector<Piece*> pieces;
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
-            if ((board->getSquare(i, j).getPiece()) && (board->getSquare(i, j).getPiece()->getColor() == color)) {
-                pieces.push_back(board->getSquare(i, j).getPiece());
-            }
+          Piece* p = board->getSquare(i, j).getPiece();
+          if (p && p->getColor() == color) {
+            pieces.push_back(p);
+          }
         }
     }
 
