@@ -63,7 +63,7 @@ bool Pawn::canMove(int newRow, int newCol) const {
         return true;
       } else if (newCol == col && newRow == row - 2 && row == 6 &&
                  !board->getSquare(newRow, newCol).getPiece() &&
-                 !board->getSquare(newRow - 1, newCol).getPiece()) {
+                 !board->getSquare(newRow + 1, newCol).getPiece()) {
         return true;
       }
     } else if (getColor() == Color::Black) {
@@ -86,7 +86,7 @@ bool Pawn::canMove(int newRow, int newCol) const {
         return true;
       } else if (newCol == col && newRow == row + 2 && newRow < 8 && row == 1 &&
                  !board->getSquare(newRow, newCol).getPiece() &&
-                 !board->getSquare(newRow + 1, newCol).getPiece()) {
+                 !board->getSquare(newRow - 1, newCol).getPiece()) {
         return true;
       }
     }
