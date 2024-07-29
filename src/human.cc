@@ -8,7 +8,6 @@ Human::Human(Color c) : Player(c) {
 }
 
 Move Human::getMove() {
-    cout << "called";
     string from, to;
 	cin >> from >> to;
     int r, c, nr, nc;
