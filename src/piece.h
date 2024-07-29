@@ -19,7 +19,7 @@ class Piece {
   Square* pos;
   Board* board;
 
-  void getlinearMoves(int row, int col, vector<Move>& moves);
+  void getlinearMoves(int row, int col, vector<Move>& moves) const;
 
  public:
   Piece(PieceType t, Color c, int points, Square* pos);
