@@ -19,7 +19,7 @@ void ChessController::createGame(){
     string cmd;
     bool setupMode = true;
 
-    while (cin >> cmd) {
+    while (cin >> cmd) {        
         if (cmd == "game") {
             string firstPlayer, secondPlayer;
             cin >> firstPlayer >> secondPlayer;
@@ -42,7 +42,7 @@ void ChessController::createGame(){
 
             // checks if move is valid for player
             bool isValidMove;
-            if (playerTurn % 2) {
+            if (playerTurn % 2 == 0) {
                 turn = p0->getMove();
                 isValidMove = board->canMove(turn, Color::White);
             } else {
@@ -124,8 +124,11 @@ void ChessController::createGame(){
             cout<< "White: " << p0Score << std::endl;
             cout<< "Black: " << p1Score << std::endl;
 
+            playerTurn = 0; // reset to white turn
         }
 
+        // remove this
+        cout << (playerTurn % 2 == 0 ? "White Turn" : "Black Turn") << endl;
     }
 }
 
