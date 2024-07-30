@@ -92,6 +92,13 @@ void ChessController::createGame(){
             // read input
             Move turn;
 
+            cout << "checking stalemate --------------" << (((playerTurn) % 2 == 0) ? "White" : "Black") << endl;
+            if(board->isStalemate(((playerTurn) % 2 == 0) ? Color::White : Color::Black)) { 
+              cout << "stalemate --------------" << endl;
+              addToScore(Color::White, 1);
+              addToScore(Color::Black, 1);
+            }
+            
             // checks if move is valid for player
             bool isValidMove = true;
             if (playerTurn % 2 == 0) {
@@ -121,11 +128,6 @@ void ChessController::createGame(){
                       } else {
                         addToScore(Color::White, 2);
                       }
-                    }
-                } else {
-                    if(board->isStalemate(opposingColor)){ 
-                      addToScore(Color::White, 1);
-                      addToScore(Color::Black, 1);
                     }
                 }
 

@@ -197,8 +197,7 @@ bool Board::isCheck(Color c) {
     Color opposingColor = (c == Color::White) ? Color::Black : Color::White;
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
-            Square& square = board[row][col];
-            Piece* piece = square.getPiece();
+            Piece* piece = getSquare(row, col).getPiece();
             if (piece && piece->getColor() == opposingColor) {
                 std::vector<Move> moves = piece->getMoves();
                 for (const Move& move : moves) {
@@ -206,6 +205,7 @@ bool Board::isCheck(Color c) {
                         return true; // King is in check
                     }
                 }
+                cout << "pawn done" << endl;
             }
         }
     }
@@ -246,7 +246,43 @@ bool Board::isCheckmate(Color c) {
 }
 
 bool Board::isStalemate(Color c) {
-    return false;
+    // Check if the player is not in check
+    if (isCheck(c)) {
+        cout << "In check" << endl;
+        return false;
+    }
+
+    // Check if there are any legal moves available for the current player
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            cout << "piece here: " << endl;
+
+            Piece* piece = getSquare(row, col).getPiece();
+
+            if (piece && piece->getColor() == c) {
+                std::vector<Move> moves = piece->getMoves();
+                for (const Move& move : moves) {
+                    cout << "Here is move" << move.r << move.c << move.nr << move.nc << endl;
+                    // Make a temporary move
+                    Move turn {move.r, move.c, move.nr, move.nc};
+                    Board::move(turn);
+
+                    bool isStillInCheck = isCheck(c);
+
+                    // Undo the move
+                    undoMove();
+
+                    // If the move is legal, it's not a stalemate
+                    if (!isStillInCheck) {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
+    // If no legal move is available, it's a stalemate
+    return true;
 }
 
 float Board::getWhiteScore() {
