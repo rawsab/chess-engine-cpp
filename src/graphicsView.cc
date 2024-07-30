@@ -1,6 +1,6 @@
 #include "graphicsView.h"
 
-GraphicsView::GraphicsView(Board* b) : View() {
+GraphicsView::GraphicsView(Board* b) : View(), board{b}, graphicsWindow{500,500} {
     graphicsWindow.fillRectangle(0, 0, 500, 500, Xwindow::Brown);
     
     for(int i = 0; i < 2; i++){
