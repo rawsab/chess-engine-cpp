@@ -15,8 +15,8 @@
 using namespace std;
 
 ChessController::ChessController() : p0(nullptr), p1(nullptr), textDisplay(nullptr), p0Score(0), p1Score(0), playerTurn(0) {
-    board = new Board();
-    textDisplay = new TextView(board);
+    board = make_shared<Board>();
+    textDisplay = make_unique<TextView>(board);
     // board->setupBoard();
 }
 
@@ -49,27 +49,27 @@ void ChessController::createGame(){
             }
 
             if (firstPlayer == "human") {
-                p0 = new Human(Color::White);
+                p0 = make_unique<Human>(Color::White);
             } else if (firstPlayer == "computer1") {
-                p0 = new LevelOne(Color::White, board);
+                p0 = make_unique<LevelOne>(Color::White, board);
             } else if (firstPlayer == "computer2") {
-                p0 = new LevelTwo(Color::White, board);
+                p0 = make_unique<LevelTwo>(Color::White, board);
             } else if (firstPlayer == "computer3") {
-                p0 = new LevelThree(Color::White, board);
+                p0 = make_unique<LevelThree>(Color::White, board);
             } else if (firstPlayer == "computer4") {
-                p0 = new LevelFour(Color::White, board);
+                p0 = make_unique<LevelFour>(Color::White, board);
             }
 
             if (secondPlayer == "human") {
-                p1 = new Human(Color::Black);
+                p1 = make_unique<Human>(Color::Black);
             } else if (secondPlayer == "computer1") {
-                p1 = new LevelOne(Color::Black, board);
+                p1 = make_unique<LevelOne>(Color::Black, board);
             } else if (secondPlayer == "computer2") {
-                p1 = new LevelTwo(Color::Black, board);
+                p1 = make_unique<LevelTwo>(Color::Black, board);
             } else if (secondPlayer == "computer3") {
-                p1 = new LevelThree(Color::Black, board);
+                p1 = make_unique<LevelThree>(Color::Black, board);
             } else if (secondPlayer == "computer4") {
-                p1 = new LevelFour(Color::Black, board);
+                p1 = make_unique<LevelFour>(Color::Black, board);
             }
 
             p0->setColor(Color::White);
@@ -229,9 +229,10 @@ void ChessController::createGame(){
           }
 
           playerTurn = 0;  // reset to white turn
-        }
-        else {
-            cout << "Invalid command" << endl;
+        } else if (cmd == "quit"){
+          return;
+        } else {
+          cout << "Invalid command" << endl;
         }
 
         // remove this

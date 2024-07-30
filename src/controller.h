@@ -8,15 +8,16 @@
 #include "view.h"
 #include "textView.h"
 #include "types.h"
+#include <memory>
 
 class ChessController {
 private:
-    Player *p0;  // white
-    Player *p1;  // black
+    unique_ptr<Player> p0;
+    unique_ptr<Player> p1;
     int p0Score;
     int p1Score;
-    Board *board;
-    TextView *textDisplay;
+    shared_ptr<Board> board;
+    unique_ptr<TextView> textDisplay;
     int playerTurn;
 
 public:

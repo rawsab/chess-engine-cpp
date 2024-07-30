@@ -4,7 +4,7 @@
 
 class LevelOne : public Computer {
  public:
-    LevelOne(Color c, Board *b);
+    LevelOne(Color c, shared_ptr<Board> b);
     Move getMove() override;
 
     ~LevelOne() {};

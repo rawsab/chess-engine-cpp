@@ -1,10 +1,11 @@
 #include "textView.h"
 #include "types.h"
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
-TextView::TextView(Board* b) : View(), board {b} {
+TextView::TextView(shared_ptr<Board> b) : View(), board {b} {
     // Constructor
 }
 

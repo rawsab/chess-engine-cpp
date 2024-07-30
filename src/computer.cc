@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <random>
 #include <algorithm>
+#include <memory>
 
 #include <iostream>
 
 using namespace std;
 
-Computer::Computer(Color c, Board *b) : Player{c}, board{b} {}
+Computer::Computer(Color c, std::shared_ptr<Board> b) : Player{c}, board{b} {}
 
 Computer::~Computer() {}
 

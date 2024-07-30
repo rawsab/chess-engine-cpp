@@ -5,12 +5,13 @@
 #include "view.h"
 #include "types.h"
 #include "board.h"
+#include <memory>
 
 class TextView : public View {
-  Board* board;
+  shared_ptr<Board> board;
 
   public:
-    TextView(Board* b);
+    TextView(shared_ptr<Board> b);
     void print();
     ~TextView();
 };

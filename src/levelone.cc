@@ -4,11 +4,11 @@
 #include <vector>
 #include <iostream>
 #include <random>
-
+#include "memory"
 using namespace std;
 
 
-LevelOne::LevelOne(Color c, Board *b) : Computer{c, b} {}
+LevelOne::LevelOne(Color c, shared_ptr<Board> b) : Computer{c, b} {}
 
 
 Move LevelOne::getMove() {

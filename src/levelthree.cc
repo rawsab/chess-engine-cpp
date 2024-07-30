@@ -3,11 +3,12 @@
 #include <algorithm>
 #include <vector>
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
 
-LevelThree::LevelThree(Color c, Board *b) : Computer{c, b} {}
+LevelThree::LevelThree(Color c, std::shared_ptr<Board> b) : Computer{c, b} {}
 
 Move LevelThree::getMove() {
     std::vector<Move> avoidingCaptureMoves;

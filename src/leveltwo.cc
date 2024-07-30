@@ -3,11 +3,12 @@
 #include <algorithm>
 #include <vector>
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
 
-LevelTwo::LevelTwo(Color c, Board *b) : Computer{c, b} {}
+LevelTwo::LevelTwo(Color c, shared_ptr<Board> b) : Computer{c, b} {}
 
 Move LevelTwo::getMove() {
     std::vector<Move> capturingOrCheckingMoves;
