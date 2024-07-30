@@ -4,6 +4,8 @@
 #include "board.h"
 #include "view.h"
 #include "types.h"
+
+#include "leveltwo.h"
 #include <string>
 #include <cmath>
 
@@ -33,9 +35,11 @@ void ChessController::createGame(){
     string cmd;
     bool setupMode = true;
 
+    string firstPlayer = "";
+    string secondPlayer = "";
     while (cin >> cmd) {        
+        cout << "Players here: " << firstPlayer << secondPlayer << playerTurn <<endl;
         if (cmd == "game") {
-            string firstPlayer, secondPlayer;
             cin >> firstPlayer >> secondPlayer;
             
             if (firstPlayer != "human" && secondPlayer != "human") {
@@ -45,8 +49,19 @@ void ChessController::createGame(){
 
             // for now set both players to human
             // initialize both to NoColor for now
-            p0 = new Human(Color::White);
-            p1 = new Human(Color::Black);
+            // choose player one type
+          if (firstPlayer == "human") {
+                p0 = new Human(Color::White);
+            } else if (firstPlayer == "computer2") {
+                p0 = new LevelTwo(Color::White, board);
+            }
+
+            // choose player two type
+            if (secondPlayer == "human") {
+                p1 = new Human(Color::Black);
+            } else if (secondPlayer == "computer2") {
+                p1 = new LevelTwo(Color::Black, board);
+            }
 
             textDisplay->print(); // prints board
             setupMode = false;
@@ -58,6 +73,7 @@ void ChessController::createGame(){
             bool isValidMove;
             if (playerTurn % 2 == 0) {
                 turn = p0->getMove();
+                cout << "getting turn for white" << turn.r << turn.nr << endl;
                 isValidMove = board->canMove(turn, Color::White);
             } else {
                 turn = p1->getMove();
