@@ -26,6 +26,8 @@ public:
     void createGame();
     void registerWin();
     void registerStalemate();
+    void playComputerBlack();
+    void playComputerWhite();
     ~ChessController();
 };
 
