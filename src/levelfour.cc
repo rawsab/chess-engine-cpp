@@ -59,9 +59,11 @@ Move LevelFour::getMove() {
                     // Categorize moves
                     if (avoidsCapture) {
                         avoidingCaptureMoves.push_back(move);
-                    } else if (targetPiece && targetPiece->getColor() != color) {
+                    }
+                    if (targetPiece && targetPiece->getColor() != color) {
                         capturingMoves.push_back(move);
-                    } else if (isCheck) {
+                    } 
+                    if (isCheck) {
                         checkingMoves.push_back(move);
                     } else {
                         otherMoves.push_back(move);
@@ -87,10 +89,12 @@ Move LevelFour::getMove() {
         }
         return bestMove;
     } else if (!avoidingCaptureMoves.empty()) {
-        return avoidingCaptureMoves.front();
+        int randomMoveIndex = getRandom(0, avoidingCaptureMoves.size() - 1);
+        return avoidingCaptureMoves[randomMoveIndex];
     } else if (!otherMoves.empty()) {
-        return otherMoves.front();
+        int randomMoveIndex = getRandom(0, avoidingCaptureMoves.size() - 1);
+        return otherMoves[randomMoveIndex];
     } else {
-        throw std::runtime_error("No valid moves available"); // Handle no valid move scenario
+        return Move{-1, -1, -1, -1}; // No valid moves available
     }
 }

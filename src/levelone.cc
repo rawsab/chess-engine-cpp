@@ -10,15 +10,6 @@ using namespace std;
 
 LevelOne::LevelOne(Color c, Board *b) : Computer{c, b} {}
 
-// random number generator
-int getRandom(int min, int max) {
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> distribution(min, max);
-
-    return distribution(gen);
-}
-
 
 Move LevelOne::getMove() {
     // get all pieces of the color
@@ -35,10 +26,10 @@ Move LevelOne::getMove() {
     if (pieces.size() == 0) return Move{};
 
     while (!pieces.empty()) {
-        int randomPieceIndex = getRandom(0, pieces.size() - 1);
+        int randomPieceIndex = Computer::getRandom(0, pieces.size() - 1);
 
         while (pieces[randomPieceIndex] == nullptr) {
-            randomPieceIndex = getRandom(0, pieces.size() - 1);
+            randomPieceIndex = Computer::getRandom(0, pieces.size() - 1);
         }
 
         Piece* chosenPiece = pieces[randomPieceIndex]; // choose random piece
@@ -46,12 +37,12 @@ Move LevelOne::getMove() {
         vector<Move> moves = chosenPiece->getMoves();
 
         while (!moves.empty()) {
-            int randomMoveIndex = getRandom(0, moves.size() - 1);
+            int randomMoveIndex = Computer::getRandom(0, moves.size() - 1);
 
             Move empty = Move{0, 0, 0, 0};
 
             while (moves[randomMoveIndex] == empty) {
-                randomMoveIndex = getRandom(0, moves.size() - 1);
+                randomMoveIndex = Computer::getRandom(0, moves.size() - 1);
             }
 
             Move chosenMove = moves[randomMoveIndex]; // choose random move
