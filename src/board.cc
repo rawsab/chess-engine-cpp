@@ -3,6 +3,10 @@
 #include <string>
 
 Board::Board() : whiteScore(0), blackScore(0) {
+    setupBoard();
+}
+
+void Board::setupBoard() {
     board = vector<vector<Square>>(8, vector<Square>(8, Square(0, 0, nullptr)));
 
     for (int i = 0; i < 8; ++i) {
@@ -11,7 +15,6 @@ Board::Board() : whiteScore(0), blackScore(0) {
         }
     }
 
-    // board[6][1].updateSquare(new Pawn(Color::Black, &board[6][1], this));
     // // Setup pawns
     for (int i = 0; i < 8; ++i) {
         board[1][i].updateSquare(new Pawn(Color::Black, &board[1][i], this));

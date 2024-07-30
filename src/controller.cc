@@ -20,32 +20,29 @@ ChessController::ChessController() : p0(nullptr), p1(nullptr), textDisplay(nullp
     // board->setupBoard();
 }
 
-void ChessController::addToScore(Color c, int score) {
-    if (c == Color::White) {
-      p0Score += score;
-    } else {
-      p1Score += score;
-    }
-
+void ChessController::printScore() {
     cout << "Current score: " << std::endl;
     cout << "White: " << ((double)p0Score / 2) << std::endl;
     cout << "Black: " << ((double)p1Score / 2) << std::endl;
-
-    playerTurn = 0;  // reset to white turn
 }
 
-void ChessController::registerCheckmate(){
+void ChessController::registerWin(){
+  cout << "checkmate --------------" << endl;
   if (playerTurn % 2 == 0) {
-    addToScore(Color::White, 2);
+    p0Score += 2;
   } else {
-    addToScore(Color::Black, 2);
+    p1Score += 2;
   }
+  board->setupBoard();
+  playerTurn = 0;
 }
 
 void ChessController::registerStalemate(){
   cout << "stalemate --------------" << endl;
-  addToScore(Color::White, 1);
-  addToScore(Color::Black, 1);
+  p0Score += 1;
+  p1Score += 1;
+  board->setupBoard();
+  playerTurn = 0;
 }
 
 void ChessController::createGame(){
@@ -60,6 +57,11 @@ void ChessController::createGame(){
             if (firstPlayer != "human" && secondPlayer != "human") {
                 cerr << "Players can't both be computers" << endl;
                 continue;
+            }
+
+            if(board->isStalemate(((playerTurn) % 2 == 0) ? Color::White : Color::Black)) { 
+              registerStalemate();
+              continue;
             }
 
             if (firstPlayer == "human") {
@@ -106,9 +108,9 @@ void ChessController::createGame(){
                 Move turn = p1->getMove();
                 if(turn.nr == -1 && turn.nc == -1) {
                   registerStalemate();
+                  continue;
                 }
                 board->move(turn);
-
                 playerTurn = 0;
             }
 
@@ -120,6 +122,7 @@ void ChessController::createGame(){
 
             if(board->isStalemate(((playerTurn) % 2 == 0) ? Color::White : Color::Black)) { 
               registerStalemate();
+              continue;
             }
             
             // checks if move is valid for player
@@ -146,7 +149,8 @@ void ChessController::createGame(){
                     // cout << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << " in check" << endl;
                     if(board->isCheckmate(opposingColor)){
                       // cout << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << "checkmate" << endl;
-                      registerCheckmate();
+                      registerWin();
+                      continue;
                     }
                 }
 
@@ -175,7 +179,8 @@ void ChessController::createGame(){
                   Color opposingColor = ((playerTurn + 1) % 2 == 0) ? Color::White : Color::Black;
                   if(board->isCheck(opposingColor)){
                       if(board->isCheckmate(opposingColor)){
-                        registerCheckmate();
+                        registerWin();
+                        continue;
                       }
                   }
                 }
@@ -277,21 +282,18 @@ void ChessController::createGame(){
             continue;
           }
 
-          if (playerTurn % 2 == 0) {
-            addToScore(Color::Black, 2);
-          } else {
-            addToScore(Color::White, 2);
-          }
-
-          playerTurn = 0;  // reset to white turn
+          playerTurn++;
+          registerWin();
+          continue;
         }
         else {
-            cout << "Invalid command" << endl;
+          cout << "Invalid command" << endl;
         }
 
         // remove this
         cout << (playerTurn % 2 == 0 ? "White Turn" : "Black Turn") << endl;
     }
+    printScore();
 }
 
 ChessController::~ChessController() {}

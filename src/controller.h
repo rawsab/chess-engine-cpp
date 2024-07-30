@@ -22,9 +22,9 @@ private:
 public:
     ChessController();
 
-    void addToScore(Color c, int score);
+    void printScore();
     void createGame();
-    void registerCheckmate();
+    void registerWin();
     void registerStalemate();
     ~ChessController();
 };
