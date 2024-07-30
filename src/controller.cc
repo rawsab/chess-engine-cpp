@@ -145,7 +145,7 @@ void ChessController::createGame(){
                     cout << "Computer is making move" << endl;
                     turn = p1->getMove();
                     board->move(turn);
-                    
+
                     textDisplay->print();
                     // isValidMove = board->canMove(turn, Color::Black);
                 }
@@ -212,6 +212,8 @@ void ChessController::createGame(){
             } else if (op == "done") {
               cout << "Exiting setup" << endl;
               break;
+            } else {
+              cout << "Invalid command" << endl;
             }
           }
         } else if (cmd == "resign") {

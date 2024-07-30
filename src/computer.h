@@ -11,7 +11,7 @@ class Computer : public Player {
     Computer(Color c, Board *b);
 
     virtual Move getMove() = 0;
-
+    int getRandom(int min, int max);
     ~Computer();
 };
 
