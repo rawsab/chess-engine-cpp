@@ -37,6 +37,7 @@ vector<Move> Knight::getMoves() const {
     return moves;
 }
 
+// checks if move is valid
 bool Knight::canMove(int newRow, int newCol) const {
     vector<Move> moves = getMoves();
 

@@ -80,7 +80,7 @@ Move LevelThree::getMove() {
         }
     }
 
-    // Choose a move based on the priority
+    // choose move based on priority
     if (!checkingMoves.empty()) {
         int randomMoveIndex = getRandom(0, checkingMoves.size() - 1);
         return checkingMoves[randomMoveIndex];

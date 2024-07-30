@@ -16,20 +16,20 @@ std::ostream& operator<<(std::ostream& os, const PieceType& pieceType) {
     return os;
 }
 
-// Default constructor
+// default constructor
 Move::Move() : r(0), c(0), nr(0), nc(0) {}
 Move::Move(int x, int y, int nx, int ny) : r(x), c(y), nr(nx), nc(ny) {}
 
-// Destructor
+// destructor
 Move::~Move() {
     // No dynamic memory to clean up
 }
 
-// Copy constructor
+// copy constructor
 Move::Move(const Move& other) 
     : r(other.r), c(other.c), nr(other.nr), nc(other.nc) {}
 
-// Copy assignment operator
+// copy assignment operator
 Move& Move::operator=(const Move& other) {
     if (this != &other) {
         r = other.r;
@@ -40,7 +40,7 @@ Move& Move::operator=(const Move& other) {
     return *this;
 }
 
-// Move constructor
+// move constructor
 Move::Move(Move&& other) noexcept 
     : r(other.r), c(other.c), nr(other.nr), nc(other.nc) {
     other.r = 0;
@@ -49,7 +49,7 @@ Move::Move(Move&& other) noexcept
     other.nc = 0;
 }
 
-// Move assignment operator
+// move assignment operator
 Move& Move::operator=(Move&& other) noexcept {
     if (this != &other) {
         r = other.r;

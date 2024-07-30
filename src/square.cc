@@ -15,6 +15,7 @@ int Square::getCol() const {
     return col;
 }
 
+// gets piece at square
 Piece* Square::getPiece() const {
     return piece;
 }

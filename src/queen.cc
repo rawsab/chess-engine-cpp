@@ -25,7 +25,7 @@ vector<Move> Queen::getMoves() const {
     return moves;
 }
 
-
+// checks if queen can move to a pos
 bool Queen::canMove(int newRow, int newCol) const {
   if (!pos) return false;
 

@@ -20,6 +20,7 @@ vector<Move> Rook::getMoves() const {
     return moves;
 }
 
+// checks if move is valid
 bool Rook::canMove(int newRow, int newCol) const {
   if (!pos) return false;
 

@@ -13,7 +13,7 @@ Move LevelTwo::getMove() {
     std::vector<Move> capturingOrCheckingMoves;
     std::vector<Move> otherMoves;
 
-    // get all pieces of the color
+    // gets all pieces of the color
     vector<Piece*> pieces;
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
@@ -25,9 +25,8 @@ Move LevelTwo::getMove() {
     }
 
 
-    // Iterate through all the pieces of the given color
+    // iterates through all the pieces
     for (Piece* piece : pieces) {
-        // Piece* piece = board->getSquare(row, col).getPiece();
         if (piece != nullptr && piece->getColor() == color) {
             vector<Move> moves = piece->getMoves();
             for (Move& move : moves) {
@@ -38,26 +37,22 @@ Move LevelTwo::getMove() {
                     capturingOrCheckingMoves.push_back(move);
                 } else {
                     Move turn {move.r, move.c, move.nr, move.nc};
-
-                    // cout << "trying move " << (color == Color::Black ? "Black" : "White") << move.r << move.c << move.nr << move.nc << endl;
                     if(board->canMove(turn, color)){
-                        // cout << "successful move " << move.r << move.c << move.nr << move.nc << endl;
-
-                        // Make a temporary move
+                        // makes temporary move
                         board->move(turn);
 
                         bool isOurKingInCheck = board->isCheck(color);
                         bool isCheck = board->isCheck((color == Color::White) ? Color::Black : Color::White);
 
-                        // Undo the move
+                        // undo move
                         board->undoMove();
 
-                        // invalid
+                        // invalid move
                         if(isOurKingInCheck) {
                             continue;
                         }
 
-                        // Prioritize checking moves
+                        // prioritize capture/checking moves
                         if (isCheck) {
                             capturingOrCheckingMoves.push_back(move);
                         } else {
@@ -72,7 +67,7 @@ Move LevelTwo::getMove() {
 
 
 
-    // Choose a move based on the priority
+    // choose move based on priority
     Move chosenMove;
     if (!capturingOrCheckingMoves.empty()) {
         int randomMoveIndex = getRandom(0, capturingOrCheckingMoves.size() - 1);
@@ -81,6 +76,6 @@ Move LevelTwo::getMove() {
         int randomMoveIndex = getRandom(0, otherMoves.size() - 1);
         return otherMoves[randomMoveIndex];
     } else {
-        return Move{-1, -1, -1, -1}; // No valid moves available
+        return Move{-1, -1, -1, -1}; // no valid moves available
     }
 }

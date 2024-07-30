@@ -15,7 +15,7 @@ Move LevelFour::getMove() {
     std::vector<Move> checkingMoves;
     std::vector<Move> otherMoves;
 
-    // Iterate through all the pieces of the given color
+    // iterates through all the pieces of the given color
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
             Piece* piece = board->getSquare(row, col).getPiece();
@@ -30,13 +30,13 @@ Move LevelFour::getMove() {
                         continue;
                     }
 
-                    // Make a temporary move
+                    // makes temporary move
                     board->move(turn);
 
                     bool isOurKingInCheck = board->isCheck(color);
                     bool isCheck = board->isCheck((color == Color::White) ? Color::Black : Color::White);
 
-                    // Check if the move avoids capture
+                    // checks if the move avoids capture
                     bool avoidsCapture = true;
                     for (int oppRow = 0; oppRow < 8; ++oppRow) {
                         for (int oppCol = 0; oppCol < 8; ++oppCol) {
@@ -54,15 +54,15 @@ Move LevelFour::getMove() {
                         if (!avoidsCapture) break;
                     }
 
-                    // Undo the move
+                    // undo move
                     board->undoMove();
                     
-                    // invalid
+                    // invalid move
                     if(isOurKingInCheck) {
                         continue;
                     }
 
-                    // Categorize moves
+                    // categorize moves
                     if (avoidsCapture) {
                         avoidingCaptureMoves.push_back(move);
                     }
@@ -79,7 +79,7 @@ Move LevelFour::getMove() {
         }
     }
 
-    // Choose a move based on the priority
+    // choose move based on priority
     if (!checkingMoves.empty()) {
         return checkingMoves.front();
     } else if (!capturingMoves.empty()) {

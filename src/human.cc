@@ -7,11 +7,13 @@ Human::Human(Color c) : Player(c) {
     // Constructor implementation
 }
 
+// gets pos from user
 Move Human::getMove() {
     string from, to;
 	cin >> from >> to;
     int r, c, nr, nc;
     if (from.size() == 2 && to.size() == 2) {
+        // indexing
         c = from[0] - 'a';
         r = from[1] - '1' + 1;
         nc = to[0] - 'a';

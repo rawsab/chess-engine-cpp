@@ -24,7 +24,8 @@ Move LevelOne::getMove() {
     }
 
     if (pieces.size() == 0) return Move{};
-
+    
+    // gets random piece and tries move for that piece
     while (!pieces.empty()) {
         int randomPieceIndex = Computer::getRandom(0, pieces.size() - 1);
 
@@ -33,9 +34,9 @@ Move LevelOne::getMove() {
         }
 
         Piece* chosenPiece = pieces[randomPieceIndex]; // choose random piece
-
         vector<Move> moves = chosenPiece->getMoves();
-
+        
+        // if piece doesn't have valid move, go to next piece
         while (!moves.empty()) {
             int randomMoveIndex = Computer::getRandom(0, moves.size() - 1);
 
