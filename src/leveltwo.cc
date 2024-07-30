@@ -13,42 +13,51 @@ Move LevelTwo::getMove() {
     std::vector<Move> capturingOrCheckingMoves;
     std::vector<Move> otherMoves;
 
+    // get all pieces of the color
+    vector<Piece*> pieces;
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+          Piece* p = board->getSquare(i, j).getPiece();
+          if ((p != nullptr) && (p->getColor() == color)) {
+            pieces.push_back(p);
+          }
+        }
+    }
+
 
     // Iterate through all the pieces of the given color
-    for (int row = 0; row < 8; ++row) {
-        for (int col = 0; col < 8; ++col) {
-            Piece* piece = board->getSquare(row, col).getPiece();
-            if (piece != nullptr && piece->getColor() == color) {
-                std::vector<Move> moves = piece->getMoves();
-                for (const Move& move : moves) {
-                    Piece* targetPiece = board->getSquare(move.nr, move.nc).getPiece();
+    for (Piece* piece : pieces) {
+        // Piece* piece = board->getSquare(row, col).getPiece();
+        if (piece != nullptr && piece->getColor() == color) {
+            vector<Move> moves = piece->getMoves();
+            for (Move& move : moves) {
+                Piece* targetPiece = board->getSquare(move.nr, move.nc).getPiece();
 
-                    // Prioritize capturing moves
-                    if (targetPiece && targetPiece->getColor() != color) {
-                        capturingOrCheckingMoves.push_back(move);
-                    } else {
-                        Move turn {move.r, move.c, move.nr, move.nc};
+                // Prioritize capturing moves
+                if (targetPiece && targetPiece->getColor() != color) {
+                    capturingOrCheckingMoves.push_back(move);
+                } else {
+                    Move turn {move.r, move.c, move.nr, move.nc};
 
-                        // cout << "trying move " << (color == Color::Black ? "Black" : "White") << move.r << move.c << move.nr << move.nc << endl;
-                        if(board->canMove(turn, color)){
-                            // cout << "successful move " << move.r << move.c << move.nr << move.nc << endl;
+                    // cout << "trying move " << (color == Color::Black ? "Black" : "White") << move.r << move.c << move.nr << move.nc << endl;
+                    if(board->canMove(turn, color)){
+                        // cout << "successful move " << move.r << move.c << move.nr << move.nc << endl;
 
-                            // Make a temporary move
-                            board->move(turn);
+                        // Make a temporary move
+                        board->move(turn);
 
-                            bool isCheck = board->isCheck((color == Color::White) ? Color::Black : Color::White);
+                        bool isCheck = board->isCheck((color == Color::White) ? Color::Black : Color::White);
 
-                            // Undo the move
-                            board->undoMove();
+                        // Undo the move
+                        board->undoMove();
 
-                            // Prioritize checking moves
-                            if (isCheck) {
-                                capturingOrCheckingMoves.push_back(move);
-                            } else {
-                                otherMoves.push_back(move);
-                            }
-
+                        // Prioritize checking moves
+                        if (isCheck) {
+                            capturingOrCheckingMoves.push_back(move);
+                        } else {
+                            otherMoves.push_back(move);
                         }
+
                     }
                 }
             }
@@ -60,9 +69,11 @@ Move LevelTwo::getMove() {
     // Choose a move based on the priority
     Move chosenMove;
     if (!capturingOrCheckingMoves.empty()) {
-        return capturingOrCheckingMoves.front();
+        int randomMoveIndex = getRandom(0, capturingOrCheckingMoves.size() - 1);
+        return capturingOrCheckingMoves[randomMoveIndex];
     } else if (!otherMoves.empty()) {
-        return otherMoves.front();
+        int randomMoveIndex = getRandom(0, otherMoves.size() - 1);
+        return otherMoves[randomMoveIndex];
     } else {
         return Move{-1, -1, -1, -1}; // No valid moves available
     }

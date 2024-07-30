@@ -59,9 +59,12 @@ Move LevelThree::getMove() {
                     // Categorize moves
                     if (avoidsCapture) {
                         avoidingCaptureMoves.push_back(move);
-                    } else if (targetPiece && targetPiece->getColor() != color) {
+                    } 
+                    if (targetPiece && targetPiece->getColor() != color) {
+                        cout << "adding to capturing move " << move.r << move.c << move.nr << move.nc << endl;
                         capturingMoves.push_back(move);
-                    } else if (isCheck) {
+                    } 
+                    if (isCheck) {
                         checkingMoves.push_back(move);
                     } else {
                         otherMoves.push_back(move);
@@ -73,14 +76,18 @@ Move LevelThree::getMove() {
 
     // Choose a move based on the priority
     if (!checkingMoves.empty()) {
-        return checkingMoves.front();
+        int randomMoveIndex = getRandom(0, checkingMoves.size() - 1);
+        return checkingMoves[randomMoveIndex];
     } else if (!capturingMoves.empty()) {
-        return capturingMoves.front();
+        int randomMoveIndex = getRandom(0, capturingMoves.size() - 1);
+        return capturingMoves[randomMoveIndex];
     } else if (!avoidingCaptureMoves.empty()) {
-        return avoidingCaptureMoves.front();
+        int randomMoveIndex = getRandom(0, avoidingCaptureMoves.size() - 1);
+        return avoidingCaptureMoves[randomMoveIndex];
     } else if (!otherMoves.empty()) {
-        return otherMoves.front();
+        int randomMoveIndex = getRandom(0, otherMoves.size() - 1);
+        return otherMoves[randomMoveIndex];
     } else {
-        throw std::runtime_error("No valid moves available"); // Handle no valid move scenario
+        return Move{-1, -1, -1, -1}; // No valid moves available
     }
 }
