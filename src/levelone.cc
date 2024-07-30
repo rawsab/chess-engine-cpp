@@ -57,17 +57,18 @@ Move LevelOne::getMove() {
             Move chosenMove = moves[randomMoveIndex]; // choose random move
             board->move(chosenMove);
 
+            board->undoMove();
+
             if (!(board->isCheck(color))) {
-                return Move{};
+                return chosenMove;
             }
             else {
-                board->undoMove();
                 moves[randomMoveIndex] = empty;
             }
         }
         pieces[randomPieceIndex] = nullptr;
     }
 
-    return Move{};
+    return Move{}; // if no moves available
 }
 

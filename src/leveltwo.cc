@@ -29,9 +29,9 @@ Move LevelTwo::getMove() {
                     } else {
                         Move turn {move.r, move.c, move.nr, move.nc};
 
-                        cout << "trying move " << (color == Color::Black ? "Black" : "White") << move.r << move.c << move.nr << move.nc << endl;
+                        // cout << "trying move " << (color == Color::Black ? "Black" : "White") << move.r << move.c << move.nr << move.nc << endl;
                         if(board->canMove(turn, color)){
-                            cout << "successful move " << move.r << move.c << move.nr << move.nc << endl;
+                            // cout << "successful move " << move.r << move.c << move.nr << move.nc << endl;
 
                             // Make a temporary move
                             board->move(turn);

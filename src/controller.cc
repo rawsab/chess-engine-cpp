@@ -79,7 +79,7 @@ void ChessController::createGame(){
                 cout << "White Turn" << endl;
                 cout << "Computer is making move" << endl;
                 Move turn = p0->getMove();
-                // board->move(turn);
+                board->move(turn);
 
                 playerTurn = 1;
             }
@@ -132,6 +132,8 @@ void ChessController::createGame(){
                     cout << "White Turn" << endl;
                     cout << "Computer is making move" << endl;
                     turn = p0->getMove();
+                    board->move(turn);
+
                     textDisplay->print();
                     // isValidMove = board->canMove(turn, Color::Black);
                 }
@@ -140,6 +142,8 @@ void ChessController::createGame(){
                     cout << "Black Turn" << endl;
                     cout << "Computer is making move" << endl;
                     turn = p1->getMove();
+                    board->move(turn);
+                    
                     textDisplay->print();
                     // isValidMove = board->canMove(turn, Color::Black);
                 }
