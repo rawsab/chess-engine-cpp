@@ -18,10 +18,13 @@ vector<Move> Pawn::getMoves() const {
   int currentCol = pos->getCol();
 
   if (getColor() == Color::White){
+    // move forwards one
     moves.push_back(Move{currentRow, currentCol, currentRow - 1, currentCol});
+    // move forwards two
     if (currentRow == 6){
       moves.push_back(Move{currentRow, currentCol, currentRow - 2, currentCol});
     }
+    // diagonal captures
     if (currentCol - 1 >= 0){
       moves.push_back(Move{currentRow, currentCol, currentRow - 1, currentCol - 1});
     }
@@ -30,10 +33,13 @@ vector<Move> Pawn::getMoves() const {
     }
   }
   else {
+    // move forwards one
     moves.push_back(Move{currentRow, currentCol, currentRow + 1, currentCol});
+    // move forwards two
     if (currentRow == 1){
       moves.push_back(Move{currentRow, currentCol, currentRow + 2, currentCol});
     }
+    // diagonal captures
     if (currentCol - 1 >= 0){
       moves.push_back(Move{currentRow, currentCol, currentRow + 1, currentCol - 1});
     }

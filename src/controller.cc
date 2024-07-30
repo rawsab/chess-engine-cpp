@@ -45,7 +45,6 @@ void ChessController::createGame(){
                 continue;
             }
 
-            // choose player one type
             if (firstPlayer == "human") {
                 p0 = new Human(Color::White);
             } else if (firstPlayer == "computer1") {
@@ -58,7 +57,6 @@ void ChessController::createGame(){
                 p0 = new LevelFour(Color::White, board);
             }
 
-            // choose player two type
             if (secondPlayer == "human") {
                 p1 = new Human(Color::Black);
             } else if (secondPlayer == "computer1") {
@@ -71,32 +69,50 @@ void ChessController::createGame(){
                 p1 = new LevelFour(Color::Black, board);
             }
 
+            p0->setColor(Color::White);
+            p1->setColor(Color::Black);
+
+            // if computer starts the game
+            if (firstPlayer != "human") {
+                textDisplay->print();
+                cout << "White Turn" << endl;
+                cout << "Computer is making move" << endl;
+                Move turn = p0->getMove();
+                // board->move(turn);
+
+                playerTurn = 1;
+            }
+
             textDisplay->print(); // prints board
             setupMode = false;
         } else if (cmd == "move") {
             // read input
-            Move turn; // make move turn off move we need to make
+            Move turn;
 
             // checks if move is valid for player
             bool isValidMove = true;
             if (playerTurn % 2 == 0) {
-                turn = p0->getMove();
-                isValidMove = board->canMove(turn, Color::White);
+                if (firstPlayer == "human") {
+                  turn = p0->getMove();
+                  isValidMove = board->canMove(turn, Color::White);
+                }
             } else {
-                turn = p1->getMove();
-                isValidMove = board->canMove(turn, Color::Black);
+                if (secondPlayer == "human") {
+                  turn = p1->getMove();
+                  isValidMove = board->canMove(turn, Color::Black);
+                }
             }
             // change to isValidMove
             if (isValidMove) {
                 board->move(turn);
                 textDisplay->print(); // prints board
 
-                cout << "checking for check for " << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << endl;
+                // cout << "checking for check for " << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << endl;
                 Color opposingColor = ((playerTurn + 1) % 2 == 0) ? Color::White : Color::Black;
                 if(board->isCheck(opposingColor)){
-                    cout << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << " in check" << endl;
+                    cout << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << " in check!" << endl;
                     if(board->isCheckmate(opposingColor)){
-                      cout << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << "checkmate" << endl;
+                      cout << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << "checkmate!" << endl;
                       if (playerTurn % 2 == 0) {
                         addToScore(Color::Black, 2);
                       } else {
@@ -109,11 +125,18 @@ void ChessController::createGame(){
                       addToScore(Color::Black, 1);
                     }
                 }
-
-                // TESTING BELOW
-                playerTurn++;
-
-                if (secondPlayer != "human") {
+                
+                if (firstPlayer != "human") {
+                    playerTurn++;
+                    cout << "White Turn" << endl;
+                    cout << "Computer is making move" << endl;
+                    turn = p0->getMove();
+                    textDisplay->print();
+                    // isValidMove = board->canMove(turn, Color::Black);
+                }
+                else if (secondPlayer != "human") {
+                    playerTurn++;
+                    cout << "Black Turn" << endl;
                     cout << "Computer is making move" << endl;
                     turn = p1->getMove();
                     textDisplay->print();
@@ -199,8 +222,10 @@ void ChessController::createGame(){
 
           playerTurn = 0;  // reset to white turn
         }
+        else {
+            cout << "Invalid command" << endl;
+        }
 
-        // remove this
         cout << (playerTurn % 2 == 0 ? "White Turn" : "Black Turn") << endl;
     }
 }

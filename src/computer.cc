@@ -3,6 +3,8 @@
 #include <random>
 #include <algorithm>
 
+#include <iostream>
+
 using namespace std;
 
 Computer::Computer(Color c, Board *b) : Player{c}, board{b} {}
