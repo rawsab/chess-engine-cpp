@@ -14,15 +14,14 @@ LevelTwo::LevelTwo(Color c, Board *b) : Computer{c, b} {}
 LevelThree::LevelThree(Color c, Board *b) : Computer{c, b} {}
 LevelFour::LevelFour(Color c, Board *b) : Computer{c, b} {}
 
-
+// random number generator
 int getRandom(int min, int max) {
-    static random_device rd;
-    static mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(min, max);
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> distribution(min, max);
 
-    return dis(gen);
+    return distribution(gen);
 }
-
 
 Move LevelOne::getMove() {
     // get all pieces of the color
@@ -30,7 +29,7 @@ Move LevelOne::getMove() {
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
           Piece* p = board->getSquare(i, j).getPiece();
-          if (p && p->getColor() == color) {
+          if ((p != nullptr) && (p->getColor() == color)) {
             pieces.push_back(p);
           }
         }
@@ -52,7 +51,9 @@ Move LevelOne::getMove() {
         while (!moves.empty()) {
             int randomMoveIndex = getRandom(0, moves.size() - 1);
 
-            while (moves[randomMoveIndex] == Move{0, 0, 0, 0}) {
+            Move empty = Move{0, 0, 0, 0};
+
+            while (moves[randomMoveIndex] == empty) {
                 randomMoveIndex = getRandom(0, moves.size() - 1);
             }
 
@@ -64,10 +65,9 @@ Move LevelOne::getMove() {
             }
             else {
                 board->undoMove();
-                moves[randomMoveIndex] = Move{0, 0, 0, 0};
+                moves[randomMoveIndex] = empty;
             }
         }
-
         pieces[randomPieceIndex] = nullptr;
     }
 

@@ -1,5 +1,4 @@
 #include "pawn.h"
-
 #include "board.h"
 
 using namespace std;
@@ -9,90 +8,101 @@ Pawn::Pawn(Color c, Square *pos, Board *b)
 
 vector<Move> Pawn::getMoves() const {
   vector<Move> moves;
-  if (!pos) return moves;
+  vector<Move> validMoves;
+
+  if (!pos) {
+    return moves;
+  }
+
+  int currentRow = pos->getRow();
+  int currentCol = pos->getCol();
+
+  if (getColor() == Color::White){
+    moves.push_back(Move{currentRow, currentCol, currentRow - 1, currentCol});
+    if (currentRow == 6){
+      moves.push_back(Move{currentRow, currentCol, currentRow - 2, currentCol});
+    }
+    if (currentCol - 1 >= 0){
+      moves.push_back(Move{currentRow, currentCol, currentRow - 1, currentCol - 1});
+    }
+    if (currentCol + 1 < 8){
+      moves.push_back(Move{currentRow, currentCol, currentRow - 1, currentCol + 1});
+    }
+  }
+  else {
+    moves.push_back(Move{currentRow, currentCol, currentRow + 1, currentCol});
+    if (currentRow == 1){
+      moves.push_back(Move{currentRow, currentCol, currentRow + 2, currentCol});
+    }
+    if (currentCol - 1 >= 0){
+      moves.push_back(Move{currentRow, currentCol, currentRow + 1, currentCol - 1});
+    }
+    if (currentCol + 1 < 8){
+      moves.push_back(Move{currentRow, currentCol, currentRow + 1, currentCol + 1});
+    }
+  }
+
+  for (auto move : moves){
+    if (canMove(move.nr, move.nc)){
+      validMoves.push_back(move);
+    }
+  }
+
+  return validMoves;  
+}
+
+bool Pawn::canMove(int newRow, int newCol) const {
+  if (!pos){
+    return false;
+  }
 
   int row = pos->getRow();
   int col = pos->getCol();
 
-  // Potential move directions for white pawns
-  vector<pair<int, int>> directionsWhite = {{1, 0}, {1, 1}, {1, -1}, {2, 0}};
+  if (newRow < 0 || newRow >= 8 || newCol < 0 || newCol >= 8){
+    return false;
+  }
 
-  // Potential move directions for black pawns
-  vector<pair<int, int>> directionsBlack = {
-      {-1, 0}, {-1, 1}, {-1, -1}, {-2, 0}};
+  // if moving forward and there is a piece in the way
+  if ((newCol == col) && (board->getSquare(newRow, newCol).getPiece())){
+    return false;
+  }
 
-  vector<pair<int, int>> directions =
-      getColor() == Color::White ? directionsWhite : directionsBlack;
+  // two square move blocked
+  if (getColor() == Color::White && row == 6 && newRow == row - 2 && board->getSquare(row - 1, newCol).getPiece()){
+      return false;
+  }
+  else if (getColor() == Color::Black && row == 1 && newRow == row + 2 && board->getSquare(row + 1, newCol).getPiece()){
+      return false;
+  }
 
-  for (const auto &direction : directions) {
-    int newRow = row + direction.first;
-    int newCol = col + direction.second;
-
-    if (canMove(newRow, newCol)) {
-      moves.emplace_back(Move(row,col, newRow, newCol));
+  // cannot move backwards
+  if (getColor() == Color::White){
+    if (newRow != row - 1 && newRow != row - 2){
+      return false;
+    }
+  }
+  else {
+    if (newRow != row + 1 && newRow != row + 2){
+      return false;
     }
   }
 
-  return moves;
-}
-
-bool Pawn::canMove(int newRow, int newCol) const {
-  if (pos) {
-    int col = pos->getCol();
-    int row = pos->getRow();
-
-    // Square board->getSquare(newRow, newCol) = board->getSquare(newRow,
-    // newCol);
-
-    if (getColor() == Color::White) {
-      if (newCol == col + 1 && newRow == row - 1 && newRow >= 0 && newCol < 8 &&
-          (board->getSquare(newRow, newCol).getPiece()->getColor() ==
-               Color::Black ||
-           (enpassant &&
-            board->getSquare(newRow, newCol).getPiece() == nullptr))) {
-        return true;
-      } else if (newCol == col && newRow == row - 1 && newRow >= 0 &&
-                 board->getSquare(newRow, newCol).getPiece() == nullptr) {
-        return true;
-      } else if (newCol == col - 1 && newRow == row - 1 && newCol >= 0 &&
-                 newRow >= 0 &&
-                 (board->getSquare(newRow, newCol).getPiece()->getColor() ==
-                      Color::Black ||
-                  (enpassant &&
-                   board->getSquare(newRow, newCol).getPiece() == nullptr))) {
-        return true;
-      } else if (newCol == col && newRow == row - 2 && row == 6 &&
-                 !board->getSquare(newRow, newCol).getPiece() &&
-                 !board->getSquare(newRow + 1, newCol).getPiece()) {
-        return true;
-      }
-    } else if (getColor() == Color::Black) {
-      if (newCol == col - 1 && newRow == row + 1 && newRow < 8 &&
-          newCol >= 0 &&
-          (board->getSquare(newRow, newCol).getPiece()->getColor() ==
-               Color::White ||
-           (enpassant &&
-            board->getSquare(newRow, newCol).getPiece() == nullptr))) {
-        return true;
-      } else if (newCol == col && newRow == row + 1 && newRow < 8 &&
-                 board->getSquare(newRow, newCol).getPiece() == nullptr) {
-        return true;
-      } else if (newCol == col + 1 && newRow == row + 1 && newCol < 8 &&
-                 newRow < 8 &&
-                 (board->getSquare(newRow, newCol).getPiece()->getColor() ==
-                      Color::White ||
-                  (enpassant &&
-                   board->getSquare(newRow, newCol).getPiece() == nullptr))) {
-        return true;
-      } else if (newCol == col && newRow == row + 2 && newRow < 8 && row == 1 &&
-                 !board->getSquare(newRow, newCol).getPiece() &&
-                 !board->getSquare(newRow - 1, newCol).getPiece()) {
-        return true;
-      }
+  // diagonal movement restrictions
+  if (newCol > col + 1 || newCol < col - 1){
+    return false;
+  }
+  if (newCol != col){
+    if (newRow > row + 1 || newRow < row - 1){
+      return false;
+    }
+    if (getColor() == Color::White && board->getSquare(newRow, newCol).getPiece()->getColor() != Color::Black){
+      return false;
+    }
+    if (getColor() == Color::Black && board->getSquare(newRow, newCol).getPiece()->getColor() != Color::White){
+      return false;
     }
   }
-  return false;
-}
 
-// fix white moving back down
-// fix pawn cant go to a place where a pawn already was
+  return true;  
+}
