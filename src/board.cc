@@ -138,6 +138,29 @@ void Board::move(Move m) {
           board[m.nr - 1][m.nc].updateSquare(nullptr);
         }
     }
+
+    // pawn promotion
+    if ((p->getType() == PieceType::Pawn) && (m.nr == 0 || m.nr == 7)) {
+        Piece* promotedPiece = nullptr;
+        string promotionType;
+        while (promotionType != "q" && promotionType != "r" && promotionType != "b" && promotionType != "n") {
+            cout << "What piece you would like to promote to (b, n, q, r)? ";
+            cin >> promotionType;
+            promotionType = tolower(promotionType[0]);
+        }
+        // for creating black or white pieces (createPiece)
+        if (p->getColor() == Color::White) {
+            promotionType = toupper(promotionType[0]);
+        }
+        else {
+            promotionType = tolower(promotionType[0]);
+        }
+        promotedPiece = createPiece(promotionType, m.nr, m.nc);
+        dst->updateSquare(promotedPiece);
+        promotedPiece->updateSquare(dst);
+    }
+
+
     addPastMoves(m, p->getType(), dstOccupant);
 }
 

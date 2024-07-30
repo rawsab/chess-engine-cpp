@@ -145,7 +145,7 @@ void ChessController::createGame(){
                     cout << "Computer is making move" << endl;
                     turn = p1->getMove();
                     board->move(turn);
-                    
+
                     textDisplay->print();
                     // isValidMove = board->canMove(turn, Color::Black);
                 }
