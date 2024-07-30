@@ -129,7 +129,28 @@ void Board::move(Move m) {
     dst->updateSquare(p);
     src->updateSquare(nullptr);
     p->updateSquare(dst);
+
+    // castling logic
+    if (p->getType() == PieceType::King && abs(m.nc - m.c) == 2) {
+        if (m.nc == 6) { // King-side castling
+            Square* rookSrc = &board[m.r][7];
+            Square* rookDst = &board[m.r][5];
+            Piece* rook = rookSrc->getPiece();
+            rookDst->updateSquare(rook);
+            rookSrc->updateSquare(nullptr);
+            if (rookDst) cout << "rook dst is valid" << endl;
+            rook->updateSquare(rookDst);
+        } else if (m.nc == 2) {  // Queen-side castling
+          Square* rookSrc = &board[m.r][0];
+          Square* rookDst = &board[m.r][3];
+          Piece* rook = rookSrc->getPiece();
+          rookDst->updateSquare(rook);
+          rookSrc->updateSquare(nullptr);
+          rook->updateSquare(rookDst);
+        }
+    }
     
+    // enpassant logic
     if (m.nc != m.c && !dstOccupant){
         if (p->getColor() == Color::White && m.r == 3 && isLastMoveTwoSquarePawnMove(m.nc)){
           board[m.nr + 1][m.nc].updateSquare(nullptr);
@@ -264,6 +285,52 @@ bool Board::isLastMoveTwoSquarePawnMove(int col) const {
     if (lastMove.movedType == PieceType::Pawn && abs(move.r - move.nr) == 2) {
         // Check if the target column matches the given column
         return move.nc == col;
+    }
+
+    return false;
+}
+
+
+bool Board::isCastlingPossible(Color color, bool kingSide) const {
+    int row = (color == Color::White) ? 7 : 0;
+    int kingCol = 4;
+    int rookCol = kingSide ? 7 : 0;
+
+    Square kingSquare = board[row][kingCol];
+    Square rookSquare = board[row][rookCol];
+    King* king = dynamic_cast<King*>(kingSquare.getPiece());
+    Rook* rook = dynamic_cast<Rook*>(rookSquare.getPiece());
+
+    if (!king || !rook || !king->getCanCastle() || !rook->getCanCastle()) return false;
+
+    // Check the spaces between the king and rook
+    int step = kingSide ? 1 : -1;
+    for (int col = kingCol + step; col != rookCol; col += step) {
+        if (board[row][col].getPiece() != nullptr) return false;
+    }
+
+    // Check if the king passes through or ends up in a square under attack
+    for (int col = kingCol; col != kingCol + 2 * step; col += step) {
+        if (isSquareUnderAttack(row, col, color)) return false;
+    }
+
+    return true;
+}
+
+bool Board::isSquareUnderAttack(int row, int col, Color color) const {
+    // Check if any opponent piece can move to the specified square
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            Piece* piece = board[i][j].getPiece();
+            if (piece && piece->getColor() != color) {
+                vector<Move> opponentMoves = piece->getMoves();
+                for (const Move& move : opponentMoves) {
+                    if (move.nr == row && move.nc == col) {
+                        return true;
+                    }
+                }
+            }
+        }
     }
 
     return false;

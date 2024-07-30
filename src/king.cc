@@ -4,7 +4,11 @@
 using namespace std;
 
 King::King(Color c, Square *pos, Board *b)
-    : Piece{PieceType::King, c, 40, pos, b} {}
+    : Piece{PieceType::King, c, 40, pos, b}, canCastle{true} {}
+
+bool King::getCanCastle() const { return canCastle; }
+
+void King::setCanCastle() { canCastle = false; }
 
 vector<Move> King::getMoves() const {
     vector<Move> moves;
@@ -53,6 +57,16 @@ vector<Move> King::getMoves() const {
     if (currentCol - 1 >= 0) {
         if (board->getSquare(currentRow, currentCol - 1).getPiece()->getColor() != color) {
             moves.push_back(Move{currentRow, currentCol, currentRow, currentCol - 1});
+        }
+    }
+
+     // Castling
+    if (canCastle) {
+        if (board->isCastlingPossible(color, true)) {
+            moves.push_back(Move{currentRow, currentCol, currentRow, currentCol + 2});
+        }
+        if (board->isCastlingPossible(color, false)) {
+            moves.push_back(Move{currentRow, currentCol, currentRow, currentCol - 2});
         }
     }
 
