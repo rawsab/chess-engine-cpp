@@ -8,6 +8,7 @@
 #include "view.h"
 #include "textView.h"
 #include "types.h"
+#include "graphicsView.h"
 
 class ChessController {
 private:
@@ -17,9 +18,10 @@ private:
     int p1Score;
     Board *board;
     TextView *textDisplay;
+    GraphicsView *graphicsDisplay;
     int playerTurn;
 
-public:
+   public:
     ChessController();
 
     void addToScore(Color c, int score);
