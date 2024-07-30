@@ -130,26 +130,54 @@ void Board::move(Move m) {
     src->updateSquare(nullptr);
     p->updateSquare(dst);
 
-    // castling logic
-    if (p->getType() == PieceType::King && abs(m.nc - m.c) == 2) {
-        if (m.nc == 6) { // King-side castling
-            Square* rookSrc = &board[m.r][7];
-            Square* rookDst = &board[m.r][5];
-            Piece* rook = rookSrc->getPiece();
-            rookDst->updateSquare(rook);
-            rookSrc->updateSquare(nullptr);
-            if (rookDst) cout << "rook dst is valid" << endl;
-            rook->updateSquare(rookDst);
-        } else if (m.nc == 2) {  // Queen-side castling
-          Square* rookSrc = &board[m.r][0];
-          Square* rookDst = &board[m.r][3];
-          Piece* rook = rookSrc->getPiece();
-          rookDst->updateSquare(rook);
-          rookSrc->updateSquare(nullptr);
-          rook->updateSquare(rookDst);
+    // castling logic 
+    if ((p->getType() == PieceType::King) && (m.nc - m.c == 2 || m.nc - m.c == -2)) {
+        int rookR = (p->getColor() == Color::White) ? 7 : 0;
+        cout << "rookR: " << rookR << endl;
+        int rookC = (m.nc > m.c) ? 7 : 0;
+        cout << "rookC: " << rookC << endl;
+        int newRookC = (m.nc > m.c) ? m.nc - 1 : m.nc + 1;
+
+        King *k = dynamic_cast<King*>(p);
+        if (k->getCanCastle()){
+            Square* rookSquare = &board[rookR][rookC];
+            Rook *r = dynamic_cast<Rook*>(rookSquare->getPiece());
+
+            if (r->getCanCastle()){
+                Square* newRookSquare = &board[rookR][newRookC];
+                r->updateSquare(newRookSquare);
+                rookSquare->updateSquare(nullptr);
+                newRookSquare->updateSquare(r);
+
+                r->setCanCastle(false);
+                k->setCanCastle(false);
+            }
+            else {
+                return; // fix this
+            }
         }
+        else {
+            return; // fix this
+        }
+
+        Square* rookSquare = &board[m.r][rookC];
+        Square* newRookSquare = &board[m.r][newRookC];
+
+        // move rook and king
+        Piece* rook = rookSquare->getPiece();
     }
     
+
+    // update castling status if king or rook moved
+    if (p->getType() == PieceType::King) {
+        King* k = dynamic_cast<King*>(p);
+        k->setCanCastle(false);
+    }
+    if (p->getType() == PieceType::Rook) {
+        Rook* r = dynamic_cast<Rook*>(p);
+        r->setCanCastle(false);
+    }
+
     // enpassant logic
     if (m.nc != m.c && !dstOccupant){
         if (p->getColor() == Color::White && m.r == 3 && isLastMoveTwoSquarePawnMove(m.nc)){

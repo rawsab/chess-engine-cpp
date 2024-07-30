@@ -14,7 +14,7 @@ class Rook : public Piece {
  public:
   Rook(Color c, Square *pos, Board *b);
   bool getCanCastle() const;
-  void setCanCastle();
+  void setCanCastle(bool b);
   vector<Move> getMoves() const override;
   bool canMove(int newRow, int newCol) const override;
 };

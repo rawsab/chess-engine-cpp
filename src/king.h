@@ -12,7 +12,7 @@ class King : public Piece {
     King(Color c, Square *pos, Board* b);
     vector<Move> getMoves() const override;
     bool getCanCastle() const;
-    void setCanCastle();
+    void setCanCastle(bool b);
     bool canMove(int newRow, int newCol) const override;
 };
 
