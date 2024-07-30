@@ -4,13 +4,13 @@
 #include "window.h"
 
 class GraphicsView : public View {
- Xwindow graphicsWindow;
- Board* board;
-public:
- GraphicsView(Board* b);
+    Xwindow graphicsWindow;
+    Board* board;
 
- void renderDisplay();
- void renderDisplay(int row, int col);
+   public:
+    GraphicsView(Board* b);
+
+    void renderDisplay();
 };
 
 #endif
