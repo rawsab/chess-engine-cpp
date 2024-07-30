@@ -6,6 +6,7 @@
 #include "types.h"
 
 #include "leveltwo.h"
+#include "levelthree.h"
 #include <string>
 #include <cmath>
 
@@ -54,6 +55,8 @@ void ChessController::createGame(){
                 p0 = new Human(Color::White);
             } else if (firstPlayer == "computer2") {
                 p0 = new LevelTwo(Color::White, board);
+            } else if (firstPlayer == "computer3") {
+                p0 = new LevelThree(Color::White, board);
             }
 
             // choose player two type
@@ -61,6 +64,8 @@ void ChessController::createGame(){
                 p1 = new Human(Color::Black);
             } else if (secondPlayer == "computer2") {
                 p1 = new LevelTwo(Color::Black, board);
+            } else if (secondPlayer == "computer3") {
+                p1 = new LevelThree(Color::Black, board);
             }
 
             textDisplay->print(); // prints board

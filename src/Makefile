@@ -2,8 +2,8 @@ CXX = g++
 CXXFLAGS = -std=c++14 -g -Wall
 EXEC = chess
 
-SRCS = main.cc controller.cc human.cc board.cc view.cc textView.cc piece.cc square.cc rook.cc pawn.cc types.cc knight.cc queen.cc bishop.cc king.cc computer.cc leveltwo.cc
-HEADERS = controller.h types.h player.h human.h board.h make.h view.h textView.h square.h piece.h rook.h pawn.h knight.h queen.h bishop.h king.h computer.h leveltwo.h
+SRCS = main.cc controller.cc human.cc board.cc view.cc textView.cc piece.cc square.cc rook.cc pawn.cc types.cc knight.cc queen.cc bishop.cc king.cc computer.cc leveltwo.cc levelthree.cc
+HEADERS = controller.h types.h player.h human.h board.h make.h view.h textView.h square.h piece.h rook.h pawn.h knight.h queen.h bishop.h king.h computer.h leveltwo.h levelthree.h
 OBJS = $(SRCS:.cc=.o)
 
 all: $(EXEC)
