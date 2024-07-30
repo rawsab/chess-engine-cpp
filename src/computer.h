@@ -17,19 +17,6 @@ class Computer : public Player {
 
 
 // Levels for move generation difficulties
-
-class LevelOne : public Computer {
- public:
-    LevelOne(Color c, Board *b);
-    Move getMove() override;
-};
-
-class LevelTwo : public Computer {
- public:
-    LevelTwo(Color c, Board *b);
-    Move getMove() override;
-};
-
 class LevelThree : public Computer {
  public:
     LevelThree(Color c, Board *b);

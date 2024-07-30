@@ -1,6 +1,8 @@
 #include "controller.h"
 #include "player.h"
 #include "human.h"
+#include "levelone.h"
+#include "leveltwo.h"
 #include "board.h"
 #include "view.h"
 #include "types.h"
@@ -223,7 +225,7 @@ void ChessController::createGame(){
         else {
             cout << "Invalid command" << endl;
         }
-        
+
         // remove this
         cout << (playerTurn % 2 == 0 ? "White Turn" : "Black Turn") << endl;
     }
