@@ -46,7 +46,7 @@ class Board {
    MoveHistory popLastMove();
    void updateWhiteScore();  // make virtual
    void updateBlackScore(); // make virtual
-   bool isLastMoveTwoSquarePawnMove(int row, int col) const;
+   bool isLastMoveTwoSquarePawnMove(int col) const;
 };
 
 #endif

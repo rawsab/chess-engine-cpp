@@ -246,7 +246,7 @@ stack<MoveHistory> Board::getPastMoves() {
     return pastMoves; 
 }
 
-bool Board::isLastMoveTwoSquarePawnMove(int row, int col) const {
+bool Board::isLastMoveTwoSquarePawnMove(int col) const {
     if (pastMoves.empty()) return false;
 
     MoveHistory lastMove = pastMoves.top();

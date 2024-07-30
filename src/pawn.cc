@@ -48,8 +48,7 @@ bool Pawn::canMove(int newRow, int newCol) const {
       if (newCol == col + 1 && newRow == row - 1 && newRow >= 0 && newCol < 8 &&
           (board->getSquare(newRow, newCol).getPiece()->getColor() ==
                Color::Black ||
-           (enpassant &&
-            board->getSquare(newRow, newCol).getPiece() == nullptr))) {
+           (board->getSquare(newRow, newCol).getPiece() == nullptr && board->isLastMoveTwoSquarePawnMove(newCol) && row == 3))) {
         return true;
       } else if (newCol == col && newRow == row - 1 && newRow >= 0 &&
                  board->getSquare(newRow, newCol).getPiece() == nullptr) {
@@ -58,8 +57,7 @@ bool Pawn::canMove(int newRow, int newCol) const {
                  newRow >= 0 &&
                  (board->getSquare(newRow, newCol).getPiece()->getColor() ==
                       Color::Black ||
-                  (enpassant &&
-                   board->getSquare(newRow, newCol).getPiece() == nullptr))) {
+                  (board->getSquare(newRow, newCol).getPiece() == nullptr && board->isLastMoveTwoSquarePawnMove(newCol) && row == 3))) {
         return true;
       } else if (newCol == col && newRow == row - 2 && row == 6 &&
                  !board->getSquare(newRow, newCol).getPiece() &&
@@ -71,8 +69,7 @@ bool Pawn::canMove(int newRow, int newCol) const {
           newCol >= 0 &&
           (board->getSquare(newRow, newCol).getPiece()->getColor() ==
                Color::White ||
-           (enpassant &&
-            board->getSquare(newRow, newCol).getPiece() == nullptr))) {
+           (board->getSquare(newRow, newCol).getPiece() == nullptr && board->isLastMoveTwoSquarePawnMove(newCol) && row == 4))) {
         return true;
       } else if (newCol == col && newRow == row + 1 && newRow < 8 &&
                  board->getSquare(newRow, newCol).getPiece() == nullptr) {
@@ -81,8 +78,7 @@ bool Pawn::canMove(int newRow, int newCol) const {
                  newRow < 8 &&
                  (board->getSquare(newRow, newCol).getPiece()->getColor() ==
                       Color::White ||
-                  (enpassant &&
-                   board->getSquare(newRow, newCol).getPiece() == nullptr))) {
+                  (board->getSquare(newRow, newCol).getPiece() == nullptr && board->isLastMoveTwoSquarePawnMove(newCol) && row == 4))) {
         return true;
       } else if (newCol == col && newRow == row + 2 && newRow < 8 && row == 1 &&
                  !board->getSquare(newRow, newCol).getPiece() &&
