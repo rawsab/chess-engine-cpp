@@ -3,6 +3,8 @@
 #include "human.h"
 #include "levelone.h"
 #include "leveltwo.h"
+#include "levelthree.h"
+#include "levelfour.h"
 #include "board.h"
 #include "view.h"
 #include "types.h"
