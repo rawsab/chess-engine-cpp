@@ -23,10 +23,4 @@ class LevelOne : public Computer {
     Move getMove() override;
 };
 
-class LevelFour : public Computer {
- public:
-    LevelFour(Color c, Board *b);
-    Move getMove() override;
-};
-
 #endif

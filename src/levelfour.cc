@@ -1,4 +1,4 @@
-#include "levelthree.h"
+#include "levelfour.h"
 #include <stdlib.h>
 #include <algorithm>
 #include <vector>
@@ -7,9 +7,9 @@
 using namespace std;
 
 
-LevelThree::LevelThree(Color c, Board *b) : Computer{c, b} {}
+LevelFour::LevelFour(Color c, Board *b) : Computer{c, b} {}
 
-Move LevelThree::getMove() {
+Move LevelFour::getMove() {
     std::vector<Move> avoidingCaptureMoves;
     std::vector<Move> capturingMoves;
     std::vector<Move> checkingMoves;
@@ -75,7 +75,17 @@ Move LevelThree::getMove() {
     if (!checkingMoves.empty()) {
         return checkingMoves.front();
     } else if (!capturingMoves.empty()) {
-        return capturingMoves.front();
+        Move bestMove = capturingMoves.front();
+        int bestPoints = -1;
+
+        // captures the piece with the most value
+        for (const Move& m : capturingMoves) {
+            Piece* targetPiece = board->getSquare(m.nr, m.nc).getPiece();
+            if(targetPiece->getPoints() > bestPoints) {
+                bestMove = m;
+            }
+        }
+        return bestMove;
     } else if (!avoidingCaptureMoves.empty()) {
         return avoidingCaptureMoves.front();
     } else if (!otherMoves.empty()) {

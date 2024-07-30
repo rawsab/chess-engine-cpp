@@ -7,6 +7,7 @@
 
 #include "leveltwo.h"
 #include "levelthree.h"
+#include "levelfour.h"
 #include <string>
 #include <cmath>
 
@@ -57,6 +58,8 @@ void ChessController::createGame(){
                 p0 = new LevelTwo(Color::White, board);
             } else if (firstPlayer == "computer3") {
                 p0 = new LevelThree(Color::White, board);
+            } else if (firstPlayer == "computer4") {
+                p0 = new LevelFour(Color::White, board);
             }
 
             // choose player two type
@@ -66,7 +69,10 @@ void ChessController::createGame(){
                 p1 = new LevelTwo(Color::Black, board);
             } else if (secondPlayer == "computer3") {
                 p1 = new LevelThree(Color::Black, board);
+            } else if (secondPlayer == "computer4") {
+                p1 = new LevelFour(Color::Black, board);
             }
+            
 
             textDisplay->print(); // prints board
             setupMode = false;
@@ -82,6 +88,7 @@ void ChessController::createGame(){
                 isValidMove = board->canMove(turn, Color::White);
             } else {
                 turn = p1->getMove();
+                cout << "getting turn for black" << turn.r << turn.nr << endl;
                 isValidMove = board->canMove(turn, Color::Black);
             }
             // change to isValidMove
