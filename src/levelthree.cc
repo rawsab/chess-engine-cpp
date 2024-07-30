@@ -33,6 +33,7 @@ Move LevelThree::getMove() {
                     // Make a temporary move
                     board->move(turn);
 
+                    bool isOurKingInCheck = board->isCheck(color);
                     bool isCheck = board->isCheck((color == Color::White) ? Color::Black : Color::White);
 
                     // Check if the move avoids capture
@@ -55,6 +56,11 @@ Move LevelThree::getMove() {
 
                     // Undo the move
                     board->undoMove();
+
+                    // invalid
+                    if(isOurKingInCheck) {
+                        continue;
+                    }
 
                     // Categorize moves
                     if (avoidsCapture) {

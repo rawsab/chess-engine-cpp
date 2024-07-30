@@ -24,6 +24,8 @@ public:
 
     void addToScore(Color c, int score);
     void createGame();
+    void registerCheckmate();
+    void registerStalemate();
     ~ChessController();
 };
 

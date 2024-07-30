@@ -46,10 +46,16 @@ Move LevelTwo::getMove() {
                         // Make a temporary move
                         board->move(turn);
 
+                        bool isOurKingInCheck = board->isCheck(color);
                         bool isCheck = board->isCheck((color == Color::White) ? Color::Black : Color::White);
 
                         // Undo the move
                         board->undoMove();
+
+                        // invalid
+                        if(isOurKingInCheck) {
+                            continue;
+                        }
 
                         // Prioritize checking moves
                         if (isCheck) {
