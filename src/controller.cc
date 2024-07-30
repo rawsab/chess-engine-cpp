@@ -214,6 +214,8 @@ void ChessController::createGame(){
             } else if (op == "done") {
               cout << "Exiting setup" << endl;
               break;
+            } else {
+              cout << "Invalid command" << endl;
             }
           }
         } else if (cmd == "resign") {
