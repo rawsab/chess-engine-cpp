@@ -14,9 +14,10 @@
 
 using namespace std;
 
-ChessController::ChessController() : p0(nullptr), p1(nullptr), textDisplay(nullptr), p0Score(0), p1Score(0), playerTurn(0) {
+ChessController::ChessController() : p0(nullptr), p1(nullptr), textDisplay(nullptr), graphicsDisplay(nullptr), p0Score(0), p1Score(0), playerTurn(0) {
     board = new Board();
     textDisplay = new TextView(board);
+    graphicsDisplay = new GraphicsView(board);
 }
 
 // prints scores at game end
@@ -126,6 +127,7 @@ void ChessController::createGame(){
             // if computer starts the game
             if (playerTurn % 2 == 0 && firstPlayer != "human") {
                 textDisplay->print();
+                graphicsDisplay->renderDisplay();
                 playComputerWhite();
                 playerTurn = 1;
             } else if(playerTurn % 2 > 0 && secondPlayer != "human") {
@@ -135,6 +137,7 @@ void ChessController::createGame(){
             }
 
             textDisplay->print();
+            graphicsDisplay->renderDisplay();
             setupMode = false;
         } else if (cmd == "move") {
             Move turn;
@@ -158,6 +161,7 @@ void ChessController::createGame(){
             if (isValidMove) {
                 board->move(turn);
                 textDisplay->print();
+                graphicsDisplay->renderDisplay();
 
                 Color opposingColor = ((playerTurn + 1) % 2 == 0) ? Color::White : Color::Black;
                 // checks if we check opposing player
@@ -179,6 +183,7 @@ void ChessController::createGame(){
                       playComputerBlack();
                   }
                   textDisplay->print();
+                  graphicsDisplay->renderDisplay();
 
                   Color opposingColor = ((playerTurn + 1) % 2 == 0) ? Color::White : Color::Black;
                   // checks if computer checks human
@@ -204,6 +209,7 @@ void ChessController::createGame(){
           else {
             board->undoMove();
             textDisplay->print();
+            graphicsDisplay->renderDisplay();
             playerTurn--;
           }
 
@@ -230,6 +236,7 @@ void ChessController::createGame(){
               }
 
               textDisplay->print();
+              graphicsDisplay->renderDisplay();
             } else if (op == "-") {
               string pos;
               cin >> pos;
@@ -243,6 +250,7 @@ void ChessController::createGame(){
               }
 
               textDisplay->print();
+              graphicsDisplay->renderDisplay();
             } else if (op == "=") {
               // sets turn to go next
               string col;
