@@ -129,7 +129,15 @@ void Board::move(Move m) {
     dst->updateSquare(p);
     src->updateSquare(nullptr);
     p->updateSquare(dst);
-
+    
+    if (m.nc != m.c && !dstOccupant){
+        if (p->getColor() == Color::White && m.r == 3 && isLastMoveTwoSquarePawnMove(m.nc)){
+          board[m.nr + 1][m.nc].updateSquare(nullptr);
+        }
+        if (p->getColor() == Color::Black && m.r == 4 && isLastMoveTwoSquarePawnMove(m.nc)){
+          board[m.nr - 1][m.nc].updateSquare(nullptr);
+        }
+    }
     addPastMoves(m, p->getType(), dstOccupant);
 }
 
@@ -244,4 +252,19 @@ MoveHistory Board::popLastMove() {
 
 stack<MoveHistory> Board::getPastMoves() { 
     return pastMoves; 
+}
+
+bool Board::isLastMoveTwoSquarePawnMove(int col) const {
+    if (pastMoves.empty()) return false;
+
+    MoveHistory lastMove = pastMoves.top();
+    Move move = lastMove.move;
+
+     // Check if the last move was a two-square pawn move
+    if (lastMove.movedType == PieceType::Pawn && abs(move.r - move.nr) == 2) {
+        // Check if the target column matches the given column
+        return move.nc == col;
+    }
+
+    return false;
 }

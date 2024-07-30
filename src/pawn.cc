@@ -99,6 +99,17 @@ bool Pawn::canMove(int newRow, int newCol) const {
   if (newCol > col + 1 || newCol < col - 1){
     return false;
   }
+  
+    //check for enpassant
+    if (newCol != col && !board->getSquare(newRow, newCol).getPiece()) {
+      if (getColor() == Color::White && row == 3 && board->isLastMoveTwoSquarePawnMove(newCol)) {
+          return true;
+      } else if (getColor() == Color::Black && row == 4 && board->isLastMoveTwoSquarePawnMove(newCol)) {
+          return true;
+      }
+      return false;
+  }
+
   if (newCol != col){
     if (newRow > row + 1 || newRow < row - 1){
       return false;
