@@ -133,9 +133,7 @@ void Board::move(Move m) {
     // castling logic 
     if ((p->getType() == PieceType::King) && (m.nc - m.c == 2 || m.nc - m.c == -2)) {
         int rookR = (p->getColor() == Color::White) ? 7 : 0;
-        cout << "rookR: " << rookR << endl;
         int rookC = (m.nc > m.c) ? 7 : 0;
-        cout << "rookC: " << rookC << endl;
         int newRookC = (m.nc > m.c) ? m.nc - 1 : m.nc + 1;
 
         King *k = dynamic_cast<King*>(p);
