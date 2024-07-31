@@ -16,8 +16,8 @@ using namespace std;
 
 ChessController::ChessController() : p0(nullptr), p1(nullptr), p0Score(0), p1Score(0), playerTurn(0) {
     board = new Board();
-    observers.push_back(new TextView(board))
-    observers.push_back(new GraphicsView(board))
+    observers.push_back(new TextView(board));
+    observers.push_back(new GraphicsView(board));
 }
 
 void ChessController::notifyObservers() {
