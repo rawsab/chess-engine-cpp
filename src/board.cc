@@ -133,7 +133,53 @@ void Board::move(Move m) {
     dst->updateSquare(p);
     src->updateSquare(nullptr);
     p->updateSquare(dst);
-    
+
+    // castling logic 
+    if ((p->getType() == PieceType::King) && (m.nc - m.c == 2 || m.nc - m.c == -2)) {
+        int rookR = (p->getColor() == Color::White) ? 7 : 0;
+        int rookC = (m.nc > m.c) ? 7 : 0;
+        int newRookC = (m.nc > m.c) ? m.nc - 1 : m.nc + 1;
+
+        King *k = dynamic_cast<King*>(p);
+        if (k->getCanCastle()){
+            Square* rookSquare = &board[rookR][rookC];
+            Rook *r = dynamic_cast<Rook*>(rookSquare->getPiece());
+
+            if (r->getCanCastle()){
+                Square* newRookSquare = &board[rookR][newRookC];
+                r->updateSquare(newRookSquare);
+                rookSquare->updateSquare(nullptr);
+                newRookSquare->updateSquare(r);
+
+                r->setCanCastle(false);
+                k->setCanCastle(false);
+            }
+            else {
+                return; // fix this
+            }
+        }
+        else {
+            return; // fix this
+        }
+
+        Square* rookSquare = &board[m.r][rookC];
+        Square* newRookSquare = &board[m.r][newRookC];
+
+        // move rook and king
+        Piece* rook = rookSquare->getPiece();
+    }
+
+    // update castling status if king or rook moved
+    if (p->getType() == PieceType::King) {
+        King* k = dynamic_cast<King*>(p);
+        k->setCanCastle(false);
+    }
+    if (p->getType() == PieceType::Rook) {
+        Rook* r = dynamic_cast<Rook*>(p);
+        r->setCanCastle(false);
+    }
+
+    // enpassant logic
     // if no dest exists, set to nullptr
     if (m.nc != m.c && !dstOccupant){
         if (p->getColor() == Color::White && m.r == 3 && isLastMoveTwoSquarePawnMove(m.nc)){
@@ -322,6 +368,52 @@ bool Board::isLastMoveTwoSquarePawnMove(int col) const {
     if (lastMove.movedType == PieceType::Pawn && abs(move.r - move.nr) == 2) {
         // Check if the target column matches the given column
         return move.nc == col;
+    }
+
+    return false;
+}
+
+
+bool Board::isCastlingPossible(Color color, bool kingSide) const {
+    int row = (color == Color::White) ? 7 : 0;
+    int kingCol = 4;
+    int rookCol = kingSide ? 7 : 0;
+
+    Square kingSquare = board[row][kingCol];
+    Square rookSquare = board[row][rookCol];
+    King* king = dynamic_cast<King*>(kingSquare.getPiece());
+    Rook* rook = dynamic_cast<Rook*>(rookSquare.getPiece());
+
+    if (!king || !rook || !king->getCanCastle() || !rook->getCanCastle()) return false;
+
+    // Check the spaces between the king and rook
+    int step = kingSide ? 1 : -1;
+    for (int col = kingCol + step; col != rookCol; col += step) {
+        if (board[row][col].getPiece() != nullptr) return false;
+    }
+
+    // Check if the king passes through or ends up in a square under attack
+    for (int col = kingCol; col != kingCol + 2 * step; col += step) {
+        if (isSquareUnderAttack(row, col, color)) return false;
+    }
+
+    return true;
+}
+
+bool Board::isSquareUnderAttack(int row, int col, Color color) const {
+    // Check if any opponent piece can move to the specified square
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            Piece* piece = board[i][j].getPiece();
+            if (piece && piece->getColor() != color) {
+                vector<Move> opponentMoves = piece->getMoves();
+                for (const Move& move : opponentMoves) {
+                    if (move.nr == row && move.nc == col) {
+                        return true;
+                    }
+                }
+            }
+        }
     }
 
     return false;

@@ -48,6 +48,8 @@ class Board {
    void updateWhiteScore();  // make virtual
    void updateBlackScore(); // make virtual
   bool isLastMoveTwoSquarePawnMove(int col) const;
+  bool isCastlingPossible(Color color, bool kingSide) const;
+  bool isSquareUnderAttack(int row, int col, Color color) const;
 };
 
 #endif

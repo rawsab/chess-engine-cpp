@@ -6,7 +6,7 @@ Rook::Rook(Color c, Square*pos,  Board *b): Piece{PieceType::Rook, c, 5, pos, b}
 
 bool Rook::getCanCastle() const { return canCastle; }
 
-void Rook::setCanCastle() { canCastle = false; }
+void Rook::setCanCastle(bool b) { canCastle = b; }
 
 vector<Move> Rook::getMoves() const {
     vector<Move> moves;
