@@ -142,12 +142,6 @@ void ChessController::createGame(){
         } else if (cmd == "move") {
             Move turn;
 
-            // checks if it is stalemate
-            if(board->isStalemate(((playerTurn) % 2 == 0) ? Color::White : Color::Black)) { 
-              registerStalemate();
-              continue;
-            }
-            
             // checks if move is valid for human players
             bool isValidMove = true;
             if (playerTurn % 2 == 0 && firstPlayer == "human") {
@@ -197,6 +191,13 @@ void ChessController::createGame(){
                 }
 
                 playerTurn++;
+
+                // checks if it is stalemate
+                if(board->isStalemate(((playerTurn) % 2 == 0) ? Color::White : Color::Black)) { 
+                  registerStalemate();
+                  continue;
+                }
+                
             } else {
                 cout << "Invalid move" << endl;
             }
