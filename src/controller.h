@@ -17,8 +17,7 @@ private:
     int p0Score;
     int p1Score;
     Board *board;
-    TextView *textDisplay;
-    GraphicsView *graphicsDisplay;
+    vector<View *> observers;
     int playerTurn;
 
 public:
@@ -30,6 +29,7 @@ public:
     void registerStalemate();
     void playComputerBlack();
     void playComputerWhite();
+    void notifyObservers();
     ~ChessController();
 };
 

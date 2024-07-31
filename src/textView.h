@@ -11,6 +11,7 @@ class TextView : public View {
 
   public:
     TextView(Board* b);
+    void notify() override;
     void print();
     ~TextView();
 };

@@ -13,7 +13,7 @@ class View {
   public:
     View();
 
-    void notify(Move turn);  
+    virtual void notify() = 0;  
     virtual ~View();
 };
 

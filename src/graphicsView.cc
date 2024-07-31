@@ -32,6 +32,10 @@ GraphicsView::GraphicsView(Board* b) : View(), board{b}, graphicsWindow{500, 500
     }
 }
 
+void GraphicsView::notify() {
+    renderDisplay();
+}
+
 void GraphicsView::renderDisplay() {
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {

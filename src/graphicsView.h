@@ -9,7 +9,7 @@ class GraphicsView : public View {
 
    public:
     GraphicsView(Board* b);
-
+    void notify() override;
     void renderDisplay();
 };
 

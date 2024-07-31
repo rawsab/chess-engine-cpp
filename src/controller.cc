@@ -14,10 +14,16 @@
 
 using namespace std;
 
-ChessController::ChessController() : p0(nullptr), p1(nullptr), textDisplay(nullptr), graphicsDisplay(nullptr), p0Score(0), p1Score(0), playerTurn(0) {
+ChessController::ChessController() : p0(nullptr), p1(nullptr), p0Score(0), p1Score(0), playerTurn(0) {
     board = new Board();
-    textDisplay = new TextView(board);
-    graphicsDisplay = new GraphicsView(board);
+    observers.push_back(new TextView(board))
+    observers.push_back(new GraphicsView(board))
+}
+
+void ChessController::notifyObservers() {
+    for (auto i : observers) {
+        i->notify();
+    }
 }
 
 // prints scores at game end
@@ -126,18 +132,16 @@ void ChessController::createGame(){
 
             // if computer starts the game
             if (playerTurn % 2 == 0 && firstPlayer != "human") {
-                textDisplay->print();
-                graphicsDisplay->renderDisplay();
+                notifyObservers();
                 playComputerWhite();
                 playerTurn = 1;
             } else if(playerTurn % 2 > 0 && secondPlayer != "human") {
-                textDisplay->print();
+                notifyObservers();
                 playComputerBlack();
                 playerTurn = 0;
             }
 
-            textDisplay->print();
-            graphicsDisplay->renderDisplay();
+            notifyObservers();
             setupMode = false;
         } else if (cmd == "move") {
             Move turn;
@@ -154,8 +158,7 @@ void ChessController::createGame(){
 
             if (isValidMove) {
                 board->move(turn);
-                textDisplay->print();
-                graphicsDisplay->renderDisplay();
+                notifyObservers();
 
                 Color opposingColor = ((playerTurn + 1) % 2 == 0) ? Color::White : Color::Black;
                 // checks if we check opposing player
@@ -176,8 +179,7 @@ void ChessController::createGame(){
                   else if (secondPlayer != "human") {
                       playComputerBlack();
                   }
-                  textDisplay->print();
-                  graphicsDisplay->renderDisplay();
+                  notifyObservers();
 
                   Color opposingColor = ((playerTurn + 1) % 2 == 0) ? Color::White : Color::Black;
                   // checks if computer checks human
@@ -209,8 +211,7 @@ void ChessController::createGame(){
           }
           else {
             board->undoMove();
-            textDisplay->print();
-            graphicsDisplay->renderDisplay();
+            notifyObservers();
             playerTurn--;
           }
 
@@ -236,8 +237,7 @@ void ChessController::createGame(){
                 board->updatePiece(piece, r, c);
               }
 
-              textDisplay->print();
-              graphicsDisplay->renderDisplay();
+              notifyObservers();
             } else if (op == "-") {
               string pos;
               cin >> pos;
@@ -250,8 +250,7 @@ void ChessController::createGame(){
                 board->updatePiece("", r, c);
               }
 
-              textDisplay->print();
-              graphicsDisplay->renderDisplay();
+              notifyObservers();
             } else if (op == "=") {
               // sets turn to go next
               string col;

@@ -9,9 +9,6 @@ using namespace std;
 View::View() {
 }
 
-void View::notify(Move turn) {
-}
-
 View::~View() {
     // Destructor
 }
