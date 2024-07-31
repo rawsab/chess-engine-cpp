@@ -3,6 +3,10 @@
 #include <string>
 
 Board::Board() : whiteScore(0), blackScore(0) {
+    setupBoard();
+}
+
+void Board::setupBoard() {
     board = vector<vector<Square>>(8, vector<Square>(8, Square(0, 0, nullptr)));
 
     for (int i = 0; i < 8; ++i) {
@@ -11,7 +15,6 @@ Board::Board() : whiteScore(0), blackScore(0) {
         }
     }
 
-    // board[6][1].updateSquare(new Pawn(Color::Black, &board[6][1], this));
     // // Setup pawns
     for (int i = 0; i < 8; ++i) {
         board[1][i].updateSquare(new Pawn(Color::Black, &board[1][i], this));
@@ -43,7 +46,8 @@ Board::Board() : whiteScore(0), blackScore(0) {
 Piece* Board::createPiece(const string& p, int r, int c) {
     Piece* piece = nullptr;
     Color color = (isupper(p[0]) ? Color::White : Color::Black);
-
+    
+    // creates piece based on color and type
     switch (tolower(p[0])) {
         case 'k':
             piece = new King(color, &board[r][c], this);
@@ -64,12 +68,12 @@ Piece* Board::createPiece(const string& p, int r, int c) {
             piece = new Pawn(color, &board[r][c], this);
             break;
         default:
-            // Handle invalid piece input if necessary
             break;
     }
     return piece;
 }
 
+// updates piece at square
 void Board::updatePiece(const string& p, int r, int c) {
     board[r][c].updateSquare(createPiece(p, r, c));
     return;
@@ -78,7 +82,7 @@ void Board::updatePiece(const string& p, int r, int c) {
 
 void Board::clearBoard() {
     board = vector<vector<Square>>(8, vector<Square>(8, Square(0, 0, nullptr)));
-
+    // sets all board parts to nullptr
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
             board[i][j] = Square(i, j, nullptr);
@@ -87,8 +91,7 @@ void Board::clearBoard() {
 }
 
 
-Board::~Board() {
-}
+Board::~Board() { }
 
 vector<vector<Square>> Board::getSquares() {
     return board;
@@ -107,10 +110,10 @@ bool Board::canMove(Move m, Color c) {
 
     if(currentPiece->canMove(m.nr, m.nc)) {
         Move turn {m.r, m.c, m.nr, m.nc};
-        // Make a temporary move
+        // makes temporary move
         Board::move(turn);
         bool isInCheck = isCheck(c);
-        // Undo the move
+        // undo move
         undoMove();
 
         // make sure move doesnt put our king in check
@@ -122,6 +125,7 @@ bool Board::canMove(Move m, Color c) {
 }
 
 void Board::move(Move m) {
+    // moves src piece to dest
     Square* src = &board[m.r][m.c];
     Square* dst = &board[m.nr][m.nc];
     Piece* p = src->getPiece();
@@ -164,7 +168,6 @@ void Board::move(Move m) {
         // move rook and king
         Piece* rook = rookSquare->getPiece();
     }
-    
 
     // update castling status if king or rook moved
     if (p->getType() == PieceType::King) {
@@ -177,6 +180,7 @@ void Board::move(Move m) {
     }
 
     // enpassant logic
+    // if no dest exists, set to nullptr
     if (m.nc != m.c && !dstOccupant){
         if (p->getColor() == Color::White && m.r == 3 && isLastMoveTwoSquarePawnMove(m.nc)){
           board[m.nr + 1][m.nc].updateSquare(nullptr);
@@ -207,12 +211,12 @@ void Board::move(Move m) {
         promotedPiece->updateSquare(dst);
     }
 
-
+    // add to move history
     addPastMoves(m, p->getType(), dstOccupant);
 }
 
 void Board::undoMove() {
-
+    // undos last move in stack
     MoveHistory m = this->popLastMove();
 
     Square* src = &board[m.move.nr][m.move.nc];
@@ -221,9 +225,9 @@ void Board::undoMove() {
     dst->updateSquare(p);
     src->updateSquare(m.captured);
     p->updateSquare(dst);
-
 }
 
+// checks ic color c's king is in check
 bool Board::isCheck(Color c) {
     Square* kingSquare = nullptr;
     for (int row = 0; row < 8; ++row) {
@@ -238,30 +242,29 @@ bool Board::isCheck(Color c) {
         if (kingSquare) break;
     }
 
-    if (!kingSquare) return false; // King not found
+    if (!kingSquare) return false; // king not found
 
-    // Check all pieces of the opposite color to see if they can attack the king
+    // checks pieces of opposite color to see if they can move to king's pos
     Color opposingColor = (c == Color::White) ? Color::Black : Color::White;
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
-            Square& square = board[row][col];
-            Piece* piece = square.getPiece();
+            Piece* piece = getSquare(row, col).getPiece();
             if (piece && piece->getColor() == opposingColor) {
                 std::vector<Move> moves = piece->getMoves();
                 for (const Move& move : moves) {
                     if (move.nr == kingSquare->getRow() && move.nc == kingSquare->getCol()) {
-                        return true; // King is in check
+                        return true; // check
                     }
                 }
             }
         }
     }
 
-    return false; // King is not in check
+    return false;
 }
 
 bool Board::isCheckmate(Color c) {
-    // Step 2: Check if any move can get the king out of check
+    // check if any moves get king out of check
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
             Square& square = board[row][col];
@@ -271,15 +274,15 @@ bool Board::isCheckmate(Color c) {
                 for (const Move& move : moves) {
                     Move turn {move.r, move.c, move.nr, move.nc};
 
-                    // Make a temporary move
+                    // makes temporary move
                     Board::move(turn);
 
                     bool isStillInCheck = isCheck(c);
 
-                    // Undo the move
+                    // undo move
                     undoMove();
 
-                    // If the move gets the king out of check, it's not checkmate
+                    // valid move gets king out of check
                     if (!isStillInCheck) {
                         return false;
                     }
@@ -288,12 +291,42 @@ bool Board::isCheckmate(Color c) {
         }
     }
 
-    // If no valid move gets the king out of check, it's checkmate
     return true;
 }
 
 bool Board::isStalemate(Color c) {
-    return false;
+    // if player in check, not stale
+    if (isCheck(c)) {
+        return false;
+    }
+
+    // checks if any legal moves available 
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            Piece* piece = getSquare(row, col).getPiece();
+
+            if (piece && piece->getColor() == c) {
+                std::vector<Move> moves = piece->getMoves();
+                for (const Move& move : moves) {
+                    // makes temporary move
+                    Move turn {move.r, move.c, move.nr, move.nc};
+                    Board::move(turn);
+
+                    bool isStillInCheck = isCheck(c);
+
+                    // undo move
+                    undoMove();
+
+                    // not stalemate
+                    if (!isStillInCheck) {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
+    return true;
 }
 
 float Board::getWhiteScore() {
@@ -314,6 +347,7 @@ void Board::addPastMoves(Move& m, PieceType movedType, Piece* captured) {
     pastMoves.push(MoveHistory{std::move(m), movedType, captured});
 }
 
+// remove last move from stack
 MoveHistory Board::popLastMove() { 
     MoveHistory lastMove = pastMoves.top();
     pastMoves.pop();

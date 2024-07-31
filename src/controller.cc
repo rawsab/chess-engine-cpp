@@ -14,32 +14,73 @@
 
 using namespace std;
 
-ChessController::ChessController() : p0(nullptr), p1(nullptr), textDisplay(nullptr), p0Score(0), p1Score(0), playerTurn(0) {
+ChessController::ChessController() : p0(nullptr), p1(nullptr), textDisplay(nullptr), graphicsDisplay(nullptr), p0Score(0), p1Score(0), playerTurn(0) {
     board = new Board();
     textDisplay = new TextView(board);
-    // board->setupBoard();
+    graphicsDisplay = new GraphicsView(board);
 }
 
-void ChessController::addToScore(Color c, int score) {
-    if (c == Color::White) {
-      p0Score += score;
-    } else {
-      p1Score += score;
-    }
-
-    cout << "Current score: " << std::endl;
-    cout << "White: " << ((double)p0Score / 2) << std::endl;
-    cout << "Black: " << ((double)p1Score / 2) << std::endl;
-
-    playerTurn = 0;  // reset to white turn
+// prints scores at game end
+void ChessController::printScore() {
+    cout << "Current score: " << endl;
+    cout << "White: " << ((double)p0Score / 2) << endl;
+    cout << "Black: " << ((double)p1Score / 2) << endl;
 }
 
+// registers win - checkmate or resign
+void ChessController::registerWin(){
+  cout << (playerTurn % 2 == 0 ? "White" : "Black") << " wins! --------------" << endl;
+  if (playerTurn % 2 == 0) {
+    p0Score += 2;
+  } else {
+    p1Score += 2;
+  }
+  // reset board
+  board->setupBoard();
+  playerTurn = 0;
+}
+
+void ChessController::registerStalemate(){
+  cout << "Stalemate --------------" << endl;
+  p0Score += 1;
+  p1Score += 1;
+  // reset board
+  board->setupBoard();
+  playerTurn = 0;
+}
+
+void ChessController::playComputerWhite(){
+  cout << "White Turn" << endl;
+  cout << "Computer is making move" << endl;
+
+  Move turn = p0->getMove();
+  if(turn.nr == -1 && turn.nc == -1) {
+    registerStalemate();
+    return;
+  }
+  board->move(turn);
+}
+
+void ChessController::playComputerBlack(){
+  cout << "Black Turn" << endl;
+  cout << "Computer is making move" << endl;
+  
+  Move turn = p1->getMove();
+  if(turn.nr == -1 && turn.nc == -1) {
+    registerStalemate();
+    return;
+  }
+  board->move(turn);
+}
+
+// starts chess session
 void ChessController::createGame(){
     string cmd;
     bool setupMode = true;
     string firstPlayer, secondPlayer;
     
     while (cin >> cmd) {        
+        // creates a new game with two players
         if (cmd == "game") {
             cin >> firstPlayer >> secondPlayer;
             
@@ -48,6 +89,13 @@ void ChessController::createGame(){
                 continue;
             }
 
+            // if board starts at stalemate in setup
+            if(board->isStalemate(((playerTurn) % 2 == 0) ? Color::White : Color::Black)) { 
+              registerStalemate();
+              continue;
+            }
+
+            // sets white player
             if (firstPlayer == "human") {
                 p0 = new Human(Color::White);
             } else if (firstPlayer == "computer1") {
@@ -60,6 +108,7 @@ void ChessController::createGame(){
                 p0 = new LevelFour(Color::White, board);
             }
 
+            // sets black player
             if (secondPlayer == "human") {
                 p1 = new Human(Color::Black);
             } else if (secondPlayer == "computer1") {
@@ -76,78 +125,75 @@ void ChessController::createGame(){
             p1->setColor(Color::Black);
 
             // if computer starts the game
-            if (firstPlayer != "human") {
+            if (playerTurn % 2 == 0 && firstPlayer != "human") {
                 textDisplay->print();
-                cout << "White Turn" << endl;
-                cout << "Computer is making move" << endl;
-                Move turn = p0->getMove();
-                board->move(turn);
-
+                graphicsDisplay->renderDisplay();
+                playComputerWhite();
                 playerTurn = 1;
+            } else if(playerTurn % 2 > 0 && secondPlayer != "human") {
+                textDisplay->print();
+                playComputerBlack();
+                playerTurn = 0;
             }
 
-            textDisplay->print(); // prints board
+            textDisplay->print();
+            graphicsDisplay->renderDisplay();
             setupMode = false;
         } else if (cmd == "move") {
-            // read input
             Move turn;
 
-            // checks if move is valid for player
-            bool isValidMove = true;
-            if (playerTurn % 2 == 0) {
-                if (firstPlayer == "human") {
-                  turn = p0->getMove();
-                  isValidMove = board->canMove(turn, Color::White);
-                }
-            } else {
-                if (secondPlayer == "human") {
-                  turn = p1->getMove();
-                  isValidMove = board->canMove(turn, Color::Black);
-                }
+            // checks if it is stalemate
+            if(board->isStalemate(((playerTurn) % 2 == 0) ? Color::White : Color::Black)) { 
+              registerStalemate();
+              continue;
             }
-            // change to isValidMove
+            
+            // checks if move is valid for human players
+            bool isValidMove = true;
+            if (playerTurn % 2 == 0 && firstPlayer == "human") {
+                turn = p0->getMove();
+                isValidMove = board->canMove(turn, Color::White);
+            } else if (secondPlayer == "human"){
+                turn = p1->getMove();
+                isValidMove = board->canMove(turn, Color::Black);
+            }
+
             if (isValidMove) {
                 board->move(turn);
-                textDisplay->print(); // prints board
+                textDisplay->print();
+                graphicsDisplay->renderDisplay();
 
-                // cout << "checking for check for " << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << endl;
                 Color opposingColor = ((playerTurn + 1) % 2 == 0) ? Color::White : Color::Black;
+                // checks if we check opposing player
                 if(board->isCheck(opposingColor)){
-                    cout << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << " in check" << endl;
+                    // checks if it is checkmate
                     if(board->isCheckmate(opposingColor)){
-                      cout << ((playerTurn + 1) % 2 == 0 ? "White" : "Black") << "checkmate" << endl;
-                      if (playerTurn % 2 == 0) {
-                        addToScore(Color::Black, 2);
-                      } else {
-                        addToScore(Color::White, 2);
+                      registerWin();
+                      continue;
+                    }
+                }
+
+                // plays computer turns
+                if(firstPlayer != "human" || secondPlayer != "human"){
+                  playerTurn++;
+                  if (firstPlayer != "human") {
+                      playComputerWhite();
+                  }
+                  else if (secondPlayer != "human") {
+                      playComputerBlack();
+                  }
+                  textDisplay->print();
+                  graphicsDisplay->renderDisplay();
+
+                  Color opposingColor = ((playerTurn + 1) % 2 == 0) ? Color::White : Color::Black;
+                  // checks if computer checks human
+                  if(board->isCheck(opposingColor)){
+                      // checks if it is checkmate
+                      if(board->isCheckmate(opposingColor)){
+                        registerWin();
+                        continue;
                       }
-                    }
-                } else {
-                    if(board->isStalemate(opposingColor)){ 
-                      addToScore(Color::White, 1);
-                      addToScore(Color::Black, 1);
-                    }
-                }
-
-                if (firstPlayer != "human") {
-                    playerTurn++;
-                    cout << "White Turn" << endl;
-                    cout << "Computer is making move" << endl;
-                    turn = p0->getMove();
-                    board->move(turn);
-
-                    textDisplay->print();
-                    // isValidMove = board->canMove(turn, Color::Black);
-                }
-                else if (secondPlayer != "human") {
-                    playerTurn++;
-                    cout << "Black Turn" << endl;
-                    cout << "Computer is making move" << endl;
-                    turn = p1->getMove();
-                    board->move(turn);
-
-                    textDisplay->print();
-                    // isValidMove = board->canMove(turn, Color::Black);
+                  }
                 }
 
                 playerTurn++;
@@ -156,12 +202,14 @@ void ChessController::createGame(){
             }
 
         } else if (cmd == "undo") {
+          // undo feature to take back last move
           if (board->getPastMoves().empty()) {
             cout << "No moves to undo" << endl;
           }
           else {
             board->undoMove();
             textDisplay->print();
+            graphicsDisplay->renderDisplay();
             playerTurn--;
           }
 
@@ -173,8 +221,9 @@ void ChessController::createGame(){
           board->clearBoard();
 
           string op;
+          // handling setup input
           while (cin >> op) {
-            if (op == "+") {  // TODO: make sure capitalization is correct
+            if (op == "+") {
               string piece, pos;
               cin >> piece >> pos;
 
@@ -187,7 +236,8 @@ void ChessController::createGame(){
               }
 
               textDisplay->print();
-            } else if (op == "-") {  // TODO: make sure capitalization is correct
+              graphicsDisplay->renderDisplay();
+            } else if (op == "-") {
               string pos;
               cin >> pos;
 
@@ -196,12 +246,13 @@ void ChessController::createGame(){
               if (pos.size() == 2) {
                 c = pos[0] - 'a';
                 r = pos[1] - '1' + 1;
-                // renive piece
                 board->updatePiece("", r, c);
               }
 
               textDisplay->print();
+              graphicsDisplay->renderDisplay();
             } else if (op == "=") {
+              // sets turn to go next
               string col;
               cin >> col;
               if (col == "white") {
@@ -210,8 +261,37 @@ void ChessController::createGame(){
                 playerTurn = 1;
               }
             } else if (op == "done") {
-              cout << "Exiting setup" << endl;
-              break;
+                // checks if exactly one black and one white king + no pawns on promotion squares + no king in check
+                int whiteKings = 0;
+                int blackKings = 0;
+                bool pawnOnPromotionPos = false;
+                for (int row = 0; row < 8; ++row) {
+                  for (int col = 0; col < 8; ++col) {
+                      Piece* piece = board->getSquare(row, col).getPiece();
+                      // checks if one black and one white king
+                      if (piece && piece->getType() == PieceType::King) {
+                          if(piece->getColor() == Color::White){
+                            whiteKings++;
+                          } else if(piece->getColor() == Color::Black){
+                            blackKings++;
+                          }
+                      }
+                      // checks if not pawns on promotion pos
+                      if(piece && piece->getType() == PieceType::Pawn){
+                        if((row == 0 && piece->getColor() == Color::White) || (row == 7 && piece->getColor() == Color::Black)){
+                          pawnOnPromotionPos = true;
+                        }
+                      }
+                  }
+                }
+                // checks if no king in check
+                if(whiteKings == 1 && blackKings == 1 && !pawnOnPromotionPos && !board->isCheck(Color::White) && !board->isCheck(Color::Black)){
+                  cout << "Exiting setup" << endl;
+                  break;
+                } else {
+                  cout << "Conditions to exit setup not met" << endl;
+                  continue;
+                }
             } else {
               cout << "Invalid command" << endl;
             }
@@ -222,21 +302,18 @@ void ChessController::createGame(){
             continue;
           }
 
-          if (playerTurn % 2 == 0) {
-            addToScore(Color::Black, 2);
-          } else {
-            addToScore(Color::White, 2);
-          }
-
-          playerTurn = 0;  // reset to white turn
+          playerTurn++;
+          registerWin();
+          continue;
         }
         else {
-            cout << "Invalid command" << endl;
+          cout << "Invalid command" << endl;
         }
 
-        // remove this
+        // Whos turn is next
         cout << (playerTurn % 2 == 0 ? "White Turn" : "Black Turn") << endl;
     }
+    printScore();
 }
 
 ChessController::~ChessController() {}

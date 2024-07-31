@@ -4,7 +4,7 @@
 using namespace std;
 
 Queen::Queen(Color c, Square *pos,  Board *b)
-    : Piece{PieceType::Queen, c, 3, pos, b} {}
+    : Piece{PieceType::Queen, c, 9, pos, b} {}
 
 vector<Move> Queen::getMoves() const {
     vector<Move> moves;
@@ -25,7 +25,7 @@ vector<Move> Queen::getMoves() const {
     return moves;
 }
 
-
+// checks if queen can move to a pos
 bool Queen::canMove(int newRow, int newCol) const {
   if (!pos) return false;
 

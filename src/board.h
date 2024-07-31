@@ -34,6 +34,7 @@ class Board {
    bool canMove(Move m, Color c); // make virtual
    void move(Move m); // make virtual
    void undoMove();
+   void setupBoard();
    bool isCheck(Color c);
    bool isCheckmate(Color c);
    bool isStalemate(Color c);

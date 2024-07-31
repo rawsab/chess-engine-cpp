@@ -19,7 +19,6 @@ vector<Move> King::getMoves() const {
     int currentCol = pos->getCol();
 
     // King can only move one square in all directions
-
     if (currentRow + 1 < 8) {
         if (board->getSquare(currentRow + 1, currentCol).getPiece()->getColor() != color) {
             moves.push_back(Move{currentRow, currentCol, currentRow + 1, currentCol});
@@ -75,6 +74,7 @@ vector<Move> King::getMoves() const {
     return moves;
 }
 
+// checks if move is valid
 bool King::canMove(int newRow, int newCol) const {
   vector<Move> moves = getMoves();
   if (!pos) return false;

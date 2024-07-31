@@ -7,6 +7,7 @@ using namespace std;
 Piece::Piece(PieceType t, Color c, int points, Square* pos, Board *b)
     : points{points}, type{t}, color{c}, pos{pos}, board{b} {}
 
+// gets linear moves possible
 void Piece::getlinearMoves(int row, int col, vector<Move>& moves) const {
   int currentRow = pos->getRow();
   int currentCol = pos->getCol();
@@ -30,6 +31,7 @@ void Piece::getlinearMoves(int row, int col, vector<Move>& moves) const {
   }
 }
 
+// check if piece can check king
 bool Piece::canCheck() const {
   vector<Move> moves = getMoves();
   for (auto move : moves) {
