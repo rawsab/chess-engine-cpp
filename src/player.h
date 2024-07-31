@@ -14,7 +14,7 @@ class Player {
   virtual ~Player() {};
 
   Color getColor();
-  Color setColor(Color c) { color = c; }
+  void setColor(Color c) { color = c; }
   virtual Move getMove() = 0;
 };
 

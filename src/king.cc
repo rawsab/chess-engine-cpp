@@ -86,13 +86,6 @@ bool King::canMove(int newRow, int newCol) const {
     castleRow = 0;
   }
 
-    //error checks
-    if (!canCastle) cout << "canCastle is false" << endl;
-    if (row != castleRow) cout << "row is not castleRow" << endl;
-    if (col != 4) cout << "col is not 4" << endl;
-    if (newRow != castleRow) cout << "newRow is not castleRow" << endl;
-    if (newCol != 6 && newCol != 2) cout << "newCol is not 6 or 2" << endl;
-
   if (canCastle && row == castleRow && col == 4 && newRow == castleRow && (newCol == 6 || newCol == 2)){
     if (newCol == 6 && board->getSquare(castleRow, 5).getPiece() == nullptr && board->getSquare(castleRow, 6).getPiece() == nullptr){
         // check for rook
