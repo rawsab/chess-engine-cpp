@@ -132,8 +132,9 @@ void Board::move(Move m) {
     Piece* dstOccupant = dst->getPiece();
     dst->updateSquare(p);
     src->updateSquare(nullptr);
-    p->updateSquare(dst);
-
+    if(p) {
+        p->updateSquare(dst);
+    }
     // castling logic 
     if ((p->getType() == PieceType::King) && (m.nc - m.c == 2 || m.nc - m.c == -2)) {
         int rookR = (p->getColor() == Color::White) ? 7 : 0;
@@ -224,7 +225,9 @@ void Board::undoMove() {
     Piece* p = src->getPiece();
     dst->updateSquare(p);
     src->updateSquare(m.captured);
-    p->updateSquare(dst);
+    if(p) {
+        p->updateSquare(dst);
+    }
 }
 
 // checks ic color c's king is in check
